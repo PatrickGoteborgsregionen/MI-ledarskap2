@@ -1,0 +1,1150 @@
+<title>Motiverande ledarskap, dag 2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600&display=swap">
+<style>
+  /* Layout: GR-omslag per avsnitt (enfärgad platta med rubrik + mönsterhalva), lugn läsyta under, navigering i sidofält. */
+  :root{
+    /* GR:s profilfärger (grafisk manual 2018). Används som plattor och mönster, aldrig som textfärg. */
+    --gr-rod:#8e0826; --gr-turkos:#00a29a; --gr-gron:#1a7167; --gr-persika:#f5ac90;
+    --gr-vetegul:#ecd896; --gr-gul:#ffed00; --gr-rosa:#ebd1d0; --gr-bla:#a9cee0;
+
+    /* Tema (ljust) */
+    --bg:#faf8f6; --surface:#ffffff; --surface-2:#f6eee8; --ink:#1d1d1b; --muted:#56524e;
+    --line:#e3dcd5; --line-soft:#efe9e3;
+    --action:#1a7167; --action-ink:#ffffff; --action-hover:#145a52;
+    --focus:#8e0826;
+    --good:#1a7167; --good-soft:#e2efec; --bad:#8e0826; --bad-soft:#f6e3e5;
+    --logo-pos:block; --logo-neg:none;
+
+    /* Typografi: Franklin Gothic som manualens reserv för ITC Conduit, Georgia för brödtext */
+    --font-head:"Libre Franklin","Franklin Gothic Medium","Franklin Gothic",Arial,sans-serif;
+    --font-body:Georgia,"Times New Roman",serif;
+    --maxw:44rem; --radius:14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#151817; --surface:#1d2120; --surface-2:#252a28; --ink:#f1ede8; --muted:#b9b2ab;
+      --line:#343a38; --line-soft:#2a2f2d;
+      --action:#00a29a; --action-ink:#111111; --action-hover:#14b5ad;
+      --focus:#f5ac90;
+      --good:#5cc2b5; --good-soft:#1d3532; --bad:#f08a9b; --bad-soft:#3d2228;
+      --logo-pos:none; --logo-neg:block;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#151817; --surface:#1d2120; --surface-2:#252a28; --ink:#f1ede8; --muted:#b9b2ab;
+    --line:#343a38; --line-soft:#2a2f2d;
+    --action:#00a29a; --action-ink:#111111; --action-hover:#14b5ad;
+    --focus:#f5ac90;
+    --good:#5cc2b5; --good-soft:#1d3532; --bad:#f08a9b; --bad-soft:#3d2228;
+    --logo-pos:none; --logo-neg:block;
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box;}
+  [hidden]{display:none!important;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface);}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;} *{animation:none!important;transition:none!important;}}
+  h1,h2,h3,h4,.head{font-family:var(--font-head);font-weight:500;text-wrap:balance;}
+  a{color:inherit;}
+  :focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px;}
+  .skip{position:absolute;left:-999px;top:0;background:var(--surface);color:var(--ink);padding:.6rem 1rem;z-index:200;font-family:var(--font-head);}
+  .skip:focus{left:0;}
+
+  /* ---------- Sidhuvud med logotyp uppe till höger ---------- */
+  .topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--surface);border-bottom:1px solid var(--line);}
+  .topbar-in{display:flex;align-items:center;gap:1rem;justify-content:space-between;padding-block:.7rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
+  .crumb{font-family:var(--font-head);font-size:.92rem;line-height:1.3;min-width:0;}
+  .crumb b{font-weight:500;display:block;}
+  .crumb span{font-weight:300;color:var(--muted);}
+  .logo{width:150px;flex:0 0 auto;padding:.35rem 0;}
+  .logo img{width:100%;height:auto;}
+  .logo .pos{display:var(--logo-pos);} .logo .neg{display:var(--logo-neg);}
+  .menubtn{display:none;font-family:var(--font-head);font-size:.95rem;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:99px;padding:.4rem .95rem;cursor:pointer;}
+  .mprog{display:none;height:4px;background:var(--line-soft);} .mprog i{display:block;height:100%;width:0;background:var(--action);transition:width .4s;}
+
+  /* ---------- Sidofält ---------- */
+  .wrap{display:flex;align-items:flex-start;}
+  .sidebar{width:290px;flex:0 0 290px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 66px);height:calc(100vh - 66px);overflow-y:auto;padding:1.6rem 1.1rem 2rem max(16px,env(safe-area-inset-left,0px));border-right:1px solid var(--line);background:var(--surface);}
+  .sb-title{font-family:var(--font-head);font-size:1.15rem;line-height:1.25;margin:0 0 .3rem;font-weight:500;}
+  .sb-sub{font-family:var(--font-head);font-weight:300;font-size:.9rem;color:var(--muted);margin:0 0 1.3rem;line-height:1.4;}
+  nav.toc{display:flex;flex-direction:column;gap:.2rem;}
+  .toc button{display:grid;grid-template-columns:2rem 1fr auto;align-items:center;gap:.55rem;width:100%;text-align:left;background:none;border:0;border-radius:10px;padding:.5rem .55rem;cursor:pointer;color:var(--ink);font-family:var(--font-head);font-size:.95rem;line-height:1.3;}
+  .toc button:hover{background:var(--line-soft);}
+  .toc button[aria-current="true"]{background:var(--surface-2);font-weight:500;}
+  .toc .dot{width:1.65rem;height:1.65rem;border-radius:50%;background:var(--sw);display:grid;place-items:center;font-size:.8rem;font-weight:500;color:var(--swi);}
+  .toc .tmin{font-weight:300;font-size:.8rem;color:var(--muted);}
+  .toc .ok{font-size:.8rem;color:var(--good);font-weight:600;}
+  .prog{margin:1.5rem 0 0;}
+  .prog-l{font-family:var(--font-head);font-weight:300;font-size:.85rem;color:var(--muted);margin-bottom:.35rem;display:flex;justify-content:space-between;}
+  .prog-t{height:6px;border-radius:99px;background:var(--line-soft);overflow:hidden;} .prog-t i{display:block;height:100%;width:0;background:var(--action);transition:width .4s;}
+  .saveinfo{margin-top:1.2rem;font-family:var(--font-head);font-weight:300;font-size:.82rem;color:var(--muted);line-height:1.5;}
+  .linkbtn{background:none;border:0;padding:0;margin-top:.35rem;font:inherit;font-weight:400;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
+  .confirm{margin-top:.6rem;background:var(--surface-2);border-radius:10px;padding:.7rem .8rem;font-size:.85rem;}
+  .confirm .row{display:flex;gap:.5rem;margin-top:.5rem;flex-wrap:wrap;}
+  .drawer{display:none;}
+
+  .main{flex:1 1 auto;min-width:0;}
+
+  /* ---------- Avsnittets omslag ---------- */
+  section.view{display:none;}
+  section.view.active{display:block;animation:in .35s ease;}
+  @keyframes in{from{opacity:.4;transform:translateY(4px);}to{opacity:1;transform:none;}}
+  .cover{display:grid;grid-template-columns:1.15fr 1fr;min-height:300px;}
+  .plate{background:var(--pl);color:var(--pli);padding-block:2.4rem 2.2rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:2rem;display:flex;flex-direction:column;justify-content:flex-end;gap:.4rem;}
+  .plate-in{max-width:30rem;margin-left:auto;width:100%;}
+  .lvl2{font-family:var(--font-head);font-weight:500;font-size:.95rem;margin:0;}
+  .lvl3{font-family:var(--font-head);font-weight:300;font-size:.95rem;margin:0 0 1.4rem;}
+  .plate h1{font-size:clamp(1.9rem,3.4vw,2.6rem);line-height:1.1;margin:0 0 .7rem;letter-spacing:-.01em;}
+  .plate .ingress{font-family:var(--font-head);font-weight:400;font-size:1.08rem;line-height:1.45;margin:0;}
+  .pattern{background:var(--pb);min-height:220px;position:relative;overflow:hidden;}
+  .pattern svg{position:absolute;inset:0;width:100%;height:100%;}
+  .pattern svg{stroke:var(--pf);}
+
+  .p-rodrosa{--pb:var(--gr-rosa);--pf:var(--gr-rod);}
+  .p-blagron{--pb:var(--gr-bla);--pf:var(--gr-gron);}
+  .p-vetturkos{--pb:var(--gr-vetegul);--pf:var(--gr-turkos);}
+  .p-vetgron{--pb:var(--gr-vetegul);--pf:var(--gr-gron);}
+  .p-persrod{--pb:var(--gr-persika);--pf:var(--gr-rod);}
+  .p-gulgron{--pb:var(--gr-gul);--pf:var(--gr-gron);}
+  .pl-gron{--pl:var(--gr-gron);--pli:#ffffff;}
+  .pl-vetegul{--pl:var(--gr-vetegul);--pli:#1d1d1b;}
+  .pl-rod{--pl:var(--gr-rod);--pli:#ffffff;}
+  .pl-persika{--pl:var(--gr-persika);--pli:#1d1d1b;}
+  .pl-turkos{--pl:var(--gr-turkos);--pli:#111111;}
+  .pl-rosa{--pl:var(--gr-rosa);--pli:#1d1d1b;}
+
+  /* ---------- Läsyta ---------- */
+  .col{max-width:var(--maxw);margin:0 auto;padding-block:2.2rem 5rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
+  .col > * + *{margin-top:1rem;}
+  h2{font-size:1.5rem;line-height:1.25;margin:2.6rem 0 .3rem;}
+  h3{font-size:1.15rem;line-height:1.3;margin:1.8rem 0 .2rem;}
+  p{margin:.8rem 0;}
+  ul,ol{padding-left:1.3rem;margin:.6rem 0;} li{margin:.35rem 0;} li::marker{color:var(--muted);}
+  strong{font-weight:700;}
+  .src{font-family:var(--font-head);font-weight:300;font-size:.85rem;color:var(--muted);margin-top:.4rem;}
+  .light{font-family:var(--font-head);font-weight:300;}
+
+  /* Symbol: droppe för kort information (tid) */
+  .meta{display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;margin:0 0 1.2rem;}
+  .drop{width:84px;height:84px;background:var(--gr-gul);color:#1d1d1b;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:grid;place-items:center;flex:0 0 auto;}
+  .drop span{transform:rotate(45deg);font-family:var(--font-head);font-weight:500;font-size:1.05rem;line-height:1.05;text-align:center;}
+  .drop small{display:block;font-weight:300;font-size:.75rem;}
+  .meta p{margin:0;font-family:var(--font-head);font-weight:300;font-size:1rem;line-height:1.5;flex:1 1 16rem;min-width:0;}
+
+  /* Steg (a, b, c …) */
+  .step{display:grid;grid-template-columns:2.6rem 1fr;gap:0 1rem;margin:2.2rem 0 0;}
+  .step > .letter{width:2.6rem;height:2.6rem;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center;font-family:var(--font-head);font-weight:500;font-size:1.05rem;}
+  .step > .body{min-width:0;}
+  .step h3{margin:.35rem 0 .3rem;}
+  .kind{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--font-head);font-weight:300;font-size:.88rem;color:var(--muted);margin:0 0 .2rem;}
+  .ic{width:28px;height:28px;flex:0 0 auto;}
+  .later{display:inline-block;font-family:var(--font-head);font-weight:500;font-size:.85rem;background:var(--gr-blaa,var(--gr-bla));color:#1d1d1b;border-radius:99px;padding:.15rem .7rem;margin-left:.2rem;}
+
+  /* Teoriruta och citat */
+  .box{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.2rem 1.3rem;margin:1.2rem 0;}
+  .box > :first-child{margin-top:0;} .box > :last-child{margin-bottom:0;}
+  .box h4{font-size:1.05rem;margin:0 0 .4rem;}
+  .say{font-style:italic;color:var(--muted);}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .twocol > div{min-width:0;}
+  .chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:.6rem 0 0;padding:0;list-style:none;}
+  .chips li{margin:0;font-family:var(--font-head);font-size:.9rem;line-height:1.3;background:var(--surface-2);border-radius:99px;padding:.35rem .8rem;}
+  ol.steps{counter-reset:s;list-style:none;padding:0;margin:.8rem 0 0;display:grid;gap:.7rem;}
+  ol.steps > li{counter-increment:s;display:grid;grid-template-columns:2rem 1fr;gap:.8rem;margin:0;}
+  ol.steps > li::before{content:counter(s);width:2rem;height:2rem;border-radius:50%;background:var(--gr-persika);color:#1d1d1b;display:grid;place-items:center;font-family:var(--font-head);font-weight:500;font-size:.9rem;}
+  ol.steps > li > div{min-width:0;}
+
+  /* Media (podd/film) */
+  .media{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:1.2rem 0;}
+  .frame{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;background:var(--gr-gron);}
+  .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .poster{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;cursor:pointer;background:var(--pb);display:block;text-decoration:none;color:#1d1d1b;}
+  .poster svg.pat{position:absolute;inset:0;width:100%;height:100%;}
+  .poster svg.pat{stroke:var(--pf);}
+  .poster .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:.7rem;background:#ffffff;color:#1d1d1b;border-radius:99px;padding:.7rem 1.3rem .7rem .8rem;font-family:var(--font-head);font-weight:500;font-size:1rem;white-space:nowrap;transition:transform .15s;}
+  .poster:hover .play{transform:translate(-50%,-50%) scale(1.04);}
+  .poster .play i{width:2.2rem;height:2.2rem;border-radius:50%;background:var(--gr-gron);display:grid;place-items:center;}
+  .poster .play i::before{content:"";border-style:solid;border-width:.45rem 0 .45rem .75rem;border-color:transparent transparent transparent #fff;margin-left:.15rem;}
+  .mcap{padding:.9rem 1.2rem;font-family:var(--font-head);font-size:.95rem;line-height:1.45;}
+  .mcap b{font-weight:500;display:block;}
+  .mcap span{font-weight:300;color:var(--muted);}
+  .mcap a{font-weight:400;}
+  .pending{aspect-ratio:16/9;max-width:100%;display:grid;place-items:center;text-align:center;padding:1.5rem;background:var(--surface-2);font-family:var(--font-head);}
+  .pending b{display:block;font-weight:500;font-size:1.1rem;}
+  .pending span{font-weight:300;color:var(--muted);font-size:.95rem;}
+
+  /* Övningar */
+  .ex{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.3rem;margin:1.3rem 0;}
+  .ex > :first-child{margin-top:0;}
+  .ex-k{font-family:var(--font-head);font-weight:300;font-size:.88rem;color:var(--muted);margin:0 0 .3rem;}
+  .q{font-family:var(--font-head);font-weight:500;font-size:1.05rem;line-height:1.4;margin:0 0 .8rem;}
+  .hint{font-family:var(--font-head);font-weight:300;font-size:.92rem;color:var(--muted);margin:-.4rem 0 .7rem;}
+  textarea{display:block;width:100%;min-height:8rem;border:1.5px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--ink);padding:.8rem .9rem;font:inherit;font-size:1rem;line-height:1.55;resize:vertical;}
+  textarea:focus{border-color:var(--action);outline:none;box-shadow:0 0 0 3px var(--good-soft);}
+  label.tl{display:block;font-family:var(--font-head);font-weight:500;font-size:1rem;margin:1.1rem 0 .4rem;}
+  label.tl:first-of-type{margin-top:.2rem;}
+  .btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--action);color:var(--action-ink);border:0;border-radius:99px;padding:.6rem 1.2rem;font-family:var(--font-head);font-weight:500;font-size:.98rem;cursor:pointer;}
+  .btn:hover{background:var(--action-hover);}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);}
+  .btn.ghost:hover{background:var(--line-soft);}
+  .row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;align-items:center;}
+  .model{margin-top:1rem;background:var(--surface-2);border-radius:10px;padding:1rem 1.1rem;font-size:.98rem;}
+  .model .mt{font-family:var(--font-head);font-weight:500;margin-bottom:.3rem;}
+  .mic{display:inline-flex;align-items:center;gap:.4rem;background:none;border:1.5px solid var(--line);border-radius:99px;color:var(--ink);font-family:var(--font-head);font-size:.88rem;padding:.35rem .85rem;cursor:pointer;margin-top:.5rem;}
+  .mic.on{border-color:var(--bad);color:var(--bad);background:var(--bad-soft);}
+  .mic svg{width:15px;height:15px;}
+  .micst{font-family:var(--font-head);font-weight:300;font-size:.85rem;color:var(--muted);margin-left:.5rem;}
+
+  /* Flerval */
+  .opt{display:flex;gap:.7rem;align-items:flex-start;width:100%;text-align:left;background:var(--surface-2);color:var(--ink);border:1.5px solid transparent;border-radius:10px;padding:.75rem .9rem;margin:.45rem 0;cursor:pointer;font-family:var(--font-head);font-size:1rem;line-height:1.4;}
+  .opt:hover{border-color:var(--line);}
+  .opt .mk{flex:0 0 1.6rem;height:1.6rem;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-size:.8rem;font-weight:500;}
+  .opt.correct{border-color:var(--good);background:var(--good-soft);}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-soft);}
+  .opt[disabled]{cursor:default;}
+  .opt input{margin-top:.3rem;accent-color:var(--action);}
+  .facit{margin-top:.9rem;border-top:1px solid var(--line);padding-top:.9rem;font-size:.98rem;}
+  .facit .fh{font-family:var(--font-head);font-weight:500;margin-bottom:.3rem;}
+  .facit ul{margin:.4rem 0 0;}
+
+  /* Sortering */
+  .pool{display:flex;flex-direction:column;gap:.45rem;}
+  .chipbtn{text-align:left;background:var(--surface-2);color:var(--ink);border:1.5px solid transparent;border-radius:10px;padding:.6rem .85rem;cursor:pointer;font-family:var(--font-head);font-size:.98rem;line-height:1.4;}
+  .chipbtn:hover{border-color:var(--line);}
+  .chipbtn.sel{border-color:var(--ink);background:var(--surface);}
+  .chipbtn.placed{display:none;}
+  .buckets{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1rem;}
+  .bucket{border:1.5px dashed var(--line);border-radius:12px;padding:.8rem;min-height:6rem;cursor:pointer;background:transparent;color:var(--ink);text-align:left;font:inherit;display:flex;flex-direction:column;gap:.45rem;min-width:0;}
+  .bucket.armed{border-color:var(--ink);background:var(--surface-2);}
+  .bucket .bt{font-family:var(--font-head);font-weight:500;font-size:.98rem;}
+  .pi{display:flex;justify-content:space-between;gap:.5rem;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.45rem .6rem;font-family:var(--font-head);font-size:.9rem;line-height:1.35;}
+  .pi.ok{border-color:var(--good);background:var(--good-soft);} .pi.no{border-color:var(--bad);background:var(--bad-soft);}
+  .pi .x{background:none;border:0;color:var(--muted);cursor:pointer;font-size:1rem;line-height:1;padding:.1rem .2rem;}
+  .live{font-family:var(--font-head);font-weight:300;font-size:.92rem;color:var(--muted);min-height:1.3em;margin:.6rem 0 0;}
+
+  /* Ordna */
+  .olist{display:flex;flex-direction:column;gap:.45rem;}
+  .oi{display:flex;align-items:center;gap:.7rem;background:var(--surface-2);border:1.5px solid transparent;border-radius:10px;padding:.55rem .7rem;font-family:var(--font-head);font-size:.96rem;line-height:1.35;}
+  .oi .ot{flex:1;min-width:0;}
+  .oi.ok{border-color:var(--good);background:var(--good-soft);} .oi.no{border-color:var(--bad);background:var(--bad-soft);}
+  .oc{display:flex;flex-direction:column;gap:.2rem;}
+  .oc button{width:2rem;height:1.6rem;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font-size:.7rem;}
+  .oc button:disabled{opacity:.35;cursor:default;}
+
+  /* MI-påminnaren */
+  .picker{display:flex;flex-wrap:wrap;gap:.45rem;}
+  .pick{background:var(--surface-2);color:var(--ink);border:1.5px solid transparent;border-radius:99px;padding:.4rem .9rem;cursor:pointer;font-family:var(--font-head);font-size:.93rem;}
+  .pick:hover{border-color:var(--line);}
+  .pick[aria-pressed="true"]{background:var(--gr-vetegul);color:#1d1d1b;border-color:#1d1d1b;}
+  .reminder{margin-top:1rem;border-top:1px solid var(--line);padding-top:1rem;}
+  .reminder h4{font-size:1.15rem;margin:0 0 .3rem;}
+  .reminder dl{margin:.6rem 0 0;display:grid;gap:.6rem;}
+  .reminder dt{font-family:var(--font-head);font-weight:500;font-size:.92rem;}
+  .reminder dd{margin:0;}
+
+  /* Resultat och sammanställning */
+  .score{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.3rem;margin:1.2rem 0;}
+  .score .blob{width:110px;height:100px;background:var(--gr-turkos);color:#111;border-radius:58% 42% 55% 45% / 52% 48% 52% 48%;display:grid;place-items:center;font-family:var(--font-head);font-weight:500;font-size:1.8rem;font-variant-numeric:tabular-nums;flex:0 0 auto;}
+  .score .st{flex:1 1 16rem;min-width:0;font-family:var(--font-head);font-size:1rem;}
+  .ks{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.5rem;margin-top:1rem;}
+  .ks-h{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;border-bottom:1px solid var(--line);padding-bottom:.8rem;margin-bottom:1rem;flex-wrap:wrap;}
+  .ks-h h3{margin:0;font-size:1.35rem;}
+  .ks-h .light{font-size:.88rem;color:var(--muted);}
+  .ks-sec{margin:1rem 0;} .ks-sec h4{margin:0 0 .3rem;font-size:1.02rem;}
+  .ks-sec ul{margin:.2rem 0;} .ks-sec li{font-size:.97rem;}
+  .ans{margin:.5rem 0 .9rem;} .ans .al{font-family:var(--font-head);font-weight:500;font-size:.92rem;}
+  .ans .at{white-space:pre-wrap;border-left:2px solid var(--line);padding-left:.8rem;margin-top:.2rem;font-size:.97rem;}
+  .ans .at.empty{color:var(--muted);font-style:italic;}
+  .note{font-family:var(--font-head);font-weight:300;font-size:.88rem;color:var(--muted);}
+
+  .pager{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);}
+  .resume{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;background:var(--surface-2);border-radius:12px;padding:.8rem 1rem;font-family:var(--font-head);font-size:.95rem;margin-bottom:1rem;}
+  .refs{font-family:var(--font-head);font-weight:300;font-size:.9rem;}
+
+  #printArea{display:none;}
+  @media print{
+    body.printing > *:not(#printArea){display:none!important;}
+    body.printing #printArea{display:block;}
+  }
+
+  @media (max-width:900px){
+    .sidebar{display:none;}
+    .menubtn{display:inline-block;}
+    .mprog{display:block;}
+    .drawer.open{display:block;background:var(--surface);border-bottom:1px solid var(--line);padding-block:.6rem 1rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
+    .cover{grid-template-columns:1fr;min-height:0;}
+    .pattern{order:-1;min-height:110px;}
+    .plate{padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:1.8rem;}
+    .plate-in{margin-left:0;}
+    .logo{width:118px;}
+  }
+  @media (max-width:560px){
+    body{font-size:17px;}
+    .twocol,.buckets{grid-template-columns:1fr;}
+    .crumb span{display:none;}
+    .step{grid-template-columns:2.2rem 1fr;gap:0 .75rem;}
+    .step > .letter{width:2.2rem;height:2.2rem;}
+  }
+</style>
+<!--BODY-->
+<a class="skip" href="#innehall">Hoppa till innehållet</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="pat" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+      <g fill="none" stroke-width="24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M-30 70 C 40 30, 110 120, 190 80 S 320 10, 430 70"/>
+        <path d="M-30 205 C 40 170, 85 250, 165 215 S 300 130, 430 185"/>
+        <path d="M118 -30 C 96 50, 175 92, 152 165 S 82 262, 126 330"/>
+        <path d="M305 -30 C 280 48, 352 108, 308 178 S 262 282, 318 330"/>
+        <path d="M190 80 C 226 128, 262 146, 308 178"/>
+        <path d="M152 165 C 112 186, 70 196, 30 238"/>
+      </g>
+    </symbol>
+    <symbol id="i-target" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><circle fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" cx="14" cy="14" r="6.5"/><circle fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" cx="14" cy="14" r="2"/></symbol>
+    <symbol id="i-listen" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 16v-2a6 6 0 0 1 12 0v2"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 16h2v4H8zM18 16h2v4h-2z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M11.5 9.5v9l7-4.5z"/></symbol>
+    <symbol id="i-read" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M7.5 9.5c2.5-.8 4.7-.5 6.5 1 1.8-1.5 4-1.8 6.5-1v9c-2.5-.8-4.7-.5-6.5 1-1.8-1.5-4-1.8-6.5-1zM14 10.5v9"/></symbol>
+    <symbol id="i-write" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M9 19l1-3.5 7-7 2.5 2.5-7 7zM15.5 10l2.5 2.5"/></symbol>
+    <symbol id="i-talk" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 10.5h12v7h-6l-3 2.5v-2.5H8z"/></symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="menubtn" id="menuBtn" aria-expanded="false" aria-controls="drawer">Meny</button>
+    <div class="crumb"><b id="crumbTitle">Inledning</b><span>Motiverande ledarskap, förberedelse inför dag 2</span></div>
+    <div class="logo"><img class="pos" src="{{LOGO_POS}}" alt="Göteborgsregionen"><img class="neg" src="{{LOGO_NEG}}" alt="Göteborgsregionen"></div>
+  </div>
+  <div class="mprog"><i id="mFill"></i></div>
+  <div class="drawer" id="drawer"><nav class="toc" id="tocMobile" aria-label="Avsnitt"></nav></div>
+</header>
+
+<div class="wrap">
+  <aside class="sidebar" aria-label="Kursens avsnitt">
+    <p class="sb-title">Motiverande ledarskap</p>
+    <p class="sb-sub">Förberedelse inför dag 2, ca 2 timmar</p>
+    <nav class="toc" id="tocDesktop" aria-label="Avsnitt"></nav>
+    <div class="prog"><div class="prog-l"><span>Genomfört</span><span id="dPct">0 %</span></div><div class="prog-t"><i id="dFill"></i></div></div>
+    <div class="saveinfo" id="saveInfo">
+      <span id="saveText">Dina svar och var du är i kursen sparas i den här webbläsaren.</span><br>
+      <button type="button" class="linkbtn" id="resetBtn">Rensa sparat och börja om</button>
+      <div class="confirm" id="resetConfirm" hidden>
+        Allt du skrivit och var du är i kursen tas bort.
+        <div class="row"><button type="button" class="btn" id="resetYes">Ja, börja om</button><button type="button" class="btn ghost" id="resetNo">Avbryt</button></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main" id="innehall" tabindex="-1">
+
+    <!-- ================= INLEDNING ================= -->
+    <section class="view" id="v0">
+      <div class="cover">
+        <div class="plate pl-gron"><div class="plate-in">
+          <p class="lvl2">Motiverande ledarskap</p>
+          <p class="lvl3">Förberedelse inför dag 2</p>
+          <h1>Från dag 1 till dag 2</h1>
+          <p class="ingress">Pröva det du tränade på dag 1 i ett riktigt möte, och förbered dig på feedback i dialog och samtalsutmaningar.</p>
+        </div></div>
+        <div class="pattern p-rodrosa" aria-hidden="true"><svg><use href="#pat"/></svg></div>
+      </div>
+      <div class="col">
+        <div class="resume" id="resumeBanner" hidden role="status"><span id="resumeText">Välkommen tillbaka.</span></div>
+
+        <div class="meta"><div class="drop"><span>ca 2<small>timmar</small></span></div>
+          <p>Förberedelsen består av fyra delar. Gör dem i den ordning som passar dig, men börja gärna med del 1 eftersom den kräver ett möte.</p></div>
+
+        <p>Den här förberedelsen bygger vidare på dag 1. Du prövar en MI-detalj i praktiken, lyssnar på ett webbinarium om psykologisk trygghet och läser två korta avsnitt i kursboken <em>Handbok för ledarhjältar</em>. Det du skriver ner tar du med till dag 2, där vi tränar vidare tillsammans.</p>
+
+        <h2>Fyra delar</h2>
+        <ol class="steps">
+          <li><div><strong>Pröva MI i ett möte</strong> <span class="light">(ca 15 min)</span><br>Förbered dig på att testa en MI-detalj från dag 1. Reflektera efter mötet.</div></li>
+          <li><div><strong>Psykologisk trygghet</strong> <span class="light">(ca 1 timme)</span><br>Lyssna på ett webbinarium och skriv ner vad du konkret kan göra för din arbetsgrupp.</div></li>
+          <li><div><strong>Feedback i dialog</strong> <span class="light">(ca 20 min)</span><br>Titta på en kort film, läs s. 91–94 och välj en situation att öva på dag 2.</div></li>
+          <li><div><strong>Bemöta samtalsutmaningar</strong> <span class="light">(ca 20 min)</span><br>Läs s. 114–115 och dra lärdomar av en samtalsutmaning som du har hanterat.</div></li>
+        </ol>
+
+        <div class="box">
+          <h4>Så fungerar kursen</h4>
+          <ul>
+            <li>Det du skriver sparas automatiskt i den här webbläsaren, så du kan pausa och fortsätta senare på samma dator eller mobil.</li>
+            <li>Vill du hellre prata än skriva kan du tala in dina svar, om din webbläsare stödjer det.</li>
+            <li>Sist i kursen finns en kort kunskapskoll och en sammanställning med alla dina svar som du kan spara och ta med till dag 2.</li>
+          </ul>
+        </div>
+
+        <div class="pager"><span></span><button class="btn" data-go="1">Börja med del 1</button></div>
+      </div>
+    </section>
+
+    <!-- ================= DEL 1 ================= -->
+    <section class="view" id="v1">
+      <div class="cover">
+        <div class="plate pl-vetegul"><div class="plate-in">
+          <p class="lvl2">Motiverande ledarskap</p>
+          <p class="lvl3">Del 1 av 4</p>
+          <h1>Pröva MI i ett möte</h1>
+          <p class="ingress">Välj en MI-detalj från dag 1, testa den i ett kommande möte och reflektera så snart som möjligt efteråt.</p>
+        </div></div>
+        <div class="pattern p-blagron" aria-hidden="true"><svg><use href="#pat"/></svg></div>
+      </div>
+      <div class="col">
+        <div class="meta"><div class="drop"><span>15<small>min</small></span></div>
+          <p>Ungefär 5 minuter före mötet och 10 minuter efter. Mötet i sig ingår inte i tiden.</p></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-target"/></svg>Förbered</p>
+          <h3>Välj vad du vill testa</h3>
+          <p>Tänk på ett möte du har framför dig, ett individuellt samtal eller ett gruppmöte. Vilken av MI-detaljerna från dag 1 blev du påmind om? Välj en här nedanför för att få en kort påminnelse.</p>
+
+          <div class="ex">
+            <p class="ex-k">Verktyg · MI-påminnaren</p>
+            <div class="picker" id="picker" role="group" aria-label="MI-detaljer från dag 1"></div>
+            <div class="reminder" id="reminder" aria-live="polite"></div>
+          </div>
+
+          <div class="ex">
+            <label class="tl" for="ta_plan">Det här vill jag testa, och i det här mötet</label>
+            <p class="hint">Skriv kort vilken MI-detalj du valt, vilket möte det gäller och hur du tänker göra.</p>
+            <textarea id="ta_plan"></textarea>
+          </div>
+        </div></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">b</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-write"/></svg>Efter mötet <span class="later">gör så snart som möjligt</span></p>
+          <h3>Reflektera efter mötet</h3>
+          <p>När du har testat, svara på frågorna medan mötet är färskt i minnet. Det räcker med några rader per fråga.</p>
+          <div class="ex">
+            <label class="tl" for="ta_b">b) Vad gjorde du i mötet som hade god effekt?</label>
+            <textarea id="ta_b"></textarea>
+            <label class="tl" for="ta_c">c) Vad kunde du eventuellt ha gjort annorlunda, för att få bättre effekt?</label>
+            <textarea id="ta_c"></textarea>
+            <label class="tl" for="ta_d">d) Vad vill du ge dig för påminnelser framöver om sådant du kan göra mer eller mindre av i dina möten?</label>
+            <textarea id="ta_d"></textarea>
+            <div class="row"><button type="button" class="btn ghost" data-model="m1">Visa exempel</button></div>
+            <div class="model" id="m1" hidden><div class="mt">Exempel på reflektion</div>
+              <p><strong>b)</strong> Jag inledde med en meny-agenda och lät gruppen formulera rubrikerna själva. Det blev tydligt vad de ville prioritera, och fler kom till tals än vanligt.</p>
+              <p><strong>c)</strong> När det blev tyst fyllde jag i med egna förslag ganska snabbt. Jag hade kunnat vänta in svaren längre eller ställa en öppen fråga till.</p>
+              <p><strong>d)</strong> Mer: be om lov innan jag ger information. Mindre: slutna frågor på rad när jag vill stämma av.</p>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="pager"><button class="btn ghost" data-go="0">Föregående</button><button class="btn" data-go="2">Nästa: psykologisk trygghet</button></div>
+      </div>
+    </section>
+
+    <!-- ================= DEL 2 ================= -->
+    <section class="view" id="v2">
+      <div class="cover">
+        <div class="plate pl-rod"><div class="plate-in">
+          <p class="lvl2">Motiverande ledarskap</p>
+          <p class="lvl3">Del 2 av 4</p>
+          <h1>Psykologisk trygghet</h1>
+          <p class="ingress">Vad gör att människor i en grupp vågar säga vad de tänker, fråga och dela sina misstag? Och vad kan du som ledare göra för att bidra till det?</p>
+        </div></div>
+        <div class="pattern p-vetturkos" aria-hidden="true"><svg><use href="#pat"/></svg></div>
+      </div>
+      <div class="col">
+        <div class="meta"><div class="drop"><span>1<small>timme</small></span></div>
+          <p>Webbinariet tar ca 55 minuter. Lyssna gärna när du kan vara ostörd, till exempel på en promenad.</p></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-listen"/></svg>Lyssna</p>
+          <h3>Webbinarium om psykologisk trygghet</h3>
+          <div class="media">
+            <div class="frame" data-embed="https://player.vimeo.com/video/1020956186?autoplay=1" data-link="https://vimeo.com/1020956186" data-label="Spela webbinariet"></div>
+            <div class="mcap"><b>Psykologisk trygghet: nyckeln till framgångsrika team</b><span>Öppet webbinarium från Health Competence, ca 55 min. </span><a href="https://vimeo.com/1020956186" target="_blank" rel="noopener">Öppna på Vimeo</a></div>
+          </div>
+          <p>Lyssna efter sådant du känner igen från din egen arbetsgrupp och sådant du själv skulle kunna göra mer av.</p>
+
+          <div class="box">
+            <h4>Påminnelse från kursboken (kapitel 4)</h4>
+            <p>Psykologisk trygghet beskrivs som att deltagarna i gruppen har en gemensam upplevelse av att det är okej att ta mellanmänskliga risker: att vara uppriktig med sitt perspektiv och öppet kunna prata om olika förslag, det som känns svårt i arbetet och snedsteg (Edmondson, 2019). I grupper där det råder psykologisk trygghet kommer medarbetarna självmant till tals och delar sina förslag och åsikter på ett sätt som gynnar samarbetet.</p>
+            <p>Ledaren är en förebild. När du kommunicerar med aktivt lyssnande och MI-anda visar du det som också är önskvärt att medarbetarna förmedlar till varandra. Boken sammanfattar kommunikation som främjar psykologisk trygghet så här:</p>
+            <ul class="chips">
+              <li>Icke-dömande</li><li>Förmedla empati</li><li>Fördela ordet och utforska olika perspektiv</li><li>Uppmärksamma resurser</li><li>Förmedla respekt inför olika intressen och behov</li><li>Normalisera snedsteg</li><li>Förmedla och uppmuntra till hjälpsamhet</li><li>Utforska lärdomar från snedsteg</li><li>Visa uppskattning när medarbetarna är ärliga med det som känns svårt</li>
+            </ul>
+            <p class="src">Källa: kap 4, s. 84–86. En princip att ta med sig: låt andra komma till tals först.</p>
+          </div>
+
+          <div class="ex" data-quiz="qPt">
+            <p class="ex-k">Övning · Flerval</p>
+            <p class="q">Vilket påstående stämmer bäst med hur kursboken beskriver psykologisk trygghet?</p>
+            <div class="opts"></div><div class="facit" hidden></div>
+          </div>
+        </div></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">b</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-write"/></svg>Skriv</p>
+          <h3>Vad kan du göra konkret?</h3>
+          <div class="ex">
+            <label class="tl" for="ta_pt">Vad påminns du om som du konkret kan göra för att bidra till ökad psykologisk trygghet i din arbetsgrupp?</label>
+            <p class="hint">Försök vara så konkret som möjligt: i vilken situation, och vad gör du då?</p>
+            <textarea id="ta_pt"></textarea>
+            <div class="row"><button type="button" class="btn ghost" data-model="m2">Visa exempel</button></div>
+            <div class="model" id="m2" hidden><div class="mt">Exempel</div>
+              <p>På våra veckomöten låter jag gruppen komma till tals först innan jag säger vad jag tycker. När någon berättar om ett misstag tackar jag för att hen delade det och frågar vad vi kan lära oss av det, i stället för att leta efter vems fel det var. Jag vill också själv berätta om något jag har gjort fel, så att det blir tydligt att det är okej.</p>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="pager"><button class="btn ghost" data-go="1">Föregående</button><button class="btn" data-go="3">Nästa: feedback i dialog</button></div>
+      </div>
+    </section>
+
+    <!-- ================= DEL 3 ================= -->
+    <section class="view" id="v3">
+      <div class="cover">
+        <div class="plate pl-persika"><div class="plate-in">
+          <p class="lvl2">Motiverande ledarskap</p>
+          <p class="lvl3">Del 3 av 4</p>
+          <h1>Feedback i dialog</h1>
+          <p class="ingress">Feedback tas emot bättre när medarbetaren får komma till tals först. Här förbereder du en situation att öva på dag 2.</p>
+        </div></div>
+        <div class="pattern p-vetgron" aria-hidden="true"><svg><use href="#pat"/></svg></div>
+      </div>
+      <div class="col">
+        <div class="meta"><div class="drop"><span>20<small>min</small></span></div>
+          <p>En film på 3 minuter, fyra sidor i kursboken och två korta skrivuppgifter.</p></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>Titta</p>
+          <h3>Film: feedback i dialog</h3>
+          <div class="media" id="feedbackFilm"></div>
+        </div></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">b</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-read"/></svg>Läs</p>
+          <h3>Kursboken s. 91–94</h3>
+          <p>Läs sidorna om feedback i dialog och en boostande feedbackkultur. Här är en sammanfattning att ha bredvid.</p>
+
+          <div class="box">
+            <h4>Varför feedback?</h4>
+            <p>Utöver aktivt lyssnande och tydlig information är det feedback på sina beteenden och prestationer som medarbetare värdesätter mest hos ledare, men bara en liten del av ledares tid går åt till det. Feedback stärker alla tre grundbehoven: den visar att insatserna spelar roll (tillhörighet) och gör det lättare att medvetet påverka utfallet (kompetens och autonomi).</p>
+            <p>Hur feedbacken förmedlas påverkar upplevelsen och utfallet mer än själva sakfrågan. Över tid är en riktlinje att ge betydligt mer positiv feedback än utvecklande feedback.</p>
+            <p class="src">Källa: kap 4, s. 91.</p>
+          </div>
+
+          <div class="box">
+            <h4>Struktur för feedback i dialog</h4>
+            <p>Strukturen bygger på fråga-ge-fråga, samma princip som information i dialog.</p>
+            <ol class="steps">
+              <li><div>Förtydliga att det finns feedback att ge och stäm av när det passar, eller be om lov.</div></li>
+              <li><div>Fråga vilken positiv feedback personen vill ge sig själv. Lyssna aktivt.</div></li>
+              <li><div>Ge kort positiv feedback, gärna kopplat till det personen själv tog upp. Fråga igen: <span class="say">"Hur ser du på det?"</span></div></li>
+              <li><div>Fråga vilken utvecklande feedback personen själv har tänkt på, och summera utan att värdera.</div></li>
+              <li><div>Ge utvecklande feedback, en liten dos i taget, och avsluta med en öppen fråga: <span class="say">"Vad tänker du om det?"</span></div></li>
+              <li><div>Utforska vad personen tar med sig: <span class="say">"Utifrån det vi pratat om, vad kommer du göra mer medvetet framöver?"</span></div></li>
+            </ol>
+            <p class="src">Källa: kap 4, s. 92–94.</p>
+          </div>
+
+          <div class="twocol">
+            <div class="box">
+              <h4>Innan du ger feedback</h4>
+              <ul>
+                <li>Uppmuntra medarbetaren till självreflektion.</li>
+                <li>Utforska när det passar att prata. Nära i tid är bra, men personen behöver vara redo.</li>
+                <li>Formulera feedbacken så att den, precis som affirmationer, upplevs specifik, uppriktig, relevant och i lagom dos.</li>
+                <li>Välj ut det viktigaste om du har flera utvecklingspunkter.</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h4>En boostande feedbackkultur</h4>
+              <ul>
+                <li>Tydliggör syftet: feedback främjar lärande och utveckling.</li>
+                <li>Var en förebild och be regelbundet om feedback själv.</li>
+                <li>Prata i gruppen om allas olika styrkor, och om att alla har saker som kan "finliras".</li>
+                <li>Se öppenhet inför utveckling som en professionell styrka.</li>
+              </ul>
+            </div>
+          </div>
+          <p class="src">Källa: kap 4, s. 92 och 94.</p>
+
+          <div class="ex">
+            <p class="ex-k">Övning · Ordna i rätt följd</p>
+            <p class="q">Lägg stegen i feedback i dialog i rätt ordning. Använd pilarna.</p>
+            <div class="olist" id="orderHost"></div>
+            <div class="row"><button type="button" class="btn" id="orderCheck">Rätta</button></div>
+            <p class="live" id="orderLive" aria-live="polite"></p>
+          </div>
+        </div></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">c</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-write"/></svg>Skriv</p>
+          <h3>Det här tar du med dig</h3>
+          <div class="ex">
+            <label class="tl" for="ta_fb1">Vad påminns du om från filmen och texten som kan vara värdefullt att göra i dina feedbacksamtal framöver?</label>
+            <textarea id="ta_fb1"></textarea>
+          </div>
+        </div></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">d</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-talk"/></svg>Inför övningen dag 2</p>
+          <h3>Välj en situation att öva på</h3>
+          <div class="ex">
+            <label class="tl" for="ta_fb2">I vilken situation upplever du att det kan vara värdefullt att ge feedback i dialog?</label>
+            <p class="hint">Du får möjlighet att öva på den här situationen när vi ses dag 2. Beskriv kort vem det gäller (utan namn), vad det handlar om och vad du vill uppnå.</p>
+            <textarea id="ta_fb2"></textarea>
+            <div class="row"><button type="button" class="btn ghost" data-model="m3">Visa exempel</button></div>
+            <div class="model" id="m3" hidden><div class="mt">Exempel</div>
+              <p>En medarbetare som nyligen har börjat leda våra arbetsplatsträffar. Hen förbereder sig väl och har en tydlig struktur, men pratar själv en stor del av tiden. Jag vill lyfta det som fungerar och ta reda på hur hen själv ser på hur delaktiga de andra blir.</p>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="pager"><button class="btn ghost" data-go="2">Föregående</button><button class="btn" data-go="4">Nästa: samtalsutmaningar</button></div>
+      </div>
+    </section>
+
+    <!-- ================= DEL 4 ================= -->
+    <section class="view" id="v4">
+      <div class="cover">
+        <div class="plate pl-turkos"><div class="plate-in">
+          <p class="lvl2">Motiverande ledarskap</p>
+          <p class="lvl3">Del 4 av 4</p>
+          <h1>Bemöta samtalsutmaningar</h1>
+          <p class="ingress">När det finns tveksamhet, motstånd eller oenighet. Vad gjorde du senast det gick bra, och vilka fällor undvek du?</p>
+        </div></div>
+        <div class="pattern p-persrod" aria-hidden="true"><svg><use href="#pat"/></svg></div>
+      </div>
+      <div class="col">
+        <div class="meta"><div class="drop"><span>20<small>min</small></span></div>
+          <p>Två sidor i kursboken, en kort övning och tre reflektionsfrågor om en egen erfarenhet.</p></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-read"/></svg>Läs</p>
+          <h3>Kursboken s. 114–115</h3>
+          <p>Signaler om tveksamhet och lägre engagemang kan ha många orsaker: lägre angelägenhet eller självtillit, annat som pågår parallellt, eller relationer och kommunikation i gruppen. Hur du som ledare kommunicerar påverkar hur dialogen fortsätter. Genom MI-anda och aktivt lyssnande kan spänningar dämpas.</p>
+
+          <div class="twocol">
+            <div class="box">
+              <h4>Riktlinjer vid samtalsutmaningar</h4>
+              <ul>
+                <li>Stanna upp och utforska vad det som signaleras, eller motpratet, kan bero på.</li>
+                <li>Förmedla empati, icke-dömande och respekt (acceptans).</li>
+                <li>Normalisera upplevelserna.</li>
+                <li>Var följsam och anpassa fokus och stöd efter medarbetarens behov.</li>
+                <li>Var självmedveten: vad är en rimlig ambitionsnivå just nu?</li>
+                <li>Be om ursäkt när det är lämpligt: <span class="say">"Förlåt, nu avbröt jag dig, fortsätt berätta vad du tänkte …"</span></li>
+              </ul>
+            </div>
+            <div class="box">
+              <h4>Exempel på samtalsfällor</h4>
+              <ul>
+                <li>För många slutna frågor på rad</li>
+                <li>Expertrollen: föreläsa eller ta över ansvaret</li>
+                <li>Styra mot fokus eller problemlösning för tidigt</li>
+                <li>Rättningsreflexen: råd som inte efterfrågats</li>
+                <li>Välja sida i en fråga</li>
+                <li>Konfrontation, kritik eller skuldbeläggande</li>
+                <li>Kontrollerande språk: "ska", "måste", "borde"</li>
+                <li>Fastna i småprat, eller bara vända sig till några i gruppen</li>
+              </ul>
+            </div>
+          </div>
+          <p class="src">Källa: kap 5, s. 114–115. Boken listar fler samtalsfällor än de som står här.</p>
+
+          <div class="ex">
+            <p class="ex-k">Övning · Sortera</p>
+            <p class="q">Vilka repliker är samtalsfällor, och vilka är ett behovsstödjande bemötande?</p>
+            <p class="hint">Markera en replik och tryck sedan på rätt ruta. Fungerar med tangentbord och touch.</p>
+            <div class="pool" id="sortPool" role="group" aria-label="Repliker"></div>
+            <div class="buckets" id="sortBuckets"></div>
+            <div class="row"><button type="button" class="btn" id="sortCheck">Rätta</button><button type="button" class="btn ghost" id="sortReset">Börja om</button></div>
+            <p class="live" id="sortLive" aria-live="polite"></p>
+            <div class="facit" id="sortFacit" hidden></div>
+          </div>
+        </div></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">b</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-write"/></svg>Reflektera och skriv</p>
+          <h3>En samtalsutmaning som gick bra</h3>
+          <p>Tänk på en samtalsutmaning som du nyligen hanterat, där utfallet blev till det bättre. Skriv ner dina lärdomar utifrån frågorna.</p>
+          <div class="ex">
+            <label class="tl" for="ta_su1">c) Vad gjorde du i den situationen som var värdefullt?</label>
+            <textarea id="ta_su1"></textarea>
+            <label class="tl" for="ta_su2">d) Vilka samtalsfällor undvek du att hamna i, eller lyckades du parera om du hamnade i dem?</label>
+            <textarea id="ta_su2"></textarea>
+            <label class="tl" for="ta_su3">e) Vilka påminnelser tar du med dig från exemplet? Vad vill du göra mer eller mindre av i framtida samtalsutmaningar?</label>
+            <textarea id="ta_su3"></textarea>
+            <div class="row"><button type="button" class="btn ghost" data-model="m4">Visa exempel</button></div>
+            <div class="model" id="m4" hidden><div class="mt">Exempel</div>
+              <p><strong>c)</strong> En medarbetare sa direkt att det nya schemat "inte går". I stället för att förklara beslutet igen frågade jag vad som gjorde att det kändes omöjligt, och lyssnade.</p>
+              <p><strong>d)</strong> Jag var nära att välja sida och argumentera för schemat. Jag märkte det och gick tillbaka till att reflektera det hen sa.</p>
+              <p><strong>e)</strong> Mer: stanna upp och utforska motpratet. Mindre: förklara och övertyga för tidigt.</p>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="pager"><button class="btn ghost" data-go="3">Föregående</button><button class="btn" data-go="5">Nästa: kunskapskoll och dina svar</button></div>
+      </div>
+    </section>
+
+    <!-- ================= AVSLUT ================= -->
+    <section class="view" id="v5">
+      <div class="cover">
+        <div class="plate pl-rosa"><div class="plate-in">
+          <p class="lvl2">Motiverande ledarskap</p>
+          <p class="lvl3">Inför dag 2</p>
+          <h1>Kunskapskoll och dina svar</h1>
+          <p class="ingress">Sex korta frågor, och sedan en sammanställning av allt du skrivit som du tar med till dag 2.</p>
+        </div></div>
+        <div class="pattern p-gulgron" aria-hidden="true"><svg><use href="#pat"/></svg></div>
+      </div>
+      <div class="col">
+        <div class="meta"><div class="drop"><span>5<small>min</small></span></div>
+          <p>Du kan rätta så många gånger du vill. Svarsalternativen hamnar i ny ordning varje gång sidan laddas.</p></div>
+
+        <div id="examHost"></div>
+        <div class="row"><button type="button" class="btn" id="examSubmit">Rätta kunskapskollen</button></div>
+        <div id="examResult" aria-live="polite"></div>
+
+        <h2>Ta med till dag 2</h2>
+        <p>Här är allt du har skrivit i kursen. Spara det, eller kopiera texten till dina egna anteckningar.</p>
+        <div class="row">
+          <button type="button" class="btn" id="ksPdf">Spara som PDF</button>
+          <button type="button" class="btn ghost" id="ksCopy">Kopiera texten</button>
+          <span class="note" id="ksNote" aria-live="polite"></span>
+        </div>
+        <div id="ksHost"></div>
+
+        <h2>Källor</h2>
+        <ul class="refs">
+          <li>Edler, K. (red.), Hartelius, E. (red.) &amp; Ehrenborg, L. (2024). <em>Handbok för ledarhjältar: motivationsforskningen som superkraft</em>. Kapitel 4, s. 84–86 och 91–94, kapitel 5, s. 114–115.</li>
+          <li>Health Competence: <em>Psykologisk trygghet, nyckeln till framgångsrika team</em> (öppet webbinarium, Vimeo).</li>
+        </ul>
+        <p class="note">Förberedelsen ersätter inte kurstillfället, där vi tränar tillsammans. Exempel och formuleringar är illustrationer. Anpassa dem alltid till ditt eget sammanhang.</p>
+
+        <div class="pager"><button class="btn ghost" data-go="4">Föregående</button><button class="btn ghost" data-go="0">Till inledningen</button></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div id="printArea" aria-hidden="true"></div>
+
+<script>
+"use strict";
+(function(){
+  /* ============ INSTÄLLNINGAR ============
+     Lägg in länken till filmen om feedback i dialog här när den finns.
+     Ange Vimeo-länken, t.ex. "https://vimeo.com/1234567890/abcdef1234".
+     Lämnas den tom visas en platshållare i kursen. */
+  var FEEDBACK_FILM_URL = "";
+  /* ======================================= */
+
+  document.documentElement.lang = "sv";
+  var IN_ARTIFACT = /claude/i.test(location.hostname);
+
+  var SECTIONS=[
+    {id:"v0",label:"Inledning",n:"",sw:"var(--gr-gron)",swi:"#fff",t:""},
+    {id:"v1",label:"Pröva MI i ett möte",n:"1",sw:"var(--gr-vetegul)",swi:"#1d1d1b",t:"15 min"},
+    {id:"v2",label:"Psykologisk trygghet",n:"2",sw:"var(--gr-rod)",swi:"#fff",t:"1 tim"},
+    {id:"v3",label:"Feedback i dialog",n:"3",sw:"var(--gr-persika)",swi:"#1d1d1b",t:"20 min"},
+    {id:"v4",label:"Bemöta samtalsutmaningar",n:"4",sw:"var(--gr-turkos)",swi:"#111",t:"20 min"},
+    {id:"v5",label:"Kunskapskoll och svar",n:"",sw:"var(--gr-rosa)",swi:"#1d1d1b",t:"5 min"}
+  ];
+  var ANSWER_FIELDS=[
+    {id:"ta_plan",part:"Del 1. Pröva MI i ett möte",label:"a) Det här vill jag testa, och i det här mötet"},
+    {id:"ta_b",part:"Del 1. Pröva MI i ett möte",label:"b) Vad gjorde jag i mötet som hade god effekt?"},
+    {id:"ta_c",part:"Del 1. Pröva MI i ett möte",label:"c) Vad kunde jag ha gjort annorlunda för bättre effekt?"},
+    {id:"ta_d",part:"Del 1. Pröva MI i ett möte",label:"d) Påminnelser till mig själv: mer eller mindre av i mina möten"},
+    {id:"ta_pt",part:"Del 2. Psykologisk trygghet",label:"Det här kan jag konkret göra för ökad psykologisk trygghet"},
+    {id:"ta_fb1",part:"Del 3. Feedback i dialog",label:"c) Värdefullt att göra i mina feedbacksamtal framöver"},
+    {id:"ta_fb2",part:"Del 3. Feedback i dialog",label:"d) Situation att öva feedback i dialog på dag 2"},
+    {id:"ta_su1",part:"Del 4. Bemöta samtalsutmaningar",label:"c) Det här gjorde jag som var värdefullt"},
+    {id:"ta_su2",part:"Del 4. Bemöta samtalsutmaningar",label:"d) Samtalsfällor jag undvek eller parerade"},
+    {id:"ta_su3",part:"Del 4. Bemöta samtalsutmaningar",label:"e) Påminnelser inför framtida samtalsutmaningar"}
+  ];
+  var state={current:0,completed:{},pick:null};
+
+  /* ---------- Lagring ---------- */
+  var KEY="gr_motiverande_ledarskap_dag2_v1";
+  var canStore=(function(){ try{ localStorage.setItem("__t","1"); localStorage.removeItem("__t"); return true; }catch(e){ return false; } })();
+  function save(){
+    if(!canStore) return;
+    try{
+      var a={}; ANSWER_FIELDS.forEach(function(f){ var el=document.getElementById(f.id); if(el) a[f.id]=el.value; });
+      localStorage.setItem(KEY,JSON.stringify({current:state.current,completed:state.completed,pick:state.pick,answers:a,ts:Date.now()}));
+    }catch(e){}
+  }
+  function load(){ if(!canStore) return null; try{ var r=localStorage.getItem(KEY); return r?JSON.parse(r):null; }catch(e){ return null; } }
+  function clear(){ try{ localStorage.removeItem(KEY); }catch(e){} }
+
+  /* ---------- Navigering ---------- */
+  function buildToc(host){
+    host.innerHTML="";
+    SECTIONS.forEach(function(s,i){
+      var b=document.createElement("button"); b.type="button";
+      b.innerHTML='<span class="dot" style="--sw:'+s.sw+';--swi:'+s.swi+'">'+s.n+'</span><span>'+s.label+(s.t?'<br><span class="tmin">'+s.t+'</span>':'')+'</span><span class="ok" data-done="'+s.id+'"></span>';
+      b.addEventListener("click",function(){ go(i); });
+      host.appendChild(b);
+    });
+  }
+  buildToc(document.getElementById("tocDesktop")); buildToc(document.getElementById("tocMobile"));
+  function go(i,noScroll){
+    if(i<0||i>=SECTIONS.length) return;
+    if(state.current!==i) state.completed[SECTIONS[state.current].id]=true;
+    state.current=i;
+    SECTIONS.forEach(function(s){ document.getElementById(s.id).classList.remove("active"); });
+    document.getElementById(SECTIONS[i].id).classList.add("active");
+    ["tocDesktop","tocMobile"].forEach(function(h){ document.getElementById(h).querySelectorAll("button").forEach(function(b,bi){ b.setAttribute("aria-current",bi===i?"true":"false"); }); });
+    document.getElementById("crumbTitle").textContent=SECTIONS[i].label;
+    var dr=document.getElementById("drawer"); dr.classList.remove("open"); document.getElementById("menuBtn").setAttribute("aria-expanded","false");
+    if(i===SECTIONS.length-1) renderSummary();
+    progress();
+    if(!noScroll){ window.scrollTo({top:0,behavior:"auto"}); document.getElementById("innehall").focus({preventScroll:true}); }
+    save();
+  }
+  function progress(){
+    var pct=Math.round(Object.keys(state.completed).length/SECTIONS.length*100);
+    document.getElementById("dFill").style.width=pct+"%"; document.getElementById("mFill").style.width=pct+"%";
+    document.getElementById("dPct").textContent=pct+" %";
+    document.querySelectorAll("[data-done]").forEach(function(el){ el.textContent=state.completed[el.getAttribute("data-done")]?"Klar":""; });
+  }
+  document.querySelectorAll("[data-go]").forEach(function(b){ b.addEventListener("click",function(){ go(parseInt(b.getAttribute("data-go"),10)); }); });
+  document.getElementById("menuBtn").addEventListener("click",function(){
+    var o=document.getElementById("drawer").classList.toggle("open"); this.setAttribute("aria-expanded",o?"true":"false");
+  });
+
+  /* ---------- Exempel (visa/dölj) ---------- */
+  document.querySelectorAll("[data-model]").forEach(function(b){
+    var label=b.textContent;
+    b.addEventListener("click",function(){
+      var m=document.getElementById(b.getAttribute("data-model")); m.hidden=!m.hidden;
+      b.textContent=m.hidden?label:"Dölj exempel";
+    });
+  });
+
+  /* ---------- MI-påminnaren ---------- */
+  var MI=[
+    {id:"oppna",name:"Öppna frågor",what:"Frågor utan givet svar som låter medarbetaren tänka fritt. Genom att till största delen ställa öppna frågor behåller du medarbetarens perspektiv i fokus.",say:"\"Vad behöver ni för att kunna fokusera på uppgiften?\"",tip:"Ställ frågan och vänta in svaret. Låt tystnaden vara en stund innan du fyller i.",src:"kap 2"},
+    {id:"refl",name:"Reflektioner",what:"Korta påståenden som speglar tillbaka det medarbetaren sagt eller menat, med neutralt tonfall. De visar empati och kan lyfta fram förändringsprat.",say:"\"Du upplever att det är för mycket uppgifter på samma gång.\"",tip:"Byt ut en av dina frågor mot en reflektion. Börja gärna med du, ni, så eller det.",src:"kap 2"},
+    {id:"aff",name:"Affirmationer",what:"Uttalanden som uppmärksammar medarbetarens inre resurser: styrkor, förmågor, ansträngningar och värderingar. Till skillnad från beröm handlar de inte om en specifik prestation.",say:"\"Du har förmågan att vaska fram det viktigaste ur stora mängder information.\"",tip:"Lägg märke till en styrka hos någon under mötet och sätt ord på den, specifikt och uppriktigt.",src:"kap 2"},
+    {id:"summ",name:"Summeringar",what:"En längre reflektion som samlar ihop det medarbetaren sagt. Den ger överblick, visar att perspektivet tagits emot och kan samla det som talar för att något är viktigt och möjligt.",say:"\"Om jag sammanfattar det ni har sagt hittills …\" (exempel)",tip:"Summera innan ni går vidare till nästa punkt eller innan mötet avslutas.",src:"kap 2"},
+    {id:"lov",name:"Be om lov",what:"Att fråga innan du tillför information eller råd stärker upplevelsen av autonomi. Be bara om lov om du kan godta ett nej.",say:"\"Är det okej om jag berättar om …?\"",tip:"Om informationen inte kan vänta: säg i stället att den är viktig och varför den behöver tas upp nu.",src:"kap 4, s. 90"},
+    {id:"fgf",name:"Information i dialog",what:"Fråga-ge-fråga: fråga om förkunskaper och funderingar, ge kort anpassad information (riktmärke upp till ca 30 sekunder) och fråga igen vad det väcker.",say:"\"Vad vet ni redan om det här?\" … \"Vad väcker detta för frågor hos er?\"",tip:"Avsluta med att låta medarbetarna sätta egna ord på vad de tar med sig.",src:"kap 4, s. 88–90"},
+    {id:"meny",name:"Meny-agenda",what:"Ett samtalsverktyg för att engagera och ringa in vad som är viktigast att fokusera på. Be om lov, samla rubriker med medarbetarnas egna ord, utforska kort och prioritera tillsammans.",say:"\"Innan vi går in på detaljer, vad är viktigast för er att vi pratar om i dag?\" (exempel)",tip:"Fördjupa dig inte i den första punkten som dyker upp. Få upp hela menyn först.",src:"kap 4, s. 87–88"},
+    {id:"forst",name:"Låt andra tala först",what:"En princip som främjar psykologisk trygghet och engagemang: låt medarbetarna komma till tals innan du säger vad du tycker.",say:"\"Innan jag säger något själv vill jag höra hur ni ser på det.\" (exempel)",tip:"Håll inne med din egen uppfattning tills alla som vill har fått säga sitt.",src:"kap 4, s. 86"},
+    {id:"struktur",name:"MI-strukturen",what:"Fyra huvuduppgifter som bygger på varandra som en trappa: engagera, fokusera, framkalla och planera.",say:"Engagera → fokusera → framkalla → planera",tip:"Lägg märke till var i trappan samtalet befinner sig. Gå inte vidare till planering innan medarbetaren är engagerad och ni är överens om fokus.",src:"kap 2"}
+  ];
+  var picker=document.getElementById("picker"), rem=document.getElementById("reminder");
+  function renderPick(){
+    picker.querySelectorAll(".pick").forEach(function(p){ p.setAttribute("aria-pressed",p.getAttribute("data-id")===state.pick?"true":"false"); });
+    var m=MI.filter(function(x){return x.id===state.pick;})[0];
+    if(!m){ rem.innerHTML='<p class="note" style="margin:0">Välj en MI-detalj för att se en kort påminnelse.</p>'; return; }
+    rem.innerHTML='<h4>'+m.name+'</h4><p style="margin:.2rem 0 0">'+m.what+'</p><dl><div><dt>Så kan det låta</dt><dd class="say">'+m.say+'</dd></div><div><dt>I mötet</dt><dd>'+m.tip+'</dd></div></dl><p class="src">Källa: Handbok för ledarhjältar, '+m.src+'.</p>';
+  }
+  MI.forEach(function(m){
+    var b=document.createElement("button"); b.type="button"; b.className="pick"; b.textContent=m.name; b.setAttribute("data-id",m.id);
+    b.addEventListener("click",function(){ state.pick=(state.pick===m.id)?null:m.id; renderPick(); save(); });
+    picker.appendChild(b);
+  });
+
+  /* ---------- Flerval ---------- */
+  function shuffle(a){ for(var k=a.length-1;k>0;k--){ var j=Math.floor(Math.random()*(k+1)); var t=a[k]; a[k]=a[j]; a[j]=t; } return a; }
+  var QUIZ={
+    qPt:{
+      good:"Psykologisk trygghet är en gemensam upplevelse i gruppen av att det är okej att ta mellanmänskliga risker, till exempel att vara uppriktig, prata om det som är svårt och dela snedsteg (Edmondson, 2019).",
+      opts:[
+        {t:"Gruppen delar en upplevelse av att det är okej att vara uppriktig, säga emot och berätta om sina misstag.",ok:true},
+        {t:"Alla i gruppen är överens och undviker att ta upp sådant som kan skapa konflikt.",ok:false,why:"Psykologisk trygghet innebär respekt för olikheter och perspektiv, även när åsikterna går isär. Det handlar inte om att undvika oenighet."},
+        {t:"Ledaren skyddar medarbetarna från kritik genom att inte ge utvecklande feedback.",ok:false,why:"I en psykologiskt trygg grupp upplevs det tillåtet att uppmärksamma vad kollegor kan göra annorlunda. Det ses som ett bidrag till utveckling."}
+      ]
+    }
+  };
+  document.querySelectorAll("[data-quiz]").forEach(function(box){
+    var d=QUIZ[box.getAttribute("data-quiz")], host=box.querySelector(".opts"), facit=box.querySelector(".facit"), done=false;
+    var opts=shuffle(d.opts.slice());
+    opts.forEach(function(o,i){
+      var b=document.createElement("button"); b.type="button"; b.className="opt";
+      b.innerHTML='<span class="mk">'+String.fromCharCode(65+i)+'</span><span>'+o.t+'</span>';
+      b.addEventListener("click",function(){
+        if(done) return; done=true;
+        var all=host.querySelectorAll(".opt"); all.forEach(function(x){ x.disabled=true; });
+        opts.forEach(function(oo,ii){ if(oo.ok) all[ii].classList.add("correct"); });
+        if(!o.ok) b.classList.add("wrong");
+        var h='<div class="fh">'+(o.ok?"Rätt.":"Inte riktigt.")+'</div><p style="margin:.2rem 0">'+d.good+'</p>';
+        var w=opts.filter(function(x){return !x.ok;});
+        h+='<div class="fh" style="margin-top:.7rem">Därför stämmer inte de andra</div><ul>'; w.forEach(function(x){ h+='<li>'+x.why+'</li>'; }); h+='</ul>';
+        facit.innerHTML=h; facit.hidden=false;
+      });
+      host.appendChild(b);
+    });
+  });
+
+  /* ---------- Ordna (feedback i dialog) ---------- */
+  (function(){
+    var items={
+      s1:"Förtydliga att det finns feedback att ge, och stäm av när det passar",
+      s2:"Fråga vilken positiv feedback personen vill ge sig själv",
+      s3:"Ge kort positiv feedback och fråga igen",
+      s4:"Fråga vilken utvecklande feedback personen själv har tänkt på, och summera",
+      s5:"Ge utvecklande feedback i liten dos och avsluta med en öppen fråga",
+      s6:"Utforska vad personen tar med sig"
+    };
+    var correct=["s1","s2","s3","s4","s5","s6"], order=["s3","s1","s5","s2","s6","s4"];
+    var host=document.getElementById("orderHost"), live=document.getElementById("orderLive");
+    function render(){
+      host.innerHTML="";
+      order.forEach(function(id,i){
+        var r=document.createElement("div"); r.className="oi";
+        var t=document.createElement("span"); t.className="ot"; t.textContent=(i+1)+". "+items[id]; r.appendChild(t);
+        var c=document.createElement("div"); c.className="oc";
+        var u=document.createElement("button"); u.type="button"; u.textContent="▲"; u.setAttribute("aria-label","Flytta upp: "+items[id]); u.disabled=i===0;
+        var d=document.createElement("button"); d.type="button"; d.textContent="▼"; d.setAttribute("aria-label","Flytta ned: "+items[id]); d.disabled=i===order.length-1;
+        u.addEventListener("click",function(){ var x=order[i-1]; order[i-1]=order[i]; order[i]=x; render(); host.querySelectorAll(".oi")[i-1].querySelector("button").focus(); });
+        d.addEventListener("click",function(){ var x=order[i+1]; order[i+1]=order[i]; order[i]=x; render(); host.querySelectorAll(".oi")[i+1].querySelectorAll("button")[1].focus(); });
+        c.appendChild(u); c.appendChild(d); r.appendChild(c); host.appendChild(r);
+      });
+      live.textContent="";
+    }
+    document.getElementById("orderCheck").addEventListener("click",function(){
+      var ok=0; host.querySelectorAll(".oi").forEach(function(r,i){ var c=order[i]===correct[i]; r.classList.add(c?"ok":"no"); if(c) ok++; });
+      live.textContent= ok===correct.length ? "Rätt ordning. Strukturen bygger på fråga-ge-fråga: medarbetaren kommer till tals före dig, både om det som fungerar och det som kan utvecklas." : ok+" av "+correct.length+" på rätt plats. Justera och rätta igen.";
+    });
+    render();
+  })();
+
+  /* ---------- Sortera (samtalsfällor) ---------- */
+  (function(){
+    var items=[
+      {id:"r1",t:"\"Det där går inte. Vi måste göra som vi har bestämt.\"",a:"falla",why:"Kontrollerande språk med \"måste\" kan få medarbetaren att gå i försvar."},
+      {id:"r2",t:"\"Vad tror du ligger bakom att det känns tveksamt?\"",a:"stod",why:"Du stannar upp och utforskar vad tveksamheten kan bero på."},
+      {id:"r3",t:"\"Jag tycker att du ska göra så här i stället.\" (utan att ha blivit tillfrågad)",a:"falla",why:"Rättningsreflexen: råd som inte är efterfrågade eller vältajmade."},
+      {id:"r4",t:"\"Det är förståeligt att det känns mycket just nu. Flera i gruppen har sagt samma sak.\"",a:"stod",why:"Du normaliserar upplevelsen och förmedlar acceptans."},
+      {id:"r5",t:"\"Förlåt, nu avbröt jag dig. Fortsätt berätta vad du tänkte.\"",a:"stod",why:"Att be om ursäkt när det är lämpligt är en av bokens riktlinjer."},
+      {id:"r6",t:"\"Hade du läst instruktionen? Visste du om tidsplanen? Har du pratat med din kollega?\"",a:"falla",why:"Många slutna frågor på rad kan göra medarbetaren passiv, och kan upplevas som ett förhör."}
+    ];
+    var buckets=[{id:"falla",l:"Samtalsfälla"},{id:"stod",l:"Behovsstödjande bemötande"}];
+    var pool=document.getElementById("sortPool"), bh=document.getElementById("sortBuckets"), live=document.getElementById("sortLive"), facit=document.getElementById("sortFacit");
+    var sel=null, place={};
+    function render(){
+      pool.innerHTML="";
+      items.forEach(function(it){
+        var c=document.createElement("button"); c.type="button"; c.className="chipbtn"+(place[it.id]?" placed":"")+(sel===it.id?" sel":"");
+        c.textContent=it.t; c.setAttribute("aria-pressed",sel===it.id?"true":"false");
+        c.addEventListener("click",function(){ sel=(sel===it.id)?null:it.id; render(); live.textContent=sel?"Vald replik. Tryck nu på en ruta.":""; });
+        pool.appendChild(c);
+      });
+      bh.innerHTML="";
+      buckets.forEach(function(bk){
+        var d=document.createElement("div"); d.className="bucket"+(sel?" armed":""); d.setAttribute("role","button"); d.tabIndex=0; d.setAttribute("aria-label","Placera i "+bk.l);
+        d.innerHTML='<span class="bt">'+bk.l+'</span>';
+        items.forEach(function(it){
+          if(place[it.id]!==bk.id) return;
+          var p=document.createElement("div"); p.className="pi"; p.setAttribute("data-id",it.id);
+          var s=document.createElement("span"); s.textContent=it.t; p.appendChild(s);
+          var x=document.createElement("button"); x.type="button"; x.className="x"; x.textContent="×"; x.setAttribute("aria-label","Ta tillbaka repliken");
+          x.addEventListener("click",function(e){ e.stopPropagation(); delete place[it.id]; facit.hidden=true; render(); });
+          p.appendChild(x); d.appendChild(p);
+        });
+        function drop(){ if(!sel){ live.textContent="Markera först en replik."; return; } place[sel]=bk.id; sel=null; render(); live.textContent="Placerad i "+bk.l.toLowerCase()+"."; }
+        d.addEventListener("click",drop);
+        d.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); drop(); } });
+        bh.appendChild(d);
+      });
+    }
+    document.getElementById("sortCheck").addEventListener("click",function(){
+      var n=Object.keys(place).length;
+      if(n<items.length){ live.textContent="Placera alla repliker först ("+n+" av "+items.length+")."; return; }
+      var ok=0;
+      bh.querySelectorAll(".pi").forEach(function(p){ var it=items.filter(function(x){return x.id===p.getAttribute("data-id");})[0]; var c=place[it.id]===it.a; p.classList.add(c?"ok":"no"); if(c) ok++; });
+      live.textContent= ok===items.length ? "Allt rätt." : ok+" av "+items.length+" rätt. Flytta de rödmarkerade och rätta igen.";
+      var h='<div class="fh">Därför</div><ul>'; items.forEach(function(it){ h+='<li><strong>'+(it.a==="falla"?"Fälla":"Stöd")+':</strong> '+it.why+'</li>'; }); h+='</ul>';
+      facit.innerHTML=h; facit.hidden=false;
+    });
+    document.getElementById("sortReset").addEventListener("click",function(){ place={}; sel=null; facit.hidden=true; render(); live.textContent=""; });
+    render();
+  })();
+
+  /* ---------- Filmer ---------- */
+  var PAT_SVG='<svg class="pat" aria-hidden="true"><use href="#pat"/></svg>';
+  function setupFrame(frame){
+    var src=frame.getAttribute("data-embed"), link=frame.getAttribute("data-link"), label=frame.getAttribute("data-label")||"Spela filmen";
+    frame.style.setProperty("--pb","var(--gr-gron)"); frame.style.setProperty("--pf","var(--gr-turkos)");
+    if(IN_ARTIFACT){
+      frame.innerHTML='<a class="poster" href="'+link+'" target="_blank" rel="noopener" style="--pb:var(--gr-gron);--pf:var(--gr-turkos)">'+PAT_SVG+'<span class="play"><i></i>'+label+' på Vimeo</span></a>';
+      return;
+    }
+    frame.innerHTML='<button type="button" class="poster" style="--pb:var(--gr-gron);--pf:var(--gr-turkos)" aria-label="'+label+'">'+PAT_SVG+'<span class="play"><i></i>'+label+'</span></button>';
+    frame.querySelector(".poster").addEventListener("click",function(){
+      var f=document.createElement("iframe"); f.src=src; f.title=label;
+      f.setAttribute("allow","autoplay; fullscreen; picture-in-picture"); f.setAttribute("allowfullscreen","");
+      frame.innerHTML=""; frame.appendChild(f);
+    });
+  }
+  (function(){
+    var host=document.getElementById("feedbackFilm"), url=(FEEDBACK_FILM_URL||"").trim();
+    var m=url.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([0-9a-f]+))?/i);
+    if(!m){
+      host.innerHTML='<div class="pending"><div><b>Filmen kommer snart</b><span>Filmen om feedback i dialog (ca 3 min) läggs upp här inom kort. Fortsätt med läsningen så länge.</span></div></div><div class="mcap"><b>Feedback i dialog</b><span>Film, ca 3 min.</span></div>';
+      return;
+    }
+    var embed="https://player.vimeo.com/video/"+m[1]+"?"+(m[2]?"h="+m[2]+"&":"")+"autoplay=1";
+    host.innerHTML='<div class="frame" data-embed="'+embed+'" data-link="'+url+'" data-label="Spela filmen"></div><div class="mcap"><b>Feedback i dialog</b><span>Film, ca 3 min. </span><a href="'+url+'" target="_blank" rel="noopener">Öppna på Vimeo</a></div>';
+  })();
+  document.querySelectorAll(".frame[data-embed]").forEach(setupFrame);
+
+  /* ---------- Kunskapskoll ---------- */
+  var EXAM=[
+    {q:"Vad påverkar enligt kursboken mest hur feedback tas emot?",o:["Hur feedbacken förmedlas","Vilken sakfråga feedbacken gäller","Hur lång tid som gått sedan situationen"],sec:"Del 3. Feedback i dialog"},
+    {q:"Du har stämt av att det passar att prata om feedback. Vad gör du sedan enligt strukturen för feedback i dialog?",o:["Frågar vilken positiv feedback personen vill ge sig själv","Börjar med det viktigaste som behöver utvecklas","Ger all positiv och utvecklande feedback på en gång"],sec:"Del 3. Feedback i dialog"},
+    {q:"Hur bör positiv och utvecklande feedback fördela sig över tid?",o:["Betydligt mer positiv än utvecklande feedback","Lika mycket av båda i varje samtal","Mest utvecklande, eftersom det är där lärandet sker"],sec:"Del 3. Feedback i dialog"},
+    {q:"En medarbetare säger \"det där är inte möjligt\". Vad är i linje med bokens riktlinjer vid samtalsutmaningar?",o:["Stanna upp och utforska vad motpratet kan bero på","Förklara beslutet en gång till, tydligare","Föreslå direkt en lösning så att ni kommer vidare"],sec:"Del 4. Bemöta samtalsutmaningar"},
+    {q:"Vad kallas det när du ger råd och förslag som inte är efterfrågade eller vältajmade?",o:["Rättningsreflexen","Att be om lov","Följsamhet"],sec:"Del 4. Bemöta samtalsutmaningar"},
+    {q:"Vad kännetecknar en grupp med psykologisk trygghet?",o:["Det upplevs tillåtet att göra misstag och dela dem, eftersom det ger gemensamma lärdomar","Ingen behöver säga emot eller ta upp något svårt","Ledaren fattar alla beslut så att ingen tar risker"],sec:"Del 2. Psykologisk trygghet"}
+  ];
+  var eh=document.getElementById("examHost");
+  EXAM.forEach(function(it,qi){
+    it._o=shuffle(it.o.map(function(t,i){ return {t:t,ok:i===0}; }));
+    it._ok=it._o.findIndex(function(x){return x.ok;});
+    var box=document.createElement("div"); box.className="ex";
+    var h='<p class="ex-k">Fråga '+(qi+1)+' av '+EXAM.length+'</p><p class="q" id="eq'+qi+'">'+it.q+'</p><div role="radiogroup" aria-labelledby="eq'+qi+'">';
+    it._o.forEach(function(o,oi){ h+='<label class="opt"><input type="radio" name="ex'+qi+'" value="'+oi+'"><span>'+o.t+'</span></label>'; });
+    h+='</div><div class="facit" hidden></div>';
+    box.innerHTML=h; eh.appendChild(box);
+  });
+  document.getElementById("examSubmit").addEventListener("click",function(){
+    var score=0, miss=[], boxes=eh.querySelectorAll(".ex");
+    EXAM.forEach(function(it,qi){
+      var box=boxes[qi], ch=box.querySelector('input[name="ex'+qi+'"]:checked'), labs=box.querySelectorAll(".opt");
+      labs.forEach(function(l){ l.classList.remove("correct","wrong"); }); labs[it._ok].classList.add("correct");
+      if(ch){ var v=+ch.value; if(v===it._ok) score++; else { labs[v].classList.add("wrong"); miss.push(it.sec); } } else miss.push(it.sec);
+      var f=box.querySelector(".facit"); f.innerHTML='<div class="fh">Rätt svar: '+it._o[it._ok].t+'</div>'; f.hidden=false;
+    });
+    var u=[]; miss.forEach(function(s){ if(u.indexOf(s)<0) u.push(s); });
+    var h='<div class="score"><div class="blob">'+score+'/'+EXAM.length+'</div><div class="st">';
+    h+= u.length ? '<strong>Värt att titta på igen:</strong><ul>'+u.map(function(s){return '<li>'+s+'</li>';}).join("")+'</ul>' : '<strong>Alla rätt.</strong> Du är väl förberedd inför dag 2.';
+    h+='</div></div>';
+    document.getElementById("examResult").innerHTML=h;
+    state.completed.v5=true; progress(); save();
+  });
+
+  /* ---------- Sammanställning ---------- */
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function answers(){ return ANSWER_FIELDS.map(function(f){ var el=document.getElementById(f.id); return {part:f.part,label:f.label,text:(el&&el.value?el.value.trim():"")}; }); }
+  function ksHtml(){
+    var d=new Date().toLocaleDateString("sv-SE"), a=answers(), parts=[], h="";
+    a.forEach(function(x){ if(parts.indexOf(x.part)<0) parts.push(x.part); });
+    h+='<div class="ks"><div class="ks-h"><div><h3>Ta med till dag 2</h3><div class="light">Motiverande ledarskap, förberedelse inför dag 2</div></div><div class="light">'+d+'</div></div>';
+    parts.forEach(function(p){
+      h+='<div class="ks-sec"><h4>'+p+'</h4>';
+      a.filter(function(x){return x.part===p;}).forEach(function(x){
+        h+='<div class="ans"><div class="al">'+esc(x.label)+'</div><div class="at'+(x.text?'':' empty')+'">'+(x.text?esc(x.text):'Inte ifyllt än.')+'</div></div>';
+      });
+      h+='</div>';
+    });
+    h+='<div class="ks-sec"><h4>Att komma ihåg</h4><ul>'
+      +'<li><strong>Feedback i dialog:</strong> låt medarbetaren komma till tals först, både om det som fungerar och det som kan utvecklas. Ge utvecklande feedback i liten dos.</li>'
+      +'<li><strong>Samtalsutmaningar:</strong> stanna upp och utforska, förmedla acceptans och normalisera. Se upp för rättningsreflexen och kontrollerande språk.</li>'
+      +'<li><strong>Psykologisk trygghet:</strong> låt andra tala först, normalisera snedsteg och visa uppskattning när någon är ärlig med det som är svårt.</li>'
+      +'</ul></div><p class="note">Källa: Handbok för ledarhjältar (Edler, Hartelius, Ehrenborg, 2024), kap 4 och 5.</p></div>';
+    return h;
+  }
+  function ksText(){
+    var a=answers(), out="TA MED TILL DAG 2\nMotiverande ledarskap, förberedelse inför dag 2 ("+new Date().toLocaleDateString("sv-SE")+")\n", last="";
+    a.forEach(function(x){ if(x.part!==last){ out+="\n"+x.part+"\n"; last=x.part; } out+="\n"+x.label+"\n"+(x.text||"(inte ifyllt)")+"\n"; });
+    return out;
+  }
+  function renderSummary(){ document.getElementById("ksHost").innerHTML=ksHtml(); }
+  var PRINT_CSS='body{font-family:Georgia,serif;color:#1d1d1b;line-height:1.55;max-width:720px;margin:24px auto;padding:0 18px;font-size:15px}'
+    +'h3,h4,.al,.light{font-family:"Libre Franklin","Franklin Gothic Medium",Arial,sans-serif;font-weight:500}.light{font-weight:300;color:#56524e;font-size:.85rem}'
+    +'.ks-h{display:flex;justify-content:space-between;border-bottom:2px solid #1d1d1b;padding-bottom:.6rem;margin-bottom:1rem}.ks-h h3{margin:0;font-size:1.4rem}'
+    +'.ks-sec{margin:1rem 0;page-break-inside:avoid}.ks-sec h4{margin:0 0 .3rem;font-size:1.05rem}.ans{margin:.4rem 0 .8rem}.al{font-size:.9rem}'
+    +'.at{white-space:pre-wrap;border-left:2px solid #ccc;padding-left:.7rem;margin-top:.2rem}.at.empty{color:#777;font-style:italic}.note{font-size:.8rem;color:#56524e}'
+    +'.logo{width:150px;margin-bottom:1rem}.noprint{text-align:center;margin:1.4rem 0}.noprint button{background:#1a7167;color:#fff;border:0;border-radius:99px;padding:.6rem 1.3rem;font-size:1rem;cursor:pointer}'
+    +'@media print{.noprint{display:none}body{margin:0;max-width:none}@page{margin:16mm 15mm}}';
+  document.getElementById("ksPdf").addEventListener("click",function(){
+    var logo=document.querySelector(".logo .pos").getAttribute("src");
+    var doc='<!DOCTYPE html><html lang="sv"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ta med till dag 2</title><style>'+PRINT_CSS+'</style></head><body><img class="logo" src="'+logo+'" alt="Göteborgsregionen">'+ksHtml()+'<div class="noprint"><button type="button" onclick="window.print()">Skriv ut eller spara som PDF</button></div><scr'+'ipt>window.addEventListener("load",function(){setTimeout(function(){try{window.print();}catch(e){}},400);});<\/scr'+'ipt></body></html>';
+    var w=null; try{ w=window.open("","_blank"); }catch(e){}
+    if(w){ w.document.open(); w.document.write(doc); w.document.close(); w.focus(); return; }
+    var pa=document.getElementById("printArea"); pa.innerHTML=ksHtml(); document.body.classList.add("printing");
+    window.onafterprint=function(){ document.body.classList.remove("printing"); };
+    try{ window.print(); }catch(e){}
+    setTimeout(function(){ document.body.classList.remove("printing"); },1500);
+  });
+  if(IN_ARTIFACT){ document.getElementById("ksPdf").hidden=true; }
+  document.getElementById("ksCopy").addEventListener("click",function(){
+    var note=document.getElementById("ksNote"), txt=ksText();
+    function fallback(){
+      var ta=document.createElement("textarea"); ta.value=txt; ta.setAttribute("readonly",""); ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select();
+      var ok=false; try{ ok=document.execCommand("copy"); }catch(e){} document.body.removeChild(ta);
+      note.textContent= ok ? "Texten är kopierad." : "Kopieringen fungerade inte här. Markera texten i rutan nedan och kopiera den själv.";
+    }
+    try{ navigator.clipboard.writeText(txt).then(function(){ note.textContent="Texten är kopierad."; },fallback); }catch(e){ fallback(); }
+  });
+
+  /* ---------- Röstinmatning (svenska) ---------- */
+  (function(){
+    var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(!SR||IN_ARTIFACT) return;
+    var MIC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="11" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><line x1="12" y1="17" x2="12" y2="21"></line></svg>';
+    ANSWER_FIELDS.forEach(function(f){
+      var ta=document.getElementById(f.id); if(!ta) return;
+      var bar=document.createElement("div");
+      var btn=document.createElement("button"); btn.type="button"; btn.className="mic"; btn.innerHTML=MIC+'<span>Tala in svar</span>';
+      var st=document.createElement("span"); st.className="micst";
+      bar.appendChild(btn); bar.appendChild(st); ta.insertAdjacentElement("afterend",bar);
+      var rec=null, on=false, base="";
+      function lab(t){ btn.querySelector("span").textContent=t; }
+      btn.addEventListener("click",function(){
+        if(on){ try{ rec.stop(); }catch(e){} return; }
+        try{ rec=new SR(); }catch(e){ st.textContent="Röstinmatningen kunde inte starta."; return; }
+        rec.lang="sv-SE"; rec.interimResults=true; rec.continuous=true; base=ta.value;
+        rec.onstart=function(){ on=true; btn.classList.add("on"); lab("Lyssnar, tryck för att stoppa"); st.textContent=""; };
+        rec.onerror=function(ev){ st.textContent=(ev&&ev.error==="not-allowed")?"Mikrofonen är blockerad. Tillåt mikrofonen i webbläsaren och försök igen.":"Röstinmatningen avbröts."; };
+        rec.onend=function(){ on=false; btn.classList.remove("on"); lab("Tala in svar"); ta.value=base; save(); };
+        rec.onresult=function(ev){
+          var fin="", tmp="";
+          for(var i=ev.resultIndex;i<ev.results.length;i++){ var s=ev.results[i][0].transcript; if(ev.results[i].isFinal) fin+=s; else tmp+=s; }
+          if(fin){ base=(base?base.replace(/\s+$/,"")+" ":"")+fin.trim(); save(); }
+          ta.value=base+(tmp?(base?" ":"")+tmp:"");
+        };
+        try{ rec.start(); }catch(e){ st.textContent="Röstinmatningen kunde inte starta."; }
+      });
+    });
+  })();
+
+  /* ---------- Återställ ---------- */
+  var rc=document.getElementById("resetConfirm");
+  document.getElementById("resetBtn").addEventListener("click",function(){ rc.hidden=false; document.getElementById("resetNo").focus(); });
+  document.getElementById("resetNo").addEventListener("click",function(){ rc.hidden=true; });
+  document.getElementById("resetYes").addEventListener("click",function(){
+    clear(); state.completed={}; state.pick=null; rc.hidden=true;
+    ANSWER_FIELDS.forEach(function(f){ var el=document.getElementById(f.id); if(el) el.value=""; });
+    document.getElementById("resumeBanner").hidden=true; renderPick();
+    state.current=0; go(0); progress();
+  });
+  if(!canStore){
+    document.getElementById("saveText").textContent="Svaren sparas inte i den här vyn. Öppna kursen via kurslänken i din webbläsare så sparas de automatiskt.";
+    document.getElementById("resetBtn").hidden=true;
+  }
+
+  /* ---------- Start ---------- */
+  ANSWER_FIELDS.forEach(function(f){ var el=document.getElementById(f.id); if(el) el.addEventListener("input",save); });
+  var s=load();
+  if(s){
+    state.completed=s.completed||{}; state.pick=s.pick||null;
+    if(s.answers) ANSWER_FIELDS.forEach(function(f){ var el=document.getElementById(f.id); if(el&&typeof s.answers[f.id]==="string") el.value=s.answers[f.id]; });
+    var idx=(typeof s.current==="number"&&s.current>=0&&s.current<SECTIONS.length)?s.current:0;
+    state.current=idx; renderPick(); go(idx,true);
+    if(idx>0||Object.keys(state.completed).length){
+      var rb=document.getElementById("resumeBanner");
+      document.getElementById("resumeText").textContent="Välkommen tillbaka. Du fortsätter i ”"+SECTIONS[idx].label+"” och dina svar finns kvar.";
+      if(idx===0) rb.hidden=false;
+    }
+  } else { renderPick(); go(0,true); }
+})();
+</script>

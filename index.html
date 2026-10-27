@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<!--
+  Självstudiekurs: Motiverande ledarskap, förberedelse inför dag 2.
+  Fristående fil. Bygger på Handbok för ledarhjältar (Edler, Hartelius, Ehrenborg, 2024), kap 4 och 5.
+  Grafisk profil: Göteborgsregionen (grafisk manual 2018).
+-->
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Motiverande ledarskap, dag 2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600&display=swap">
+<style>
+  /* Layout: GR-omslag per avsnitt (enfärgad platta med rubrik + mönsterhalva), lugn läsyta under, navigering i sidofält. */
+  :root{
+    /* GR:s profilfärger (grafisk manual 2018). Används som plattor och mönster, aldrig som textfärg. */
+    --gr-rod:#8e0826; --gr-turkos:#00a29a; --gr-gron:#1a7167; --gr-persika:#f5ac90;
+    --gr-vetegul:#ecd896; --gr-gul:#ffed00; --gr-rosa:#ebd1d0; --gr-bla:#a9cee0;
+
+    /* Tema (ljust) */
+    --bg:#faf8f6; --surface:#ffffff; --surface-2:#f6eee8; --ink:#1d1d1b; --muted:#56524e;
+    --line:#e3dcd5; --line-soft:#efe9e3;
+    --action:#1a7167; --action-ink:#ffffff; --action-hover:#145a52;
+    --focus:#8e0826;
+    --good:#1a7167; --good-soft:#e2efec; --bad:#8e0826; --bad-soft:#f6e3e5;
+    --logo-pos:block; --logo-neg:none;
+
+    /* Typografi: Franklin Gothic som manualens reserv för ITC Conduit, Georgia för brödtext */
+    --font-head:"Libre Franklin","Franklin Gothic Medium","Franklin Gothic",Arial,sans-serif;
+    --font-body:Georgia,"Times New Roman",serif;
+    --maxw:44rem; --radius:14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#151817; --surface:#1d2120; --surface-2:#252a28; --ink:#f1ede8; --muted:#b9b2ab;
+      --line:#343a38; --line-soft:#2a2f2d;
+      --action:#00a29a; --action-ink:#111111; --action-hover:#14b5ad;
+      --focus:#f5ac90;
+      --good:#5cc2b5; --good-soft:#1d3532; --bad:#f08a9b; --bad-soft:#3d2228;
+      --logo-pos:none; --logo-neg:block;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#151817; --surface:#1d2120; --surface-2:#252a28; --ink:#f1ede8; --muted:#b9b2ab;
+    --line:#343a38; --line-soft:#2a2f2d;
+    --action:#00a29a; --action-ink:#111111; --action-hover:#14b5ad;
+    --focus:#f5ac90;
+    --good:#5cc2b5; --good-soft:#1d3532; --bad:#f08a9b; --bad-soft:#3d2228;
+    --logo-pos:none; --logo-neg:block;
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box;}
+  [hidden]{display:none!important;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface);}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;} *{animation:none!important;transition:none!important;}}
+  h1,h2,h3,h4,.head{font-family:var(--font-head);font-weight:500;text-wrap:balance;}
+  a{color:inherit;}
+  :focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px;}
+  .skip{position:absolute;left:-999px;top:0;background:var(--surface);color:var(--ink);padding:.6rem 1rem;z-index:200;font-family:var(--font-head);}
+  .skip:focus{left:0;}
+
+  /* ---------- Sidhuvud med logotyp uppe till höger ---------- */
+  .topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--surface);border-bottom:1px solid var(--line);}
+  .topbar-in{display:flex;align-items:center;gap:1rem;justify-content:space-between;padding-block:.7rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
+  .crumb{font-family:var(--font-head);font-size:.92rem;line-height:1.3;min-width:0;}
+  .crumb b{font-weight:500;display:block;}
+  .crumb span{font-weight:300;color:var(--muted);}
+  .logo{width:150px;flex:0 0 auto;padding:.35rem 0;}
+  .logo img{width:100%;height:auto;}
+  .logo .pos{display:var(--logo-pos);} .logo .neg{display:var(--logo-neg);}
+  .menubtn{display:none;font-family:var(--font-head);font-size:.95rem;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:99px;padding:.4rem .95rem;cursor:pointer;}
+  .mprog{display:none;height:4px;background:var(--line-soft);} .mprog i{display:block;height:100%;width:0;background:var(--action);transition:width .4s;}
+
+  /* ---------- Sidofält ---------- */
+  .wrap{display:flex;align-items:flex-start;}
+  .sidebar{width:290px;flex:0 0 290px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 66px);height:calc(100vh - 66px);overflow-y:auto;padding:1.6rem 1.1rem 2rem max(16px,env(safe-area-inset-left,0px));border-right:1px solid var(--line);background:var(--surface);}
+  .sb-title{font-family:var(--font-head);font-size:1.15rem;line-height:1.25;margin:0 0 .3rem;font-weight:500;}
+  .sb-sub{font-family:var(--font-head);font-weight:300;font-size:.9rem;color:var(--muted);margin:0 0 1.3rem;line-height:1.4;}
+  nav.toc{display:flex;flex-direction:column;gap:.2rem;}
+  .toc button{display:grid;grid-template-columns:2rem 1fr auto;align-items:center;gap:.55rem;width:100%;text-align:left;background:none;border:0;border-radius:10px;padding:.5rem .55rem;cursor:pointer;color:var(--ink);font-family:var(--font-head);font-size:.95rem;line-height:1.3;}
+  .toc button:hover{background:var(--line-soft);}
+  .toc button[aria-current="true"]{background:var(--surface-2);font-weight:500;}
+  .toc .dot{width:1.65rem;height:1.65rem;border-radius:50%;background:var(--sw);display:grid;place-items:center;font-size:.8rem;font-weight:500;color:var(--swi);}
+  .toc .tmin{font-weight:300;font-size:.8rem;color:var(--muted);}
+  .toc .ok{font-size:.8rem;color:var(--good);font-weight:600;}
+  .prog{margin:1.5rem 0 0;}
+  .prog-l{font-family:var(--font-head);font-weight:300;font-size:.85rem;color:var(--muted);margin-bottom:.35rem;display:flex;justify-content:space-between;}
+  .prog-t{height:6px;border-radius:99px;background:var(--line-soft);overflow:hidden;} .prog-t i{display:block;height:100%;width:0;background:var(--action);transition:width .4s;}
+  .saveinfo{margin-top:1.2rem;font-family:var(--font-head);font-weight:300;font-size:.82rem;color:var(--muted);line-height:1.5;}
+  .linkbtn{background:none;border:0;padding:0;margin-top:.35rem;font:inherit;font-weight:400;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
+  .confirm{margin-top:.6rem;background:var(--surface-2);border-radius:10px;padding:.7rem .8rem;font-size:.85rem;}
+  .confirm .row{display:flex;gap:.5rem;margin-top:.5rem;flex-wrap:wrap;}
+  .drawer{display:none;}
+
+  .main{flex:1 1 auto;min-width:0;}
+
+  /* ---------- Avsnittets omslag ---------- */
+  section.view{display:none;}
+  section.view.active{display:block;animation:in .35s ease;}
+  @keyframes in{from{opacity:.4;transform:translateY(4px);}to{opacity:1;transform:none;}}
+  .cover{display:grid;grid-template-columns:1.15fr 1fr;min-height:300px;}
+  .plate{background:var(--pl);color:var(--pli);padding-block:2.4rem 2.2rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:2rem;display:flex;flex-direction:column;justify-content:flex-end;gap:.4rem;}
+  .plate-in{max-width:30rem;margin-left:auto;width:100%;}
+  .lvl2{font-family:var(--font-head);font-weight:500;font-size:.95rem;margin:0;}
+  .lvl3{font-family:var(--font-head);font-weight:300;font-size:.95rem;margin:0 0 1.4rem;}
+  .plate h1{font-size:clamp(1.9rem,3.4vw,2.6rem);line-height:1.1;margin:0 0 .7rem;letter-spacing:-.01em;}
+  .plate .ingress{font-family:var(--font-head);font-weight:400;font-size:1.08rem;line-height:1.45;margin:0;}
+  .pattern{background:var(--pb);min-height:220px;position:relative;overflow:hidden;}
+  .pattern svg{position:absolute;inset:0;width:100%;height:100%;}
+  .pattern svg{stroke:var(--pf);}
+
+  .p-rodrosa{--pb:var(--gr-rosa);--pf:var(--gr-rod);}
+  .p-blagron{--pb:var(--gr-bla);--pf:var(--gr-gron);}
+  .p-vetturkos{--pb:var(--gr-vetegul);--pf:var(--gr-turkos);}
+  .p-vetgron{--pb:var(--gr-vetegul);--pf:var(--gr-gron);}
+  .p-persrod{--pb:var(--gr-persika);--pf:var(--gr-rod);}
+  .p-gulgron{--pb:var(--gr-gul);--pf:var(--gr-gron);}
+  .pl-gron{--pl:var(--gr-gron);--pli:#ffffff;}
+  .pl-vetegul{--pl:var(--gr-vetegul);--pli:#1d1d1b;}
+  .pl-rod{--pl:var(--gr-rod);--pli:#ffffff;}
+  .pl-persika{--pl:var(--gr-persika);--pli:#1d1d1b;}
+  .pl-turkos{--pl:var(--gr-turkos);--pli:#111111;}
+  .pl-rosa{--pl:var(--gr-rosa);--pli:#1d1d1b;}
+
+  /* ---------- Läsyta ---------- */
+  .col{max-width:var(--maxw);margin:0 auto;padding-block:2.2rem 5rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
+  .col > * + *{margin-top:1rem;}
+  h2{font-size:1.5rem;line-height:1.25;margin:2.6rem 0 .3rem;}
+  h3{font-size:1.15rem;line-height:1.3;margin:1.8rem 0 .2rem;}
+  p{margin:.8rem 0;}
+  ul,ol{padding-left:1.3rem;margin:.6rem 0;} li{margin:.35rem 0;} li::marker{color:var(--muted);}
+  strong{font-weight:700;}
+  .src{font-family:var(--font-head);font-weight:300;font-size:.85rem;color:var(--muted);margin-top:.4rem;}
+  .light{font-family:var(--font-head);font-weight:300;}
+
+  /* Symbol: droppe för kort information (tid) */
+  .meta{display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;margin:0 0 1.2rem;}
+  .drop{width:84px;height:84px;background:var(--gr-gul);color:#1d1d1b;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:grid;place-items:center;flex:0 0 auto;}
+  .drop span{transform:rotate(45deg);font-family:var(--font-head);font-weight:500;font-size:1.05rem;line-height:1.05;text-align:center;}
+  .drop small{display:block;font-weight:300;font-size:.75rem;}
+  .meta p{margin:0;font-family:var(--font-head);font-weight:300;font-size:1rem;line-height:1.5;flex:1 1 16rem;min-width:0;}
+
+  /* Steg (a, b, c …) */
+  .step{display:grid;grid-template-columns:2.6rem 1fr;gap:0 1rem;margin:2.2rem 0 0;}
+  .step > .letter{width:2.6rem;height:2.6rem;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center;font-family:var(--font-head);font-weight:500;font-size:1.05rem;}
+  .step > .body{min-width:0;}
+  .step h3{margin:.35rem 0 .3rem;}
+  .kind{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--font-head);font-weight:300;font-size:.88rem;color:var(--muted);margin:0 0 .2rem;}
+  .ic{width:28px;height:28px;flex:0 0 auto;}
+  .later{display:inline-block;font-family:var(--font-head);font-weight:500;font-size:.85rem;background:var(--gr-blaa,var(--gr-bla));color:#1d1d1b;border-radius:99px;padding:.15rem .7rem;margin-left:.2rem;}
+
+  /* Teoriruta och citat */
+  .box{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.2rem 1.3rem;margin:1.2rem 0;}
+  .box > :first-child{margin-top:0;} .box > :last-child{margin-bottom:0;}
+  .box h4{font-size:1.05rem;margin:0 0 .4rem;}
+  .say{font-style:italic;color:var(--muted);}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .twocol > div{min-width:0;}
+  .chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:.6rem 0 0;padding:0;list-style:none;}
+  .chips li{margin:0;font-family:var(--font-head);font-size:.9rem;line-height:1.3;background:var(--surface-2);border-radius:99px;padding:.35rem .8rem;}
+  ol.steps{counter-reset:s;list-style:none;padding:0;margin:.8rem 0 0;display:grid;gap:.7rem;}
+  ol.steps > li{counter-increment:s;display:grid;grid-template-columns:2rem 1fr;gap:.8rem;margin:0;}
+  ol.steps > li::before{content:counter(s);width:2rem;height:2rem;border-radius:50%;background:var(--gr-persika);color:#1d1d1b;display:grid;place-items:center;font-family:var(--font-head);font-weight:500;font-size:.9rem;}
+  ol.steps > li > div{min-width:0;}
+
+  /* Media (podd/film) */
+  .media{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:1.2rem 0;}
+  .frame{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;background:var(--gr-gron);}
+  .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .poster{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;cursor:pointer;background:var(--pb);display:block;text-decoration:none;color:#1d1d1b;}
+  .poster svg.pat{position:absolute;inset:0;width:100%;height:100%;}
+  .poster svg.pat{stroke:var(--pf);}
+  .poster .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:.7rem;background:#ffffff;color:#1d1d1b;border-radius:99px;padding:.7rem 1.3rem .7rem .8rem;font-family:var(--font-head);font-weight:500;font-size:1rem;white-space:nowrap;transition:transform .15s;}
+  .poster:hover .play{transform:translate(-50%,-50%) scale(1.04);}
+  .poster .play i{width:2.2rem;height:2.2rem;border-radius:50%;background:var(--gr-gron);display:grid;place-items:center;}
+  .poster .play i::before{content:"";border-style:solid;border-width:.45rem 0 .45rem .75rem;border-color:transparent transparent transparent #fff;margin-left:.15rem;}
+  .mcap{padding:.9rem 1.2rem;font-family:var(--font-head);font-size:.95rem;line-height:1.45;}
+  .mcap b{font-weight:500;display:block;}
+  .mcap span{font-weight:300;color:var(--muted);}
+  .mcap a{font-weight:400;}
+  .pending{aspect-ratio:16/9;max-width:100%;display:grid;place-items:center;text-align:center;padding:1.5rem;background:var(--surface-2);font-family:var(--font-head);}
+  .pending b{display:block;font-weight:500;font-size:1.1rem;}
+  .pending span{font-weight:300;color:var(--muted);font-size:.95rem;}
+
+  /* Övningar */
+  .ex{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.3rem;margin:1.3rem 0;}
+  .ex > :first-child{margin-top:0;}
+  .ex-k{font-family:var(--font-head);font-weight:300;font-size:.88rem;color:var(--muted);margin:0 0 .3rem;}
+  .q{font-family:var(--font-head);font-weight:500;font-size:1.05rem;line-height:1.4;margin:0 0 .8rem;}
+  .hint{font-family:var(--font-head);font-weight:300;font-size:.92rem;color:var(--muted);margin:-.4rem 0 .7rem;}
+  textarea{display:block;width:100%;min-height:8rem;border:1.5px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--ink);padding:.8rem .9rem;font:inherit;font-size:1rem;line-height:1.55;resize:vertical;}
+  textarea:focus{border-color:var(--action);outline:none;box-shadow:0 0 0 3px var(--good-soft);}
+  label.tl{display:block;font-family:var(--font-head);font-weight:500;font-size:1rem;margin:1.1rem 0 .4rem;}
+  label.tl:first-of-type{margin-top:.2rem;}
+  .btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--action);color:var(--action-ink);border:0;border-radius:99px;padding:.6rem 1.2rem;font-family:var(--font-head);font-weight:500;font-size:.98rem;cursor:pointer;}
+  .btn:hover{background:var(--action-hover);}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);}
+  .btn.ghost:hover{background:var(--line-soft);}
+  .row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;align-items:center;}
+  .model{margin-top:1rem;background:var(--surface-2);border-radius:10px;padding:1rem 1.1rem;font-size:.98rem;}
+  .model .mt{font-family:var(--font-head);font-weight:500;margin-bottom:.3rem;}
+  .mic{display:inline-flex;align-items:center;gap:.4rem;background:none;border:1.5px solid var(--line);border-radius:99px;color:var(--ink);font-family:var(--font-head);font-size:.88rem;padding:.35rem .85rem;cursor:pointer;margin-top:.5rem;}
+  .mic.on{border-color:var(--bad);color:var(--bad);background:var(--bad-soft);}
+  .mic svg{width:15px;height:15px;}
+  .micst{font-family:var(--font-head);font-weight:300;font-size:.85rem;color:var(--muted);margin-left:.5rem;}
+
+  /* Flerval */
+  .opt{display:flex;gap:.7rem;align-items:flex-start;width:100%;text-align:left;background:var(--surface-2);color:var(--ink);border:1.5px solid transparent;border-radius:10px;padding:.75rem .9rem;margin:.45rem 0;cursor:pointer;font-family:var(--font-head);font-size:1rem;line-height:1.4;}
+  .opt:hover{border-color:var(--line);}
+  .opt .mk{flex:0 0 1.6rem;height:1.6rem;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-size:.8rem;font-weight:500;}
+  .opt.correct{border-color:var(--good);background:var(--good-soft);}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-soft);}
+  .opt[disabled]{cursor:default;}
+  .opt input{margin-top:.3rem;accent-color:var(--action);}
+  .facit{margin-top:.9rem;border-top:1px solid var(--line);padding-top:.9rem;font-size:.98rem;}
+  .facit .fh{font-family:var(--font-head);font-weight:500;margin-bottom:.3rem;}
+  .facit ul{margin:.4rem 0 0;}
+
+  /* Sortering */
+  .pool{display:flex;flex-direction:column;gap:.45rem;}
+  .chipbtn{text-align:left;background:var(--surface-2);color:var(--ink);border:1.5px solid transparent;border-radius:10px;padding:.6rem .85rem;cursor:pointer;font-family:var(--font-head);font-size:.98rem;line-height:1.4;}
+  .chipbtn:hover{border-color:var(--line);}
+  .chipbtn.sel{border-color:var(--ink);background:var(--surface);}
+  .chipbtn.placed{display:none;}
+  .buckets{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1rem;}
+  .bucket{border:1.5px dashed var(--line);border-radius:12px;padding:.8rem;min-height:6rem;cursor:pointer;background:transparent;color:var(--ink);text-align:left;font:inherit;display:flex;flex-direction:column;gap:.45rem;min-width:0;}
+  .bucket.armed{border-color:var(--ink);background:var(--surface-2);}
+  .bucket .bt{font-family:var(--font-head);font-weight:500;font-size:.98rem;}
+  .pi{display:flex;justify-content:space-between;gap:.5rem;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.45rem .6rem;font-family:var(--font-head);font-size:.9rem;line-height:1.35;}
+  .pi.ok{border-color:var(--good);background:var(--good-soft);} .pi.no{border-color:var(--bad);background:var(--bad-soft);}
+  .pi .x{background:none;border:0;color:var(--muted);cursor:pointer;font-size:1rem;line-height:1;padding:.1rem .2rem;}
+  .live{font-family:var(--font-head);font-weight:300;font-size:.92rem;color:var(--muted);min-height:1.3em;margin:.6rem 0 0;}
+
+  /* Ordna */
+  .olist{display:flex;flex-direction:column;gap:.45rem;}
+  .oi{display:flex;align-items:center;gap:.7rem;background:var(--surface-2);border:1.5px solid transparent;border-radius:10px;padding:.55rem .7rem;font-family:var(--font-head);font-size:.96rem;line-height:1.35;}
+  .oi .ot{flex:1;min-width:0;}
+  .oi.ok{border-color:var(--good);background:var(--good-soft);} .oi.no{border-color:var(--bad);background:var(--bad-soft);}
+  .oc{display:flex;flex-direction:column;gap:.2rem;}
+  .oc button{width:2rem;height:1.6rem;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font-size:.7rem;}
+  .oc button:disabled{opacity:.35;cursor:default;}
+
+  /* MI-påminnaren */
+  .picker{display:flex;flex-wrap:wrap;gap:.45rem;}
+  .pick{background:var(--surface-2);color:var(--ink);border:1.5px solid transparent;border-radius:99px;padding:.4rem .9rem;cursor:pointer;font-family:var(--font-head);font-size:.93rem;}
+  .pick:hover{border-color:var(--line);}
+  .pick[aria-pressed="true"]{background:var(--gr-vetegul);color:#1d1d1b;border-color:#1d1d1b;}
+  .reminder{margin-top:1rem;border-top:1px solid var(--line);padding-top:1rem;}
+  .reminder h4{font-size:1.15rem;margin:0 0 .3rem;}
+  .reminder dl{margin:.6rem 0 0;display:grid;gap:.6rem;}
+  .reminder dt{font-family:var(--font-head);font-weight:500;font-size:.92rem;}
+  .reminder dd{margin:0;}
+
+  /* Resultat och sammanställning */
+  .score{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.3rem;margin:1.2rem 0;}
+  .score .blob{width:110px;height:100px;background:var(--gr-turkos);color:#111;border-radius:58% 42% 55% 45% / 52% 48% 52% 48%;display:grid;place-items:center;font-family:var(--font-head);font-weight:500;font-size:1.8rem;font-variant-numeric:tabular-nums;flex:0 0 auto;}
+  .score .st{flex:1 1 16rem;min-width:0;font-family:var(--font-head);font-size:1rem;}
+  .ks{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.5rem;margin-top:1rem;}
+  .ks-h{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;border-bottom:1px solid var(--line);padding-bottom:.8rem;margin-bottom:1rem;flex-wrap:wrap;}
+  .ks-h h3{margin:0;font-size:1.35rem;}
+  .ks-h .light{font-size:.88rem;color:var(--muted);}
+  .ks-sec{margin:1rem 0;} .ks-sec h4{margin:0 0 .3rem;font-size:1.02rem;}
+  .ks-sec ul{margin:.2rem 0;} .ks-sec li{font-size:.97rem;}
+  .ans{margin:.5rem 0 .9rem;} .ans .al{font-family:var(--font-head);font-weight:500;font-size:.92rem;}
+  .ans .at{white-space:pre-wrap;border-left:2px solid var(--line);padding-left:.8rem;margin-top:.2rem;font-size:.97rem;}
+  .ans .at.empty{color:var(--muted);font-style:italic;}
+  .note{font-family:var(--font-head);font-weight:300;font-size:.88rem;color:var(--muted);}
+
+  .pager{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);}
+  .resume{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;background:var(--surface-2);border-radius:12px;padding:.8rem 1rem;font-family:var(--font-head);font-size:.95rem;margin-bottom:1rem;}
+  .refs{font-family:var(--font-head);font-weight:300;font-size:.9rem;}
+
+  #printArea{display:none;}
+  @media print{
+    body.printing > *:not(#printArea){display:none!important;}
+    body.printing #printArea{display:block;}
+  }
+
+  @media (max-width:900px){
+    .sidebar{display:none;}
+    .menubtn{display:inline-block;}
+    .mprog{display:block;}
+    .drawer.open{display:block;background:var(--surface);border-bottom:1px solid var(--line);padding-block:.6rem 1rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
+    .cover{grid-template-columns:1fr;min-height:0;}
+    .pattern{order:-1;min-height:110px;}
+    .plate{padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:1.8rem;}
+    .plate-in{margin-left:0;}
+    .logo{width:118px;}
+  }
+  @media (max-width:560px){
+    body{font-size:17px;}
+    .twocol,.buckets{grid-template-columns:1fr;}
+    .crumb span{display:none;}
+    .step{grid-template-columns:2.2rem 1fr;gap:0 .75rem;}
+    .step > .letter{width:2.2rem;height:2.2rem;}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#innehall">Hoppa till innehållet</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="pat" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+      <g fill="none" stroke-width="24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M-30 70 C 40 30, 110 120, 190 80 S 320 10, 430 70"/>
+        <path d="M-30 205 C 40 170, 85 250, 165 215 S 300 130, 430 185"/>
+        <path d="M118 -30 C 96 50, 175 92, 152 165 S 82 262, 126 330"/>
+        <path d="M305 -30 C 280 48, 352 108, 308 178 S 262 282, 318 330"/>
+        <path d="M190 80 C 226 128, 262 146, 308 178"/>
+        <path d="M152 165 C 112 186, 70 196, 30 238"/>
+      </g>
+    </symbol>
+    <symbol id="i-target" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><circle fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" cx="14" cy="14" r="6.5"/><circle fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" cx="14" cy="14" r="2"/></symbol>
+    <symbol id="i-listen" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 16v-2a6 6 0 0 1 12 0v2"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 16h2v4H8zM18 16h2v4h-2z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M11.5 9.5v9l7-4.5z"/></symbol>
+    <symbol id="i-read" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M7.5 9.5c2.5-.8 4.7-.5 6.5 1 1.8-1.5 4-1.8 6.5-1v9c-2.5-.8-4.7-.5-6.5 1-1.8-1.5-4-1.8-6.5-1zM14 10.5v9"/></symbol>
+    <symbol id="i-write" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M9 19l1-3.5 7-7 2.5 2.5-7 7zM15.5 10l2.5 2.5"/></symbol>
+    <symbol id="i-talk" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 10.5h12v7h-6l-3 2.5v-2.5H8z"/></symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="menubtn" id="menuBtn" aria-expanded="false" aria-controls="drawer">Meny</button>
+    <div class="crumb"><b id="crumbTitle">Inledning</b><span>Motiverande ledarskap, förberedelse inför dag 2</span></div>
+    <div class="logo"><img class="pos" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoUAAADPCAYAAACDdav3AAAACXBIWXMAAAsTAAALEwEAmpwYAAAFHGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOCAoV2luZG93cykiIHhtcDpDcmVhdGVEYXRlPSIyMDE4LTA2LTE0VDExOjQzOjQxKzAyOjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAxOC0xMC0xOFQxNjoxMTo1NiswMjowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAxOC0xMC0xOFQxNjoxMTo1NiswMjowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpjMjRmZGFhYy0zZTZm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" alt="Göteborgsregionen"><img class="neg" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoUAAADPCAYAAACDdav3AAAACXBIWXMAAAsTAAALEwEAmpwYAAAF7GlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOCAoV2luZG93cykiIHhtcDpDcmVhdGVEYXRlPSIyMDE4LTA2LTE0VDExOjQzOjQxKzAyOjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAxOC0xMC0xOFQxNjoxMzo0MCswMjowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAxOC0xMC0xOFQxNjoxMzo0MCswMjowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1M2Q5NzkyYy02MTA4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" alt="Göteborgsregionen"></div>
+  </div>
+  <div class="mprog"><i id="mFill"></i></div>
+  <div class="drawer" id="drawer"><nav class="toc" id="tocMobile" aria-label="Avsnitt"></nav></div>
+</header>
+
+<div class="wrap">
+  <aside class="sidebar" aria-label="Kursens avsnitt">
+    <p class="sb-title">Motiverande ledarskap</p>
+    <p class="sb-sub">Förberedelse inför dag 2, ca 2 timmar</p>
+    <nav class="toc" id="tocDesktop" aria-label="Avsnitt"></nav>
+    <div class="prog"><div class="prog-l"><span>Genomfört</span><span id="dPct">0 %</span></div><div class="prog-t"><i id="dFill"></i></div></div>
+    <div class="saveinfo" id="saveInfo">
+      <span id="saveText">Dina svar och var du är i kursen sparas i den här webbläsaren.</span><br>
+      <button type="button" class="linkbtn" id="resetBtn">Rensa sparat och börja om</button>
+      <div class="confirm" id="resetConfirm" hidden>
+        Allt du skrivit och var du är i kursen tas bort.
+        <div class="row"><button type="button" class="btn" id="resetYes">Ja, börja om</button><button type="button" class="btn ghost" id="resetNo">Avbryt</button></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main" id="innehall" tabindex="-1">
+
+    <!-- ================= INLEDNING ================= -->
+    <section class="view" id="v0">
+      <div class="cover">
+        <div class="plate pl-gron"><div class="plate-in">
+          <p class="lvl2">Motiverande ledarskap</p>
+          <p class="lvl3">Förberedelse inför dag 2</p>
+          <h1>Från dag 1 till dag 2</h1>
+          <p class="ingress">Pröva det du tränade på dag 1 i ett riktigt möte, och förbered dig på feedback i dialog och samtalsutmaningar.</p>
+        </div></div>
+        <div class="pattern p-rodrosa" aria-hidden="true"><svg><use href="#pat"/></svg></div>
+      </div>
+      <div class="col">
+        <div class="resume" id="resumeBanner" hidden role="status"><span id="resumeText">Välkommen tillbaka.</span></div>
+
+        <div class="meta"><div class="drop"><span>ca 2<small>timmar</small></span></div>
+          <p>Förberedelsen består av fyra delar. Gör dem i den ordning som passar dig, men börja gärna med del 1 eftersom den kräver ett möte.</p></div>
+
+        <p>Den här förberedelsen bygger vidare på dag 1. Du prövar en MI-detalj i praktiken, lyssnar på ett webbinarium om psykologisk trygghet och läser två korta avsnitt i kursboken <em>Handbok för ledarhjältar</em>. Det du skriver ner tar du med till dag 2, där vi tränar vidare tillsammans.</p>
+
+        <h2>Fyra delar</h2>
+        <ol class="steps">
+          <li><div><strong>Pröva MI i ett möte</strong> <span class="light">(ca 15 min)</span><br>Förbered dig på att testa en MI-detalj från dag 1. Reflektera efter mötet.</div></li>
+          <li><div><strong>Psykologisk trygghet</strong> <span class="light">(ca 1 timme)</span><br>Lyssna på ett webbinarium och skriv ner vad du konkret kan göra för din arbetsgrupp.</div></li>
+          <li><div><strong>Feedback i dialog</strong> <span class="light">(ca 20 min)</span><br>Titta på en kort film, läs s. 91–94 och välj en situation att öva på dag 2.</div></li>
+          <li><div><strong>Bemöta samtalsutmaningar</strong> <span class="light">(ca 20 min)</span><br>Läs s. 114–115 och dra lärdomar av en samtalsutmaning som du har hanterat.</div></li>
+        </ol>
+
+        <div class="box">
+          <h4>Så fungerar kursen</h4>
+          <ul>
+            <li>Det du skriver sparas automatiskt i den här webbläsaren, så du kan pausa och fortsätta senare på samma dator eller mobil.</li>
+            <li>Vill du hellre prata än skriva kan du tala in dina svar, om din webbläsare stödjer det.</li>
+            <li>Sist i kursen finns en kort kunskapskoll och en sammanställning med alla dina svar som du kan spara och ta med till dag 2.</li>
+          </ul>
+        </div>
+
+        <div class="pager"><span></span><button class="btn" data-go="1">Börja med del 1</button></div>
+      </div>
+    </section>
+
+    <!-- ================= DEL 1 ================= -->
+    <section class="view" id="v1">
+      <div class="cover">
+        <div class="plate pl-vetegul"><div class="plate-in">
+          <p class="lvl2">Motiverande ledarskap</p>
+          <p class="lvl3">Del 1 av 4</p>
+          <h1>Pröva MI i ett möte</h1>
+          <p class="ingress">Välj en MI-detalj från dag 1, testa den i ett kommande möte och reflektera så snart som möjligt efteråt.</p>
+        </div></div>
+        <div class="pattern p-blagron" aria-hidden="true"><svg><use href="#pat"/></svg></div>
+      </div>
+      <div class="col">
+        <div class="meta"><div class="drop"><span>15<small>min</small></span></div>
+          <p>Ungefär 5 minuter före mötet och 10 minuter efter. Mötet i sig ingår inte i tiden.</p></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-target"/></svg>Förbered</p>
+          <h3>Välj vad du vill testa</h3>
+          <p>Tänk på ett möte du har framför dig, ett individuellt samtal eller ett gruppmöte. Vilken av MI-detaljerna från dag 1 blev du påmind om? Välj en här nedanför för att få en kort påminnelse.</p>
+
+          <div class="ex">
+            <p class="ex-k">Verktyg · MI-påminnaren</p>
+            <div class="picker" id="picker" role="group" aria-label="MI-detaljer från dag 1"></div>
+            <div class="reminder" id="reminder" aria-live="polite"></div>
+          </div>
+
+          <div class="ex">
+            <label class="tl" for="ta_plan">Det här vill jag testa, och i det här mötet</label>
+            <p class="hint">Skriv kort vilken MI-detalj du valt, vilket möte det gäller och hur du tänker göra.</p>
+            <textarea id="ta_plan"></textarea>
+          </div>
+        </div></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">b</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-write"/></svg>Efter mötet <span class="later">gör så snart som möjligt</span></p>
+          <h3>Reflektera efter mötet</h3>
+          <p>När du har testat, svara på frågorna medan mötet är färskt i minnet. Det räcker med några rader per fråga.</p>
+          <div class="ex">
+            <label class="tl" for="ta_b">b) Vad gjorde du i mötet som hade god effekt?</label>
+            <textarea id="ta_b"></textarea>
+            <label class="tl" for="ta_c">c) Vad kunde du eventuellt ha gjort annorlunda, för att få bättre effekt?</label>
+            <textarea id="ta_c"></textarea>
+            <label class="tl" for="ta_d">d) Vad vill du ge dig för påminnelser framöver om sådant du kan göra mer eller mindre av i dina möten?</label>
+            <textarea id="ta_d"></textarea>
+            <div class="row"><button type="button" class="btn ghost" data-model="m1">Visa exempel</button></div>
+            <div class="model" id="m1" hidden><div class="mt">Exempel på reflektion</div>
+              <p><strong>b)</strong> Jag inledde med en meny-agenda och lät gruppen formulera rubrikerna själva. Det blev tydligt vad de ville prioritera, och fler kom till tals än vanligt.</p>
+              <p><strong>c)</strong> När det blev tyst fyllde jag i med egna förslag ganska snabbt. Jag hade kunnat vänta in svaren längre eller ställa en öppen fråga till.</p>
+              <p><strong>d)</strong> Mer: be om lov innan jag ger information. Mindre: slutna frågor på rad när jag vill stämma av.</p>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="pager"><button class="btn ghost" data-go="0">Föregående</button><button class="btn" data-go="2">Nästa: psykologisk trygghet</button></div>
+      </div>
+    </section>
+
+    <!-- ================= DEL 2 ================= -->
+    <section class="view" id="v2">
+      <div class="cover">
+        <div class="plate pl-rod"><div class="plate-in">
+          <p class="lvl2">Motiverande ledarskap</p>
+          <p class="lvl3">Del 2 av 4</p>
+          <h1>Psykologisk trygghet</h1>
+          <p class="ingress">Vad gör att människor i en grupp vågar säga vad de tänker, fråga och dela sina misstag? Och vad kan du som ledare göra för att bidra till det?</p>
+        </div></div>
+        <div class="pattern p-vetturkos" aria-hidden="true"><svg><use href="#pat"/></svg></div>
+      </div>
+      <div class="col">
+        <div class="meta"><div class="drop"><span>1<small>timme</small></span></div>
+          <p>Webbinariet tar ca 55 minuter. Lyssna gärna när du kan vara ostörd, till exempel på en promenad.</p></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-listen"/></svg>Lyssna</p>
+          <h3>Webbinarium om psykologisk trygghet</h3>
+          <div class="media">
+            <div class="frame" data-embed="https://player.vimeo.com/video/1020956186?autoplay=1" data-link="https://vimeo.com/1020956186" data-label="Spela webbinariet"></div>
+            <div class="mcap"><b>Psykologisk trygghet: nyckeln till framgångsrika team</b><span>Öppet webbinarium från Health Competence, ca 55 min. </span><a href="https://vimeo.com/1020956186" target="_blank" rel="noopener">Öppna på Vimeo</a></div>
+          </div>
+          <p>Lyssna efter sådant du känner igen från din egen arbetsgrupp och sådant du själv skulle kunna göra mer av.</p>
+
+          <div class="box">
+            <h4>Påminnelse från kursboken (kapitel 4)</h4>
+            <p>Psykologisk trygghet beskrivs som att deltagarna i gruppen har en gemensam upplevelse av att det är okej att ta mellanmänskliga risker: att vara uppriktig med sitt perspektiv och öppet kunna prata om olika förslag, det som känns svårt i arbetet och snedsteg (Edmondson, 2019). I grupper där det råder psykologisk trygghet kommer medarbetarna självmant till tals och delar sina förslag och åsikter på ett sätt som gynnar samarbetet.</p>
+            <p>Ledaren är en förebild. När du kommunicerar med aktivt lyssnande och MI-anda visar du det som också är önskvärt att medarbetarna förmedlar till varandra. Boken sammanfattar kommunikation som främjar psykologisk trygghet så här:</p>
+            <ul class="chips">
+              <li>Icke-dömande</li><li>Förmedla empati</li><li>Fördela ordet och utforska olika perspektiv</li><li>Uppmärksamma resurser</li><li>Förmedla respekt inför olika intressen och behov</li><li>Normalisera snedsteg</li><li>Förmedla och uppmuntra till hjälpsamhet</li><li>Utforska lärdomar från snedsteg</li><li>Visa uppskattning när medarbetarna är ärliga med det som känns svårt</li>
+            </ul>
+            <p class="src">Källa: kap 4, s. 84–86. En princip att ta med sig: låt andra komma till tals först.</p>
+          </div>
+
+          <div class="ex" data-quiz="qPt">
+            <p class="ex-k">Övning · Flerval</p>
+            <p class="q">Vilket påstående stämmer bäst med hur kursboken beskriver psykologisk trygghet?</p>
+            <div class="opts"></div><div class="facit" hidden></div>
+          </div>
+        </div></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">b</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-write"/></svg>Skriv</p>
+          <h3>Vad kan du göra konkret?</h3>
+          <div class="ex">
+            <label class="tl" for="ta_pt">Vad påminns du om som du konkret kan göra för att bidra till ökad psykologisk trygghet i din arbetsgrupp?</label>
+            <p class="hint">Försök vara så konkret som möjligt: i vilken situation, och vad gör du då?</p>
+            <textarea id="ta_pt"></textarea>
+            <div class="row"><button type="button" class="btn ghost" data-model="m2">Visa exempel</button></div>
+            <div class="model" id="m2" hidden><div class="mt">Exempel</div>
+              <p>På våra veckomöten låter jag gruppen komma till tals först innan jag säger vad jag tycker. När någon berättar om ett misstag tackar jag för att hen delade det och frågar vad vi kan lära oss av det, i stället för att leta efter vems fel det var. Jag vill också själv berätta om något jag har gjort fel, så att det blir tydligt att det är okej.</p>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="pager"><button class="btn ghost" data-go="1">Föregående</button><button class="btn" data-go="3">Nästa: feedback i dialog</button></div>
+      </div>
+    </section>
+
+    <!-- ================= DEL 3 ================= -->
+    <section class="view" id="v3">
+      <div class="cover">
+        <div class="plate pl-persika"><div class="plate-in">
+          <p class="lvl2">Motiverande ledarskap</p>
+          <p class="lvl3">Del 3 av 4</p>
+          <h1>Feedback i dialog</h1>
+          <p class="ingress">Feedback tas emot bättre när medarbetaren får komma till tals först. Här förbereder du en situation att öva på dag 2.</p>
+        </div></div>
+        <div class="pattern p-vetgron" aria-hidden="true"><svg><use href="#pat"/></svg></div>
+      </div>
+      <div class="col">
+        <div class="meta"><div class="drop"><span>20<small>min</small></span></div>
+          <p>En film på 3 minuter, fyra sidor i kursboken och två korta skrivuppgifter.</p></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>Titta</p>
+          <h3>Film: feedback i dialog</h3>
+          <div class="media" id="feedbackFilm"></div>
+        </div></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">b</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-read"/></svg>Läs</p>
+          <h3>Kursboken s. 91–94</h3>
+          <p>Läs sidorna om feedback i dialog och en boostande feedbackkultur. Här är en sammanfattning att ha bredvid.</p>
+
+          <div class="box">
+            <h4>Varför feedback?</h4>
+            <p>Utöver aktivt lyssnande och tydlig information är det feedback på sina beteenden och prestationer som medarbetare värdesätter mest hos ledare, men bara en liten del av ledares tid går åt till det. Feedback stärker alla tre grundbehoven: den visar att insatserna spelar roll (tillhörighet) och gör det lättare att medvetet påverka utfallet (kompetens och autonomi).</p>
+            <p>Hur feedbacken förmedlas påverkar upplevelsen och utfallet mer än själva sakfrågan. Över tid är en riktlinje att ge betydligt mer positiv feedback än utvecklande feedback.</p>
+            <p class="src">Källa: kap 4, s. 91.</p>
+          </div>
+
+          <div class="box">
+            <h4>Struktur för feedback i dialog</h4>
+            <p>Strukturen bygger på fråga-ge-fråga, samma princip som information i dialog.</p>
+            <ol class="steps">
+              <li><div>Förtydliga att det finns feedback att ge och stäm av när det passar, eller be om lov.</div></li>
+              <li><div>Fråga vilken positiv feedback personen vill ge sig själv. Lyssna aktivt.</div></li>
+              <li><div>Ge kort positiv feedback, gärna kopplat till det personen själv tog upp. Fråga igen: <span class="say">"Hur ser du på det?"</span></div></li>
+              <li><div>Fråga vilken utvecklande feedback personen själv har tänkt på, och summera utan att värdera.</div></li>
+              <li><div>Ge utvecklande feedback, en liten dos i taget, och avsluta med en öppen fråga: <span class="say">"Vad tänker du om det?"</span></div></li>
+              <li><div>Utforska vad personen tar med sig: <span class="say">"Utifrån det vi pratat om, vad kommer du göra mer medvetet framöver?"</span></div></li>
+            </ol>
+            <p class="src">Källa: kap 4, s. 92–94.</p>
+          </div>
+
+          <div class="twocol">
+            <div class="box">
+              <h4>Innan du ger feedback</h4>
+              <ul>
+                <li>Uppmuntra medarbetaren till självreflektion.</li>
+                <li>Utforska när det passar att prata. Nära i tid är bra, men personen behöver vara redo.</li>
+                <li>Formulera feedbacken så att den, precis som affirmationer, upplevs specifik, uppriktig, relevant och i lagom dos.</li>
+                <li>Välj ut det viktigaste om du har flera utvecklingspunkter.</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h4>En boostande feedbackkultur</h4>
+              <ul>
+                <li>Tydliggör syftet: feedback främjar lärande och utveckling.</li>
+                <li>Var en förebild och be regelbundet om feedback själv.</li>
+                <li>Prata i gruppen om allas olika styrkor, och om att alla har saker som kan "finliras".</li>
+                <li>Se öppenhet inför utveckling som en professionell styrka.</li>
+              </ul>
+            </div>
+          </div>
+          <p class="src">Källa: kap 4, s. 92 och 94.</p>
+
+          <div class="ex">
+            <p class="ex-k">Övning · Ordna i rätt följd</p>
+            <p class="q">Lägg stegen i feedback i dialog i rätt ordning. Använd pilarna.</p>
+            <div class="olist" id="orderHost"></div>
+            <div class="row"><button type="button" class="btn" id="orderCheck">Rätta</button></div>
+            <p class="live" id="orderLive" aria-live="polite"></p>
+          </div>
+        </div></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">c</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-write"/></svg>Skriv</p>
+          <h3>Det här tar du med dig</h3>
+          <div class="ex">
+            <label class="tl" for="ta_fb1">Vad påminns du om från filmen och texten som kan vara värdefullt att göra i dina feedbacksamtal framöver?</label>
+            <textarea id="ta_fb1"></textarea>
+          </div>
+        </div></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">d</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-talk"/></svg>Inför övningen dag 2</p>
+          <h3>Välj en situation att öva på</h3>
+          <div class="ex">
+            <label class="tl" for="ta_fb2">I vilken situation upplever du att det kan vara värdefullt att ge feedback i dialog?</label>
+            <p class="hint">Du får möjlighet att öva på den här situationen när vi ses dag 2. Beskriv kort vem det gäller (utan namn), vad det handlar om och vad du vill uppnå.</p>
+            <textarea id="ta_fb2"></textarea>
+            <div class="row"><button type="button" class="btn ghost" data-model="m3">Visa exempel</button></div>
+            <div class="model" id="m3" hidden><div class="mt">Exempel</div>
+              <p>En medarbetare som nyligen har börjat leda våra arbetsplatsträffar. Hen förbereder sig väl och har en tydlig struktur, men pratar själv en stor del av tiden. Jag vill lyfta det som fungerar och ta reda på hur hen själv ser på hur delaktiga de andra blir.</p>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="pager"><button class="btn ghost" data-go="2">Föregående</button><button class="btn" data-go="4">Nästa: samtalsutmaningar</button></div>
+      </div>
+    </section>
+
+    <!-- ================= DEL 4 ================= -->
+    <section class="view" id="v4">
+      <div class="cover">
+        <div class="plate pl-turkos"><div class="plate-in">
+          <p class="lvl2">Motiverande ledarskap</p>
+          <p class="lvl3">Del 4 av 4</p>
+          <h1>Bemöta samtalsutmaningar</h1>
+          <p class="ingress">När det finns tveksamhet, motstånd eller oenighet. Vad gjorde du senast det gick bra, och vilka fällor undvek du?</p>
+        </div></div>
+        <div class="pattern p-persrod" aria-hidden="true"><svg><use href="#pat"/></svg></div>
+      </div>
+      <div class="col">
+        <div class="meta"><div class="drop"><span>20<small>min</small></span></div>
+          <p>Två sidor i kursboken, en kort övning och tre reflektionsfrågor om en egen erfarenhet.</p></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-read"/></svg>Läs</p>
+          <h3>Kursboken s. 114–115</h3>
+          <p>Signaler om tveksamhet och lägre engagemang kan ha många orsaker: lägre angelägenhet eller självtillit, annat som pågår parallellt, eller relationer och kommunikation i gruppen. Hur du som ledare kommunicerar påverkar hur dialogen fortsätter. Genom MI-anda och aktivt lyssnande kan spänningar dämpas.</p>
+
+          <div class="twocol">
+            <div class="box">
+              <h4>Riktlinjer vid samtalsutmaningar</h4>
+              <ul>
+                <li>Stanna upp och utforska vad det som signaleras, eller motpratet, kan bero på.</li>
+                <li>Förmedla empati, icke-dömande och respekt (acceptans).</li>
+                <li>Normalisera upplevelserna.</li>
+                <li>Var följsam och anpassa fokus och stöd efter medarbetarens behov.</li>
+                <li>Var självmedveten: vad är en rimlig ambitionsnivå just nu?</li>
+                <li>Be om ursäkt när det är lämpligt: <span class="say">"Förlåt, nu avbröt jag dig, fortsätt berätta vad du tänkte …"</span></li>
+              </ul>
+            </div>
+            <div class="box">
+              <h4>Exempel på samtalsfällor</h4>
+              <ul>
+                <li>För många slutna frågor på rad</li>
+                <li>Expertrollen: föreläsa eller ta över ansvaret</li>
+                <li>Styra mot fokus eller problemlösning för tidigt</li>
+                <li>Rättningsreflexen: råd som inte efterfrågats</li>
+                <li>Välja sida i en fråga</li>
+                <li>Konfrontation, kritik eller skuldbeläggande</li>
+                <li>Kontrollerande språk: "ska", "måste", "borde"</li>
+                <li>Fastna i småprat, eller bara vända sig till några i gruppen</li>
+              </ul>
+            </div>
+          </div>
+          <p class="src">Källa: kap 5, s. 114–115. Boken listar fler samtalsfällor än de som står här.</p>
+
+          <div class="ex">
+            <p class="ex-k">Övning · Sortera</p>
+            <p class="q">Vilka repliker är samtalsfällor, och vilka är ett behovsstödjande bemötande?</p>
+            <p class="hint">Markera en replik och tryck sedan på rätt ruta. Fungerar med tangentbord och touch.</p>
+            <div class="pool" id="sortPool" role="group" aria-label="Repliker"></div>
+            <div class="buckets" id="sortBuckets"></div>
+            <div class="row"><button type="button" class="btn" id="sortCheck">Rätta</button><button type="button" class="btn ghost" id="sortReset">Börja om</button></div>
+            <p class="live" id="sortLive" aria-live="polite"></p>
+            <div class="facit" id="sortFacit" hidden></div>
+          </div>
+        </div></div>
+
+        <div class="step"><div class="letter" aria-hidden="true">b</div><div class="body">
+          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-write"/></svg>Reflektera och skriv</p>
+          <h3>En samtalsutmaning som gick bra</h3>
+          <p>Tänk på en samtalsutmaning som du nyligen hanterat, där utfallet blev till det bättre. Skriv ner dina lärdomar utifrån frågorna.</p>
+          <div class="ex">
+            <label class="tl" for="ta_su1">c) Vad gjorde du i den situationen som var värdefullt?</label>
+            <textarea id="ta_su1"></textarea>
+            <label class="tl" for="ta_su2">d) Vilka samtalsfällor undvek du att hamna i, eller lyckades du parera om du hamnade i dem?</label>
+            <textarea id="ta_su2"></textarea>
+            <label class="tl" for="ta_su3">e) Vilka påminnelser tar du med dig från exemplet? Vad vill du göra mer eller mindre av i framtida samtalsutmaningar?</label>
+            <textarea id="ta_su3"></textarea>
+            <div class="row"><button type="button" class="btn ghost" data-model="m4">Visa exempel</button></div>
+            <div class="model" id="m4" hidden><div class="mt">Exempel</div>
+              <p><strong>c)</strong> En medarbetare sa direkt att det nya schemat "inte går". I stället för att förklara beslutet igen frågade jag vad som gjorde att det kändes omöjligt, och lyssnade.</p>
+              <p><strong>d)</strong> Jag var nära att välja sida och argumentera för schemat. Jag märkte det och gick tillbaka till att reflektera det hen sa.</p>
+              <p><strong>e)</strong> Mer: stanna upp och utforska motpratet. Mindre: förklara och övertyga för tidigt.</p>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="pager"><button class="btn ghost" data-go="3">Föregående</button><button class="btn" data-go="5">Nästa: kunskapskoll och dina svar</button></div>
+      </div>
+    </section>
+
+    <!-- ================= AVSLUT ================= -->
+    <section class="view" id="v5">
+      <div class="cover">
+        <div class="plate pl-rosa"><div class="plate-in">
+          <p class="lvl2">Motiverande ledarskap</p>
+          <p class="lvl3">Inför dag 2</p>
+          <h1>Kunskapskoll och dina svar</h1>
+          <p class="ingress">Sex korta frågor, och sedan en sammanställning av allt du skrivit som du tar med till dag 2.</p>
+        </div></div>
+        <div class="pattern p-gulgron" aria-hidden="true"><svg><use href="#pat"/></svg></div>
+      </div>
+      <div class="col">
+        <div class="meta"><div class="drop"><span>5<small>min</small></span></div>
+          <p>Du kan rätta så många gånger du vill. Svarsalternativen hamnar i ny ordning varje gång sidan laddas.</p></div>
+
+        <div id="examHost"></div>
+        <div class="row"><button type="button" class="btn" id="examSubmit">Rätta kunskapskollen</button></div>
+        <div id="examResult" aria-live="polite"></div>
+
+        <h2>Ta med till dag 2</h2>
+        <p>Här är allt du har skrivit i kursen. Spara det, eller kopiera texten till dina egna anteckningar.</p>
+        <div class="row">
+          <button type="button" class="btn" id="ksPdf">Spara som PDF</button>
+          <button type="button" class="btn ghost" id="ksCopy">Kopiera texten</button>
+          <span class="note" id="ksNote" aria-live="polite"></span>
+        </div>
+        <div id="ksHost"></div>
+
+        <h2>Källor</h2>
+        <ul class="refs">
+          <li>Edler, K. (red.), Hartelius, E. (red.) &amp; Ehrenborg, L. (2024). <em>Handbok för ledarhjältar: motivationsforskningen som superkraft</em>. Kapitel 4, s. 84–86 och 91–94, kapitel 5, s. 114–115.</li>
+          <li>Health Competence: <em>Psykologisk trygghet, nyckeln till framgångsrika team</em> (öppet webbinarium, Vimeo).</li>
+        </ul>
+        <p class="note">Förberedelsen ersätter inte kurstillfället, där vi tränar tillsammans. Exempel och formuleringar är illustrationer. Anpassa dem alltid till ditt eget sammanhang.</p>
+
+        <div class="pager"><button class="btn ghost" data-go="4">Föregående</button><button class="btn ghost" data-go="0">Till inledningen</button></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div id="printArea" aria-hidden="true"></div>
+
+<script>
+"use strict";
+(function(){
+  /* ============ INSTÄLLNINGAR ============
+     Lägg in länken till filmen om feedback i dialog här när den finns.
+     Ange Vimeo-länken, t.ex. "https://vimeo.com/1234567890/abcdef1234".
+     Lämnas den tom visas en platshållare i kursen. */
+  var FEEDBACK_FILM_URL = "";
+  /* ======================================= */
+
+  document.documentElement.lang = "sv";
+  var IN_ARTIFACT = /claude/i.test(location.hostname);
+
+  var SECTIONS=[
+    {id:"v0",label:"Inledning",n:"",sw:"var(--gr-gron)",swi:"#fff",t:""},
+    {id:"v1",label:"Pröva MI i ett möte",n:"1",sw:"var(--gr-vetegul)",swi:"#1d1d1b",t:"15 min"},
+    {id:"v2",label:"Psykologisk trygghet",n:"2",sw:"var(--gr-rod)",swi:"#fff",t:"1 tim"},
+    {id:"v3",label:"Feedback i dialog",n:"3",sw:"var(--gr-persika)",swi:"#1d1d1b",t:"20 min"},
+    {id:"v4",label:"Bemöta samtalsutmaningar",n:"4",sw:"var(--gr-turkos)",swi:"#111",t:"20 min"},
+    {id:"v5",label:"Kunskapskoll och svar",n:"",sw:"var(--gr-rosa)",swi:"#1d1d1b",t:"5 min"}
+  ];
+  var ANSWER_FIELDS=[
+    {id:"ta_plan",part:"Del 1. Pröva MI i ett möte",label:"a) Det här vill jag testa, och i det här mötet"},
+    {id:"ta_b",part:"Del 1. Pröva MI i ett möte",label:"b) Vad gjorde jag i mötet som hade god effekt?"},
+    {id:"ta_c",part:"Del 1. Pröva MI i ett möte",label:"c) Vad kunde jag ha gjort annorlunda för bättre effekt?"},
+    {id:"ta_d",part:"Del 1. Pröva MI i ett möte",label:"d) Påminnelser till mig själv: mer eller mindre av i mina möten"},
+    {id:"ta_pt",part:"Del 2. Psykologisk trygghet",label:"Det här kan jag konkret göra för ökad psykologisk trygghet"},
+    {id:"ta_fb1",part:"Del 3. Feedback i dialog",label:"c) Värdefullt att göra i mina feedbacksamtal framöver"},
+    {id:"ta_fb2",part:"Del 3. Feedback i dialog",label:"d) Situation att öva feedback i dialog på dag 2"},
+    {id:"ta_su1",part:"Del 4. Bemöta samtalsutmaningar",label:"c) Det här gjorde jag som var värdefullt"},
+    {id:"ta_su2",part:"Del 4. Bemöta samtalsutmaningar",label:"d) Samtalsfällor jag undvek eller parerade"},
+    {id:"ta_su3",part:"Del 4. Bemöta samtalsutmaningar",label:"e) Påminnelser inför framtida samtalsutmaningar"}
+  ];
+  var state={current:0,completed:{},pick:null};
+
+  /* ---------- Lagring ---------- */
+  var KEY="gr_motiverande_ledarskap_dag2_v1";
+  var canStore=(function(){ try{ localStorage.setItem("__t","1"); localStorage.removeItem("__t"); return true; }catch(e){ return false; } })();
+  function save(){
+    if(!canStore) return;
+    try{
+      var a={}; ANSWER_FIELDS.forEach(function(f){ var el=document.getElementById(f.id); if(el) a[f.id]=el.value; });
+      localStorage.setItem(KEY,JSON.stringify({current:state.current,completed:state.completed,pick:state.pick,answers:a,ts:Date.now()}));
+    }catch(e){}
+  }
+  function load(){ if(!canStore) return null; try{ var r=localStorage.getItem(KEY); return r?JSON.parse(r):null; }catch(e){ return null; } }
+  function clear(){ try{ localStorage.removeItem(KEY); }catch(e){} }
+
+  /* ---------- Navigering ---------- */
+  function buildToc(host){
+    host.innerHTML="";
+    SECTIONS.forEach(function(s,i){
+      var b=document.createElement("button"); b.type="button";
+      b.innerHTML='<span class="dot" style="--sw:'+s.sw+';--swi:'+s.swi+'">'+s.n+'</span><span>'+s.label+(s.t?'<br><span class="tmin">'+s.t+'</span>':'')+'</span><span class="ok" data-done="'+s.id+'"></span>';
+      b.addEventListener("click",function(){ go(i); });
+      host.appendChild(b);
+    });
+  }
+  buildToc(document.getElementById("tocDesktop")); buildToc(document.getElementById("tocMobile"));
+  function go(i,noScroll){
+    if(i<0||i>=SECTIONS.length) return;
+    if(state.current!==i) state.completed[SECTIONS[state.current].id]=true;
+    state.current=i;
+    SECTIONS.forEach(function(s){ document.getElementById(s.id).classList.remove("active"); });
+    document.getElementById(SECTIONS[i].id).classList.add("active");
+    ["tocDesktop","tocMobile"].forEach(function(h){ document.getElementById(h).querySelectorAll("button").forEach(function(b,bi){ b.setAttribute("aria-current",bi===i?"true":"false"); }); });
+    document.getElementById("crumbTitle").textContent=SECTIONS[i].label;
+    var dr=document.getElementById("drawer"); dr.classList.remove("open"); document.getElementById("menuBtn").setAttribute("aria-expanded","false");
+    if(i===SECTIONS.length-1) renderSummary();
+    progress();
+    if(!noScroll){ window.scrollTo({top:0,behavior:"auto"}); document.getElementById("innehall").focus({preventScroll:true}); }
+    save();
+  }
+  function progress(){
+    var pct=Math.round(Object.keys(state.completed).length/SECTIONS.length*100);
+    document.getElementById("dFill").style.width=pct+"%"; document.getElementById("mFill").style.width=pct+"%";
+    document.getElementById("dPct").textContent=pct+" %";
+    document.querySelectorAll("[data-done]").forEach(function(el){ el.textContent=state.completed[el.getAttribute("data-done")]?"Klar":""; });
+  }
+  document.querySelectorAll("[data-go]").forEach(function(b){ b.addEventListener("click",function(){ go(parseInt(b.getAttribute("data-go"),10)); }); });
+  document.getElementById("menuBtn").addEventListener("click",function(){
+    var o=document.getElementById("drawer").classList.toggle("open"); this.setAttribute("aria-expanded",o?"true":"false");
+  });
+
+  /* ---------- Exempel (visa/dölj) ---------- */
+  document.querySelectorAll("[data-model]").forEach(function(b){
+    var label=b.textContent;
+    b.addEventListener("click",function(){
+      var m=document.getElementById(b.getAttribute("data-model")); m.hidden=!m.hidden;
+      b.textContent=m.hidden?label:"Dölj exempel";
+    });
+  });
+
+  /* ---------- MI-påminnaren ---------- */
+  var MI=[
+    {id:"oppna",name:"Öppna frågor",what:"Frågor utan givet svar som låter medarbetaren tänka fritt. Genom att till största delen ställa öppna frågor behåller du medarbetarens perspektiv i fokus.",say:"\"Vad behöver ni för att kunna fokusera på uppgiften?\"",tip:"Ställ frågan och vänta in svaret. Låt tystnaden vara en stund innan du fyller i.",src:"kap 2"},
+    {id:"refl",name:"Reflektioner",what:"Korta påståenden som speglar tillbaka det medarbetaren sagt eller menat, med neutralt tonfall. De visar empati och kan lyfta fram förändringsprat.",say:"\"Du upplever att det är för mycket uppgifter på samma gång.\"",tip:"Byt ut en av dina frågor mot en reflektion. Börja gärna med du, ni, så eller det.",src:"kap 2"},
+    {id:"aff",name:"Affirmationer",what:"Uttalanden som uppmärksammar medarbetarens inre resurser: styrkor, förmågor, ansträngningar och värderingar. Till skillnad från beröm handlar de inte om en specifik prestation.",say:"\"Du har förmågan att vaska fram det viktigaste ur stora mängder information.\"",tip:"Lägg märke till en styrka hos någon under mötet och sätt ord på den, specifikt och uppriktigt.",src:"kap 2"},
+    {id:"summ",name:"Summeringar",what:"En längre reflektion som samlar ihop det medarbetaren sagt. Den ger överblick, visar att perspektivet tagits emot och kan samla det som talar för att något är viktigt och möjligt.",say:"\"Om jag sammanfattar det ni har sagt hittills …\" (exempel)",tip:"Summera innan ni går vidare till nästa punkt eller innan mötet avslutas.",src:"kap 2"},
+    {id:"lov",name:"Be om lov",what:"Att fråga innan du tillför information eller råd stärker upplevelsen av autonomi. Be bara om lov om du kan godta ett nej.",say:"\"Är det okej om jag berättar om …?\"",tip:"Om informationen inte kan vänta: säg i stället att den är viktig och varför den behöver tas upp nu.",src:"kap 4, s. 90"},
+    {id:"fgf",name:"Information i dialog",what:"Fråga-ge-fråga: fråga om förkunskaper och funderingar, ge kort anpassad information (riktmärke upp till ca 30 sekunder) och fråga igen vad det väcker.",say:"\"Vad vet ni redan om det här?\" … \"Vad väcker detta för frågor hos er?\"",tip:"Avsluta med att låta medarbetarna sätta egna ord på vad de tar med sig.",src:"kap 4, s. 88–90"},
+    {id:"meny",name:"Meny-agenda",what:"Ett samtalsverktyg för att engagera och ringa in vad som är viktigast att fokusera på. Be om lov, samla rubriker med medarbetarnas egna ord, utforska kort och prioritera tillsammans.",say:"\"Innan vi går in på detaljer, vad är viktigast för er att vi pratar om i dag?\" (exempel)",tip:"Fördjupa dig inte i den första punkten som dyker upp. Få upp hela menyn först.",src:"kap 4, s. 87–88"},
+    {id:"forst",name:"Låt andra tala först",what:"En princip som främjar psykologisk trygghet och engagemang: låt medarbetarna komma till tals innan du säger vad du tycker.",say:"\"Innan jag säger något själv vill jag höra hur ni ser på det.\" (exempel)",tip:"Håll inne med din egen uppfattning tills alla som vill har fått säga sitt.",src:"kap 4, s. 86"},
+    {id:"struktur",name:"MI-strukturen",what:"Fyra huvuduppgifter som bygger på varandra som en trappa: engagera, fokusera, framkalla och planera.",say:"Engagera → fokusera → framkalla → planera",tip:"Lägg märke till var i trappan samtalet befinner sig. Gå inte vidare till planering innan medarbetaren är engagerad och ni är överens om fokus.",src:"kap 2"}
+  ];
+  var picker=document.getElementById("picker"), rem=document.getElementById("reminder");
+  function renderPick(){
+    picker.querySelectorAll(".pick").forEach(function(p){ p.setAttribute("aria-pressed",p.getAttribute("data-id")===state.pick?"true":"false"); });
+    var m=MI.filter(function(x){return x.id===state.pick;})[0];
+    if(!m){ rem.innerHTML='<p class="note" style="margin:0">Välj en MI-detalj för att se en kort påminnelse.</p>'; return; }
+    rem.innerHTML='<h4>'+m.name+'</h4><p style="margin:.2rem 0 0">'+m.what+'</p><dl><div><dt>Så kan det låta</dt><dd class="say">'+m.say+'</dd></div><div><dt>I mötet</dt><dd>'+m.tip+'</dd></div></dl><p class="src">Källa: Handbok för ledarhjältar, '+m.src+'.</p>';
+  }
+  MI.forEach(function(m){
+    var b=document.createElement("button"); b.type="button"; b.className="pick"; b.textContent=m.name; b.setAttribute("data-id",m.id);
+    b.addEventListener("click",function(){ state.pick=(state.pick===m.id)?null:m.id; renderPick(); save(); });
+    picker.appendChild(b);
+  });
+
+  /* ---------- Flerval ---------- */
+  function shuffle(a){ for(var k=a.length-1;k>0;k--){ var j=Math.floor(Math.random()*(k+1)); var t=a[k]; a[k]=a[j]; a[j]=t; } return a; }
+  var QUIZ={
+    qPt:{
+      good:"Psykologisk trygghet är en gemensam upplevelse i gruppen av att det är okej att ta mellanmänskliga risker, till exempel att vara uppriktig, prata om det som är svårt och dela snedsteg (Edmondson, 2019).",
+      opts:[
+        {t:"Gruppen delar en upplevelse av att det är okej att vara uppriktig, säga emot och berätta om sina misstag.",ok:true},
+        {t:"Alla i gruppen är överens och undviker att ta upp sådant som kan skapa konflikt.",ok:false,why:"Psykologisk trygghet innebär respekt för olikheter och perspektiv, även när åsikterna går isär. Det handlar inte om att undvika oenighet."},
+        {t:"Ledaren skyddar medarbetarna från kritik genom att inte ge utvecklande feedback.",ok:false,why:"I en psykologiskt trygg grupp upplevs det tillåtet att uppmärksamma vad kollegor kan göra annorlunda. Det ses som ett bidrag till utveckling."}
+      ]
+    }
+  };
+  document.querySelectorAll("[data-quiz]").forEach(function(box){
+    var d=QUIZ[box.getAttribute("data-quiz")], host=box.querySelector(".opts"), facit=box.querySelector(".facit"), done=false;
+    var opts=shuffle(d.opts.slice());
+    opts.forEach(function(o,i){
+      var b=document.createElement("button"); b.type="button"; b.className="opt";
+      b.innerHTML='<span class="mk">'+String.fromCharCode(65+i)+'</span><span>'+o.t+'</span>';
+      b.addEventListener("click",function(){
+        if(done) return; done=true;
+        var all=host.querySelectorAll(".opt"); all.forEach(function(x){ x.disabled=true; });
+        opts.forEach(function(oo,ii){ if(oo.ok) all[ii].classList.add("correct"); });
+        if(!o.ok) b.classList.add("wrong");
+        var h='<div class="fh">'+(o.ok?"Rätt.":"Inte riktigt.")+'</div><p style="margin:.2rem 0">'+d.good+'</p>';
+        var w=opts.filter(function(x){return !x.ok;});
+        h+='<div class="fh" style="margin-top:.7rem">Därför stämmer inte de andra</div><ul>'; w.forEach(function(x){ h+='<li>'+x.why+'</li>'; }); h+='</ul>';
+        facit.innerHTML=h; facit.hidden=false;
+      });
+      host.appendChild(b);
+    });
+  });
+
+  /* ---------- Ordna (feedback i dialog) ---------- */
+  (function(){
+    var items={
+      s1:"Förtydliga att det finns feedback att ge, och stäm av när det passar",
+      s2:"Fråga vilken positiv feedback personen vill ge sig själv",
+      s3:"Ge kort positiv feedback och fråga igen",
+      s4:"Fråga vilken utvecklande feedback personen själv har tänkt på, och summera",
+      s5:"Ge utvecklande feedback i liten dos och avsluta med en öppen fråga",
+      s6:"Utforska vad personen tar med sig"
+    };
+    var correct=["s1","s2","s3","s4","s5","s6"], order=["s3","s1","s5","s2","s6","s4"];
+    var host=document.getElementById("orderHost"), live=document.getElementById("orderLive");
+    function render(){
+      host.innerHTML="";
+      order.forEach(function(id,i){
+        var r=document.createElement("div"); r.className="oi";
+        var t=document.createElement("span"); t.className="ot"; t.textContent=(i+1)+". "+items[id]; r.appendChild(t);
+        var c=document.createElement("div"); c.className="oc";
+        var u=document.createElement("button"); u.type="button"; u.textContent="▲"; u.setAttribute("aria-label","Flytta upp: "+items[id]); u.disabled=i===0;
+        var d=document.createElement("button"); d.type="button"; d.textContent="▼"; d.setAttribute("aria-label","Flytta ned: "+items[id]); d.disabled=i===order.length-1;
+        u.addEventListener("click",function(){ var x=order[i-1]; order[i-1]=order[i]; order[i]=x; render(); host.querySelectorAll(".oi")[i-1].querySelector("button").focus(); });
+        d.addEventListener("click",function(){ var x=order[i+1]; order[i+1]=order[i]; order[i]=x; render(); host.querySelectorAll(".oi")[i+1].querySelectorAll("button")[1].focus(); });
+        c.appendChild(u); c.appendChild(d); r.appendChild(c); host.appendChild(r);
+      });
+      live.textContent="";
+    }
+    document.getElementById("orderCheck").addEventListener("click",function(){
+      var ok=0; host.querySelectorAll(".oi").forEach(function(r,i){ var c=order[i]===correct[i]; r.classList.add(c?"ok":"no"); if(c) ok++; });
+      live.textContent= ok===correct.length ? "Rätt ordning. Strukturen bygger på fråga-ge-fråga: medarbetaren kommer till tals före dig, både om det som fungerar och det som kan utvecklas." : ok+" av "+correct.length+" på rätt plats. Justera och rätta igen.";
+    });
+    render();
+  })();
+
+  /* ---------- Sortera (samtalsfällor) ---------- */
+  (function(){
+    var items=[
+      {id:"r1",t:"\"Det där går inte. Vi måste göra som vi har bestämt.\"",a:"falla",why:"Kontrollerande språk med \"måste\" kan få medarbetaren att gå i försvar."},
+      {id:"r2",t:"\"Vad tror du ligger bakom att det känns tveksamt?\"",a:"stod",why:"Du stannar upp och utforskar vad tveksamheten kan bero på."},
+      {id:"r3",t:"\"Jag tycker att du ska göra så här i stället.\" (utan att ha blivit tillfrågad)",a:"falla",why:"Rättningsreflexen: råd som inte är efterfrågade eller vältajmade."},
+      {id:"r4",t:"\"Det är förståeligt att det känns mycket just nu. Flera i gruppen har sagt samma sak.\"",a:"stod",why:"Du normaliserar upplevelsen och förmedlar acceptans."},
+      {id:"r5",t:"\"Förlåt, nu avbröt jag dig. Fortsätt berätta vad du tänkte.\"",a:"stod",why:"Att be om ursäkt när det är lämpligt är en av bokens riktlinjer."},
+      {id:"r6",t:"\"Hade du läst instruktionen? Visste du om tidsplanen? Har du pratat med din kollega?\"",a:"falla",why:"Många slutna frågor på rad kan göra medarbetaren passiv, och kan upplevas som ett förhör."}
+    ];
+    var buckets=[{id:"falla",l:"Samtalsfälla"},{id:"stod",l:"Behovsstödjande bemötande"}];
+    var pool=document.getElementById("sortPool"), bh=document.getElementById("sortBuckets"), live=document.getElementById("sortLive"), facit=document.getElementById("sortFacit");
+    var sel=null, place={};
+    function render(){
+      pool.innerHTML="";
+      items.forEach(function(it){
+        var c=document.createElement("button"); c.type="button"; c.className="chipbtn"+(place[it.id]?" placed":"")+(sel===it.id?" sel":"");
+        c.textContent=it.t; c.setAttribute("aria-pressed",sel===it.id?"true":"false");
+        c.addEventListener("click",function(){ sel=(sel===it.id)?null:it.id; render(); live.textContent=sel?"Vald replik. Tryck nu på en ruta.":""; });
+        pool.appendChild(c);
+      });
+      bh.innerHTML="";
+      buckets.forEach(function(bk){
+        var d=document.createElement("div"); d.className="bucket"+(sel?" armed":""); d.setAttribute("role","button"); d.tabIndex=0; d.setAttribute("aria-label","Placera i "+bk.l);
+        d.innerHTML='<span class="bt">'+bk.l+'</span>';
+        items.forEach(function(it){
+          if(place[it.id]!==bk.id) return;
+          var p=document.createElement("div"); p.className="pi"; p.setAttribute("data-id",it.id);
+          var s=document.createElement("span"); s.textContent=it.t; p.appendChild(s);
+          var x=document.createElement("button"); x.type="button"; x.className="x"; x.textContent="×"; x.setAttribute("aria-label","Ta tillbaka repliken");
+          x.addEventListener("click",function(e){ e.stopPropagation(); delete place[it.id]; facit.hidden=true; render(); });
+          p.appendChild(x); d.appendChild(p);
+        });
+        function drop(){ if(!sel){ live.textContent="Markera först en replik."; return; } place[sel]=bk.id; sel=null; render(); live.textContent="Placerad i "+bk.l.toLowerCase()+"."; }
+        d.addEventListener("click",drop);
+        d.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); drop(); } });
+        bh.appendChild(d);
+      });
+    }
+    document.getElementById("sortCheck").addEventListener("click",function(){
+      var n=Object.keys(place).length;
+      if(n<items.length){ live.textContent="Placera alla repliker först ("+n+" av "+items.length+")."; return; }
+      var ok=0;
+      bh.querySelectorAll(".pi").forEach(function(p){ var it=items.filter(function(x){return x.id===p.getAttribute("data-id");})[0]; var c=place[it.id]===it.a; p.classList.add(c?"ok":"no"); if(c) ok++; });
+      live.textContent= ok===items.length ? "Allt rätt." : ok+" av "+items.length+" rätt. Flytta de rödmarkerade och rätta igen.";
+      var h='<div class="fh">Därför</div><ul>'; items.forEach(function(it){ h+='<li><strong>'+(it.a==="falla"?"Fälla":"Stöd")+':</strong> '+it.why+'</li>'; }); h+='</ul>';
+      facit.innerHTML=h; facit.hidden=false;
+    });
+    document.getElementById("sortReset").addEventListener("click",function(){ place={}; sel=null; facit.hidden=true; render(); live.textContent=""; });
+    render();
+  })();
+
+  /* ---------- Filmer ---------- */
+  var PAT_SVG='<svg class="pat" aria-hidden="true"><use href="#pat"/></svg>';
+  function setupFrame(frame){
+    var src=frame.getAttribute("data-embed"), link=frame.getAttribute("data-link"), label=frame.getAttribute("data-label")||"Spela filmen";
+    frame.style.setProperty("--pb","var(--gr-gron)"); frame.style.setProperty("--pf","var(--gr-turkos)");
+    if(IN_ARTIFACT){
+      frame.innerHTML='<a class="poster" href="'+link+'" target="_blank" rel="noopener" style="--pb:var(--gr-gron);--pf:var(--gr-turkos)">'+PAT_SVG+'<span class="play"><i></i>'+label+' på Vimeo</span></a>';
+      return;
+    }
+    frame.innerHTML='<button type="button" class="poster" style="--pb:var(--gr-gron);--pf:var(--gr-turkos)" aria-label="'+label+'">'+PAT_SVG+'<span class="play"><i></i>'+label+'</span></button>';
+    frame.querySelector(".poster").addEventListener("click",function(){
+      var f=document.createElement("iframe"); f.src=src; f.title=label;
+      f.setAttribute("allow","autoplay; fullscreen; picture-in-picture"); f.setAttribute("allowfullscreen","");
+      frame.innerHTML=""; frame.appendChild(f);
+    });
+  }
+  (function(){
+    var host=document.getElementById("feedbackFilm"), url=(FEEDBACK_FILM_URL||"").trim();
+    var m=url.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([0-9a-f]+))?/i);
+    if(!m){
+      host.innerHTML='<div class="pending"><div><b>Filmen kommer snart</b><span>Filmen om feedback i dialog (ca 3 min) läggs upp här inom kort. Fortsätt med läsningen så länge.</span></div></div><div class="mcap"><b>Feedback i dialog</b><span>Film, ca 3 min.</span></div>';
+      return;
+    }
+    var embed="https://player.vimeo.com/video/"+m[1]+"?"+(m[2]?"h="+m[2]+"&":"")+"autoplay=1";
+    host.innerHTML='<div class="frame" data-embed="'+embed+'" data-link="'+url+'" data-label="Spela filmen"></div><div class="mcap"><b>Feedback i dialog</b><span>Film, ca 3 min. </span><a href="'+url+'" target="_blank" rel="noopener">Öppna på Vimeo</a></div>';
+  })();
+  document.querySelectorAll(".frame[data-embed]").forEach(setupFrame);
+
+  /* ---------- Kunskapskoll ---------- */
+  var EXAM=[
+    {q:"Vad påverkar enligt kursboken mest hur feedback tas emot?",o:["Hur feedbacken förmedlas","Vilken sakfråga feedbacken gäller","Hur lång tid som gått sedan situationen"],sec:"Del 3. Feedback i dialog"},
+    {q:"Du har stämt av att det passar att prata om feedback. Vad gör du sedan enligt strukturen för feedback i dialog?",o:["Frågar vilken positiv feedback personen vill ge sig själv","Börjar med det viktigaste som behöver utvecklas","Ger all positiv och utvecklande feedback på en gång"],sec:"Del 3. Feedback i dialog"},
+    {q:"Hur bör positiv och utvecklande feedback fördela sig över tid?",o:["Betydligt mer positiv än utvecklande feedback","Lika mycket av båda i varje samtal","Mest utvecklande, eftersom det är där lärandet sker"],sec:"Del 3. Feedback i dialog"},
+    {q:"En medarbetare säger \"det där är inte möjligt\". Vad är i linje med bokens riktlinjer vid samtalsutmaningar?",o:["Stanna upp och utforska vad motpratet kan bero på","Förklara beslutet en gång till, tydligare","Föreslå direkt en lösning så att ni kommer vidare"],sec:"Del 4. Bemöta samtalsutmaningar"},
+    {q:"Vad kallas det när du ger råd och förslag som inte är efterfrågade eller vältajmade?",o:["Rättningsreflexen","Att be om lov","Följsamhet"],sec:"Del 4. Bemöta samtalsutmaningar"},
+    {q:"Vad kännetecknar en grupp med psykologisk trygghet?",o:["Det upplevs tillåtet att göra misstag och dela dem, eftersom det ger gemensamma lärdomar","Ingen behöver säga emot eller ta upp något svårt","Ledaren fattar alla beslut så att ingen tar risker"],sec:"Del 2. Psykologisk trygghet"}
+  ];
+  var eh=document.getElementById("examHost");
+  EXAM.forEach(function(it,qi){
+    it._o=shuffle(it.o.map(function(t,i){ return {t:t,ok:i===0}; }));
+    it._ok=it._o.findIndex(function(x){return x.ok;});
+    var box=document.createElement("div"); box.className="ex";
+    var h='<p class="ex-k">Fråga '+(qi+1)+' av '+EXAM.length+'</p><p class="q" id="eq'+qi+'">'+it.q+'</p><div role="radiogroup" aria-labelledby="eq'+qi+'">';
+    it._o.forEach(function(o,oi){ h+='<label class="opt"><input type="radio" name="ex'+qi+'" value="'+oi+'"><span>'+o.t+'</span></label>'; });
+    h+='</div><div class="facit" hidden></div>';
+    box.innerHTML=h; eh.appendChild(box);
+  });
+  document.getElementById("examSubmit").addEventListener("click",function(){
+    var score=0, miss=[], boxes=eh.querySelectorAll(".ex");
+    EXAM.forEach(function(it,qi){
+      var box=boxes[qi], ch=box.querySelector('input[name="ex'+qi+'"]:checked'), labs=box.querySelectorAll(".opt");
+      labs.forEach(function(l){ l.classList.remove("correct","wrong"); }); labs[it._ok].classList.add("correct");
+      if(ch){ var v=+ch.value; if(v===it._ok) score++; else { labs[v].classList.add("wrong"); miss.push(it.sec); } } else miss.push(it.sec);
+      var f=box.querySelector(".facit"); f.innerHTML='<div class="fh">Rätt svar: '+it._o[it._ok].t+'</div>'; f.hidden=false;
+    });
+    var u=[]; miss.forEach(function(s){ if(u.indexOf(s)<0) u.push(s); });
+    var h='<div class="score"><div class="blob">'+score+'/'+EXAM.length+'</div><div class="st">';
+    h+= u.length ? '<strong>Värt att titta på igen:</strong><ul>'+u.map(function(s){return '<li>'+s+'</li>';}).join("")+'</ul>' : '<strong>Alla rätt.</strong> Du är väl förberedd inför dag 2.';
+    h+='</div></div>';
+    document.getElementById("examResult").innerHTML=h;
+    state.completed.v5=true; progress(); save();
+  });
+
+  /* ---------- Sammanställning ---------- */
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function answers(){ return ANSWER_FIELDS.map(function(f){ var el=document.getElementById(f.id); return {part:f.part,label:f.label,text:(el&&el.value?el.value.trim():"")}; }); }
+  function ksHtml(){
+    var d=new Date().toLocaleDateString("sv-SE"), a=answers(), parts=[], h="";
+    a.forEach(function(x){ if(parts.indexOf(x.part)<0) parts.push(x.part); });
+    h+='<div class="ks"><div class="ks-h"><div><h3>Ta med till dag 2</h3><div class="light">Motiverande ledarskap, förberedelse inför dag 2</div></div><div class="light">'+d+'</div></div>';
+    parts.forEach(function(p){
+      h+='<div class="ks-sec"><h4>'+p+'</h4>';
+      a.filter(function(x){return x.part===p;}).forEach(function(x){
+        h+='<div class="ans"><div class="al">'+esc(x.label)+'</div><div class="at'+(x.text?'':' empty')+'">'+(x.text?esc(x.text):'Inte ifyllt än.')+'</div></div>';
+      });
+      h+='</div>';
+    });
+    h+='<div class="ks-sec"><h4>Att komma ihåg</h4><ul>'
+      +'<li><strong>Feedback i dialog:</strong> låt medarbetaren komma till tals först, både om det som fungerar och det som kan utvecklas. Ge utvecklande feedback i liten dos.</li>'
+      +'<li><strong>Samtalsutmaningar:</strong> stanna upp och utforska, förmedla acceptans och normalisera. Se upp för rättningsreflexen och kontrollerande språk.</li>'
+      +'<li><strong>Psykologisk trygghet:</strong> låt andra tala först, normalisera snedsteg och visa uppskattning när någon är ärlig med det som är svårt.</li>'
+      +'</ul></div><p class="note">Källa: Handbok för ledarhjältar (Edler, Hartelius, Ehrenborg, 2024), kap 4 och 5.</p></div>';
+    return h;
+  }
+  function ksText(){
+    var a=answers(), out="TA MED TILL DAG 2\nMotiverande ledarskap, förberedelse inför dag 2 ("+new Date().toLocaleDateString("sv-SE")+")\n", last="";
+    a.forEach(function(x){ if(x.part!==last){ out+="\n"+x.part+"\n"; last=x.part; } out+="\n"+x.label+"\n"+(x.text||"(inte ifyllt)")+"\n"; });
+    return out;
+  }
+  function renderSummary(){ document.getElementById("ksHost").innerHTML=ksHtml(); }
+  var PRINT_CSS='body{font-family:Georgia,serif;color:#1d1d1b;line-height:1.55;max-width:720px;margin:24px auto;padding:0 18px;font-size:15px}'
+    +'h3,h4,.al,.light{font-family:"Libre Franklin","Franklin Gothic Medium",Arial,sans-serif;font-weight:500}.light{font-weight:300;color:#56524e;font-size:.85rem}'
+    +'.ks-h{display:flex;justify-content:space-between;border-bottom:2px solid #1d1d1b;padding-bottom:.6rem;margin-bottom:1rem}.ks-h h3{margin:0;font-size:1.4rem}'
+    +'.ks-sec{margin:1rem 0;page-break-inside:avoid}.ks-sec h4{margin:0 0 .3rem;font-size:1.05rem}.ans{margin:.4rem 0 .8rem}.al{font-size:.9rem}'
+    +'.at{white-space:pre-wrap;border-left:2px solid #ccc;padding-left:.7rem;margin-top:.2rem}.at.empty{color:#777;font-style:italic}.note{font-size:.8rem;color:#56524e}'
+    +'.logo{width:150px;margin-bottom:1rem}.noprint{text-align:center;margin:1.4rem 0}.noprint button{background:#1a7167;color:#fff;border:0;border-radius:99px;padding:.6rem 1.3rem;font-size:1rem;cursor:pointer}'
+    +'@media print{.noprint{display:none}body{margin:0;max-width:none}@page{margin:16mm 15mm}}';
+  document.getElementById("ksPdf").addEventListener("click",function(){
+    var logo=document.querySelector(".logo .pos").getAttribute("src");
+    var doc='<!DOCTYPE html><html lang="sv"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ta med till dag 2</title><style>'+PRINT_CSS+'</style></head><body><img class="logo" src="'+logo+'" alt="Göteborgsregionen">'+ksHtml()+'<div class="noprint"><button type="button" onclick="window.print()">Skriv ut eller spara som PDF</button></div><scr'+'ipt>window.addEventListener("load",function(){setTimeout(function(){try{window.print();}catch(e){}},400);});<\/scr'+'ipt></body></html>';
+    var w=null; try{ w=window.open("","_blank"); }catch(e){}
+    if(w){ w.document.open(); w.document.write(doc); w.document.close(); w.focus(); return; }
+    var pa=document.getElementById("printArea"); pa.innerHTML=ksHtml(); document.body.classList.add("printing");
+    window.onafterprint=function(){ document.body.classList.remove("printing"); };
+    try{ window.print(); }catch(e){}
+    setTimeout(function(){ document.body.classList.remove("printing"); },1500);
+  });
+  if(IN_ARTIFACT){ document.getElementById("ksPdf").hidden=true; }
+  document.getElementById("ksCopy").addEventListener("click",function(){
+    var note=document.getElementById("ksNote"), txt=ksText();
+    function fallback(){
+      var ta=document.createElement("textarea"); ta.value=txt; ta.setAttribute("readonly",""); ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select();
+      var ok=false; try{ ok=document.execCommand("copy"); }catch(e){} document.body.removeChild(ta);
+      note.textContent= ok ? "Texten är kopierad." : "Kopieringen fungerade inte här. Markera texten i rutan nedan och kopiera den själv.";
+    }
+    try{ navigator.clipboard.writeText(txt).then(function(){ note.textContent="Texten är kopierad."; },fallback); }catch(e){ fallback(); }
+  });
+
+  /* ---------- Röstinmatning (svenska) ---------- */
+  (function(){
+    var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(!SR||IN_ARTIFACT) return;
+    var MIC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="11" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><line x1="12" y1="17" x2="12" y2="21"></line></svg>';
+    ANSWER_FIELDS.forEach(function(f){
+      var ta=document.getElementById(f.id); if(!ta) return;
+      var bar=document.createElement("div");
+      var btn=document.createElement("button"); btn.type="button"; btn.className="mic"; btn.innerHTML=MIC+'<span>Tala in svar</span>';
+      var st=document.createElement("span"); st.className="micst";
+      bar.appendChild(btn); bar.appendChild(st); ta.insertAdjacentElement("afterend",bar);
+      var rec=null, on=false, base="";
+      function lab(t){ btn.querySelector("span").textContent=t; }
+      btn.addEventListener("click",function(){
+        if(on){ try{ rec.stop(); }catch(e){} return; }
+        try{ rec=new SR(); }catch(e){ st.textContent="Röstinmatningen kunde inte starta."; return; }
+        rec.lang="sv-SE"; rec.interimResults=true; rec.continuous=true; base=ta.value;
+        rec.onstart=function(){ on=true; btn.classList.add("on"); lab("Lyssnar, tryck för att stoppa"); st.textContent=""; };
+        rec.onerror=function(ev){ st.textContent=(ev&&ev.error==="not-allowed")?"Mikrofonen är blockerad. Tillåt mikrofonen i webbläsaren och försök igen.":"Röstinmatningen avbröts."; };
+        rec.onend=function(){ on=false; btn.classList.remove("on"); lab("Tala in svar"); ta.value=base; save(); };
+        rec.onresult=function(ev){
+          var fin="", tmp="";
+          for(var i=ev.resultIndex;i<ev.results.length;i++){ var s=ev.results[i][0].transcript; if(ev.results[i].isFinal) fin+=s; else tmp+=s; }
+          if(fin){ base=(base?base.replace(/\s+$/,"")+" ":"")+fin.trim(); save(); }
+          ta.value=base+(tmp?(base?" ":"")+tmp:"");
+        };
+        try{ rec.start(); }catch(e){ st.textContent="Röstinmatningen kunde inte starta."; }
+      });
+    });
+  })();
+
+  /* ---------- Återställ ---------- */
+  var rc=document.getElementById("resetConfirm");
+  document.getElementById("resetBtn").addEventListener("click",function(){ rc.hidden=false; document.getElementById("resetNo").focus(); });
+  document.getElementById("resetNo").addEventListener("click",function(){ rc.hidden=true; });
+  document.getElementById("resetYes").addEventListener("click",function(){
+    clear(); state.completed={}; state.pick=null; rc.hidden=true;
+    ANSWER_FIELDS.forEach(function(f){ var el=document.getElementById(f.id); if(el) el.value=""; });
+    document.getElementById("resumeBanner").hidden=true; renderPick();
+    state.current=0; go(0); progress();
+  });
+  if(!canStore){
+    document.getElementById("saveText").textContent="Svaren sparas inte i den här vyn. Öppna kursen via kurslänken i din webbläsare så sparas de automatiskt.";
+    document.getElementById("resetBtn").hidden=true;
+  }
+
+  /* ---------- Start ---------- */
+  ANSWER_FIELDS.forEach(function(f){ var el=document.getElementById(f.id); if(el) el.addEventListener("input",save); });
+  var s=load();
+  if(s){
+    state.completed=s.completed||{}; state.pick=s.pick||null;
+    if(s.answers) ANSWER_FIELDS.forEach(function(f){ var el=document.getElementById(f.id); if(el&&typeof s.answers[f.id]==="string") el.value=s.answers[f.id]; });
+    var idx=(typeof s.current==="number"&&s.current>=0&&s.current<SECTIONS.length)?s.current:0;
+    state.current=idx; renderPick(); go(idx,true);
+    if(idx>0||Object.keys(state.completed).length){
+      var rb=document.getElementById("resumeBanner");
+      document.getElementById("resumeText").textContent="Välkommen tillbaka. Du fortsätter i ”"+SECTIONS[idx].label+"” och dina svar finns kvar.";
+      if(idx===0) rb.hidden=false;
+    }
+  } else { renderPick(); go(0,true); }
+})();
+</script>
+
+</body>
+</html>
