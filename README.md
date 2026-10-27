@@ -8,14 +8,14 @@ Självstudiekurs som deltagarna gör mellan kurstillfälle 1 och 2. En enda fris
 |---|---|---|
 | Inledning | | Översikt över de fyra delarna och hur kursen fungerar |
 | 1. Pröva MI i ett möte | 15 min | MI-påminnaren (nio MI-detaljer från dag 1), plan för vad deltagaren ska testa, reflektionsfrågorna b–d |
-| 2. Psykologisk trygghet | 1 tim | Webbinarium (Health Competence, ca 55 min, öppnas på Vimeo eftersom inbäddning är spärrad), påminnelse ur kap 4 s. 84–86, flerval, skrivuppgift |
-| 3. Feedback i dialog | 20 min | Film (**platshållare**), sammanfattning av s. 91–94, ordna stegen i följd, skrivuppgifterna c och d |
+| 2. Psykologisk trygghet | 1 tim | Webbinarium (Health Competence, ca 55 min, öppnas på Vimeo eftersom inbäddning är spärrad), läsning av kap 4 s. 84–86 med sammanfattning och flerval, skrivuppgift |
+| 3. Feedback i dialog | 20 min | Film (Vimeo, ca 3 min), sammanfattning av s. 91–94, ordna stegen i följd, skrivuppgifterna c och d |
 | 4. Bemöta samtalsutmaningar | 20 min | Sammanfattning av s. 114–115, sortera repliker (fälla eller stöd), reflektionsfrågorna c–e |
 | Kunskapskoll och svar | 5 min | Sex frågor där svarsalternativen blandas, sammanställningen "Ta med till dag 2" (PDF eller kopiera text) |
 
 Totalt ca 2 timmar.
 
-## Lägga in filmen om feedback i dialog
+## Byta filmen om feedback i dialog
 
 Öppna `index.html` och sök på `FEEDBACK_FILM_URL` (högst upp i skriptet, längst ner i filen). Klistra in Vimeo-länken mellan citattecknen, till exempel:
 
@@ -23,7 +23,7 @@ Totalt ca 2 timmar.
 var FEEDBACK_FILM_URL = "https://vimeo.com/1234567890/abcdef1234";
 ```
 
-Fungerar både med och utan privacy-hash. Så länge fältet är tomt visar kursen texten "Filmen kommer snart".
+Fungerar både med och utan privacy-hash. Filmen är inlagd (vimeo.com/1239539193). Om fältet töms visar kursen texten "Filmen kommer snart".
 
 ## Grafisk profil
 
