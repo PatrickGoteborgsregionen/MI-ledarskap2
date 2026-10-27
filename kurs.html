@@ -9,6 +9,8 @@
     /* GR:s profilfärger (grafisk manual 2018). Används som plattor och mönster, aldrig som textfärg. */
     --gr-rod:#8e0826; --gr-turkos:#00a29a; --gr-gron:#1a7167; --gr-persika:#f5ac90;
     --gr-vetegul:#ecd896; --gr-gul:#ffed00; --gr-rosa:#ebd1d0; --gr-bla:#a9cee0;
+    /* GR:s mönster (bildfiler från GR) */
+    --img-a:url("{{PAT_A}}"); --img-b:url("{{PAT_B}}"); --img-c:url("{{PAT_C}}");
 
     /* Tema (ljust) */
     --bg:#faf8f6; --surface:#ffffff; --surface-2:#f6eee8; --ink:#1d1d1b; --muted:#56524e;
@@ -95,29 +97,30 @@
   section.view{display:none;}
   section.view.active{display:block;animation:in .35s ease;}
   @keyframes in{from{opacity:.4;transform:translateY(4px);}to{opacity:1;transform:none;}}
-  .cover{display:grid;grid-template-columns:1.15fr 1fr;min-height:300px;}
-  .plate{background:var(--pl);color:var(--pli);padding-block:2.4rem 2.2rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:2rem;display:flex;flex-direction:column;justify-content:flex-end;gap:.4rem;}
-  .plate-in{max-width:30rem;margin-left:auto;width:100%;}
-  .lvl2{font-family:var(--font-head);font-weight:500;font-size:.95rem;margin:0;}
-  .lvl3{font-family:var(--font-head);font-weight:300;font-size:.95rem;margin:0 0 1.4rem;}
-  .plate h1{font-size:clamp(1.9rem,3.4vw,2.6rem);line-height:1.1;margin:0 0 .7rem;letter-spacing:-.01em;}
-  .plate .ingress{font-family:var(--font-head);font-weight:400;font-size:1.08rem;line-height:1.45;margin:0;}
-  .pattern{background:var(--pb);min-height:220px;position:relative;overflow:hidden;}
-  .pattern svg{position:absolute;inset:0;width:100%;height:100%;}
-  .pattern svg{stroke:var(--pf);}
-
-  .p-rodrosa{--pb:var(--gr-rosa);--pf:var(--gr-rod);}
-  .p-blagron{--pb:var(--gr-bla);--pf:var(--gr-gron);}
-  .p-vetturkos{--pb:var(--gr-vetegul);--pf:var(--gr-turkos);}
-  .p-vetgron{--pb:var(--gr-vetegul);--pf:var(--gr-gron);}
-  .p-persrod{--pb:var(--gr-persika);--pf:var(--gr-rod);}
-  .p-gulgron{--pb:var(--gr-gul);--pf:var(--gr-gron);}
-  .pl-gron{--pl:var(--gr-gron);--pli:#ffffff;}
-  .pl-vetegul{--pl:var(--gr-vetegul);--pli:#1d1d1b;}
-  .pl-rod{--pl:var(--gr-rod);--pli:#ffffff;}
-  .pl-persika{--pl:var(--gr-persika);--pli:#1d1d1b;}
-  .pl-turkos{--pl:var(--gr-turkos);--pli:#111111;}
-  .pl-rosa{--pl:var(--gr-rosa);--pli:#1d1d1b;}
+  /* Omslag: GR:s mönster utfallande, texten ligger på mönstrets enfärgade yta (manualens omslag 6) */
+  .hero{position:relative;container-type:inline-size;background:var(--hb);color:var(--hi);overflow:hidden;}
+  .hero-bg{background:var(--img) center top/cover no-repeat;}
+  .flip .hero-bg{transform:scaleX(-1);}
+  .h-a{--img:var(--img-a);--hb:var(--gr-bla);--hi:#1d1d1b;--tx:30;--tw:41.5;--ty:3.8;--th:37.5;}
+  .h-b{--img:var(--img-b);--hb:var(--gr-turkos);--hi:#111111;--tx:17.5;--tw:52.5;--ty:15.2;--th:24.5;}
+  .h-c{--img:var(--img-c);--hb:var(--gr-rod);--hi:#ffffff;--tx:40;--tw:44.4;--ty:3.8;--th:31.5;}
+  .lvl2{font-family:var(--font-head);font-weight:600;font-size:.95rem;margin:0;letter-spacing:.005em;}
+  .lvl3{font-family:var(--font-head);font-weight:300;font-size:.95rem;margin:.1rem 0 1rem;}
+  .hero h1{font-weight:500;font-size:clamp(2rem,3.4cqw,3rem);line-height:1.06;letter-spacing:-.02em;margin:0 0 .65rem;}
+  .hero .ingress{font-family:var(--font-head);font-weight:400;font-size:clamp(1.02rem,1.45cqw,1.2rem);line-height:1.45;margin:0;max-width:34em;}
+  /* Bred yta: text ovanpå mönstret */
+  @container (min-width:900px){
+    .hero-in{position:relative;height:min(50cqw,560px);}
+    .hero-bg{position:absolute;inset:0;}
+    .hero-text{position:absolute;left:calc(var(--tx) * 1cqw);width:calc(var(--tw) * 1cqw);top:calc(var(--ty) * 1cqw);height:calc(var(--th) * 1cqw);display:flex;flex-direction:column;justify-content:center;}
+    .flip .hero-text{left:calc((100 - var(--tx) - var(--tw)) * 1cqw);}
+  }
+  /* Smal yta: mönsterband överst, texten på samma färg under */
+  @container (max-width:899.98px){
+    .hero-bg{height:clamp(110px,30cqw,220px);background-position:center 30%;}
+    .hero-text{padding-block:1.4rem 2rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:44rem;}
+    .hero-text{margin-inline:auto;}
+  }
 
   /* ---------- Läsyta ---------- */
   .col{max-width:var(--maxw);margin:0 auto;padding-block:2.2rem 5rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
@@ -132,9 +135,11 @@
 
   /* Symbol: droppe för kort information (tid) */
   .meta{display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;margin:0 0 1.2rem;}
-  .drop{width:84px;height:84px;background:var(--gr-gul);color:#1d1d1b;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:grid;place-items:center;flex:0 0 auto;}
-  .drop span{transform:rotate(45deg);font-family:var(--font-head);font-weight:500;font-size:1.05rem;line-height:1.05;text-align:center;}
-  .drop small{display:block;font-weight:300;font-size:.75rem;}
+  .drop{position:relative;width:80px;height:96px;flex:0 0 auto;color:#1d1d1b;}
+  .drop svg{position:absolute;inset:0;width:100%;height:100%;}
+  .drop svg path{fill:var(--gr-gul);}
+  .drop span{position:absolute;left:0;right:0;top:0;height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:600;font-size:1.15rem;line-height:1;text-align:center;letter-spacing:-.01em;}
+  .drop small{display:block;font-weight:400;font-size:.78rem;margin-top:.2rem;letter-spacing:0;}
   .meta p{margin:0;font-family:var(--font-head);font-weight:300;font-size:1rem;line-height:1.5;flex:1 1 16rem;min-width:0;}
 
   /* Steg (a, b, c …) */
@@ -163,10 +168,10 @@
   /* Media (podd/film) */
   .media{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:1.2rem 0;}
   .frame{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;background:var(--gr-gron);}
+  .frame[data-mode="link"]{aspect-ratio:16/7;}
   .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
   .poster{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;cursor:pointer;background:var(--pb);display:block;text-decoration:none;color:#1d1d1b;}
-  .poster svg.pat{position:absolute;inset:0;width:100%;height:100%;}
-  .poster svg.pat{stroke:var(--pf);}
+  .poster .pbg{position:absolute;inset:0;background:var(--img-a) center 35%/cover no-repeat;}
   .poster .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:.7rem;background:#ffffff;color:#1d1d1b;border-radius:99px;padding:.7rem 1.3rem .7rem .8rem;font-family:var(--font-head);font-weight:500;font-size:1rem;white-space:nowrap;transition:transform .15s;}
   .poster:hover .play{transform:translate(-50%,-50%) scale(1.04);}
   .poster .play i{width:2.2rem;height:2.2rem;border-radius:50%;background:var(--gr-gron);display:grid;place-items:center;}
@@ -278,10 +283,6 @@
     .menubtn{display:inline-block;}
     .mprog{display:block;}
     .drawer.open{display:block;background:var(--surface);border-bottom:1px solid var(--line);padding-block:.6rem 1rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
-    .cover{grid-template-columns:1fr;min-height:0;}
-    .pattern{order:-1;min-height:110px;}
-    .plate{padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:1.8rem;}
-    .plate-in{margin-left:0;}
     .logo{width:118px;}
   }
   @media (max-width:560px){
@@ -297,16 +298,6 @@
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
-    <symbol id="pat" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
-      <g fill="none" stroke-width="24" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M-30 70 C 40 30, 110 120, 190 80 S 320 10, 430 70"/>
-        <path d="M-30 205 C 40 170, 85 250, 165 215 S 300 130, 430 185"/>
-        <path d="M118 -30 C 96 50, 175 92, 152 165 S 82 262, 126 330"/>
-        <path d="M305 -30 C 280 48, 352 108, 308 178 S 262 282, 318 330"/>
-        <path d="M190 80 C 226 128, 262 146, 308 178"/>
-        <path d="M152 165 C 112 186, 70 196, 30 238"/>
-      </g>
-    </symbol>
     <symbol id="i-target" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><circle fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" cx="14" cy="14" r="6.5"/><circle fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" cx="14" cy="14" r="2"/></symbol>
     <symbol id="i-listen" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 16v-2a6 6 0 0 1 12 0v2"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 16h2v4H8zM18 16h2v4h-2z"/></symbol>
     <symbol id="i-play" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M11.5 9.5v9l7-4.5z"/></symbol>
@@ -346,19 +337,19 @@
 
     <!-- ================= INLEDNING ================= -->
     <section class="view" id="v0">
-      <div class="cover">
-        <div class="plate pl-gron"><div class="plate-in">
+      <div class="hero h-a"><div class="hero-in">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-text">
           <p class="lvl2">Motiverande ledarskap</p>
           <p class="lvl3">Förberedelse inför dag 2</p>
           <h1>Från dag 1 till dag 2</h1>
           <p class="ingress">Pröva det du tränade på dag 1 i ett riktigt möte, och förbered dig på feedback i dialog och samtalsutmaningar.</p>
-        </div></div>
-        <div class="pattern p-rodrosa" aria-hidden="true"><svg><use href="#pat"/></svg></div>
-      </div>
+        </div>
+      </div></div>
       <div class="col">
         <div class="resume" id="resumeBanner" hidden role="status"><span id="resumeText">Välkommen tillbaka.</span></div>
 
-        <div class="meta"><div class="drop"><span>ca 2<small>timmar</small></span></div>
+        <div class="meta"><div class="drop"><svg viewBox="0 0 80 96" aria-hidden="true"><path d="M40 95 C33 82 8 68 2.5 47 A38.5 38.5 0 1 1 77.5 47 C72 68 47 82 40 95 Z"/></svg><span>ca 2<small>timmar</small></span></div>
           <p>Förberedelsen består av fyra delar. Gör dem i den ordning som passar dig, men börja gärna med del 1 eftersom den kräver ett möte.</p></div>
 
         <p>Den här förberedelsen bygger vidare på dag 1. Du prövar en MI-detalj i praktiken, lyssnar på ett webbinarium om psykologisk trygghet och läser två korta avsnitt i kursboken <em>Handbok för ledarhjältar</em>. Det du skriver ner tar du med till dag 2, där vi tränar vidare tillsammans.</p>
@@ -386,17 +377,17 @@
 
     <!-- ================= DEL 1 ================= -->
     <section class="view" id="v1">
-      <div class="cover">
-        <div class="plate pl-vetegul"><div class="plate-in">
+      <div class="hero h-b"><div class="hero-in">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-text">
           <p class="lvl2">Motiverande ledarskap</p>
           <p class="lvl3">Del 1 av 4</p>
           <h1>Pröva MI i ett möte</h1>
           <p class="ingress">Välj en MI-detalj från dag 1, testa den i ett kommande möte och reflektera så snart som möjligt efteråt.</p>
-        </div></div>
-        <div class="pattern p-blagron" aria-hidden="true"><svg><use href="#pat"/></svg></div>
-      </div>
+        </div>
+      </div></div>
       <div class="col">
-        <div class="meta"><div class="drop"><span>15<small>min</small></span></div>
+        <div class="meta"><div class="drop"><svg viewBox="0 0 80 96" aria-hidden="true"><path d="M40 95 C33 82 8 68 2.5 47 A38.5 38.5 0 1 1 77.5 47 C72 68 47 82 40 95 Z"/></svg><span>15<small>min</small></span></div>
           <p>Ungefär 5 minuter före mötet och 10 minuter efter. Mötet i sig ingår inte i tiden.</p></div>
 
         <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
@@ -443,25 +434,25 @@
 
     <!-- ================= DEL 2 ================= -->
     <section class="view" id="v2">
-      <div class="cover">
-        <div class="plate pl-rod"><div class="plate-in">
+      <div class="hero h-c"><div class="hero-in">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-text">
           <p class="lvl2">Motiverande ledarskap</p>
           <p class="lvl3">Del 2 av 4</p>
           <h1>Psykologisk trygghet</h1>
           <p class="ingress">Vad gör att människor i en grupp vågar säga vad de tänker, fråga och dela sina misstag? Och vad kan du som ledare göra för att bidra till det?</p>
-        </div></div>
-        <div class="pattern p-vetturkos" aria-hidden="true"><svg><use href="#pat"/></svg></div>
-      </div>
+        </div>
+      </div></div>
       <div class="col">
-        <div class="meta"><div class="drop"><span>1<small>timme</small></span></div>
+        <div class="meta"><div class="drop"><svg viewBox="0 0 80 96" aria-hidden="true"><path d="M40 95 C33 82 8 68 2.5 47 A38.5 38.5 0 1 1 77.5 47 C72 68 47 82 40 95 Z"/></svg><span>1<small>timme</small></span></div>
           <p>Webbinariet tar ca 55 minuter. Lyssna gärna när du kan vara ostörd, till exempel på en promenad.</p></div>
 
         <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
           <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-listen"/></svg>Lyssna</p>
           <h3>Webbinarium om psykologisk trygghet</h3>
           <div class="media">
-            <div class="frame" data-embed="https://player.vimeo.com/video/1020956186?autoplay=1" data-link="https://vimeo.com/1020956186" data-label="Spela webbinariet"></div>
-            <div class="mcap"><b>Psykologisk trygghet: nyckeln till framgångsrika team</b><span>Öppet webbinarium från Health Competence, ca 55 min. </span><a href="https://vimeo.com/1020956186" target="_blank" rel="noopener">Öppna på Vimeo</a></div>
+            <div class="frame" data-mode="link" data-link="https://vimeo.com/1020956186" data-label="Spela webbinariet" data-link-label="Öppna webbinariet på Vimeo"></div>
+            <div class="mcap"><b>Psykologisk trygghet: nyckeln till framgångsrika team</b><span>Öppet webbinarium från Health Competence, ca 55 min. Webbinariet öppnas i en ny flik hos Vimeo, eftersom det inte går att spela inne i kursen.</span></div>
           </div>
           <p>Lyssna efter sådant du känner igen från din egen arbetsgrupp och sådant du själv skulle kunna göra mer av.</p>
 
@@ -502,17 +493,17 @@
 
     <!-- ================= DEL 3 ================= -->
     <section class="view" id="v3">
-      <div class="cover">
-        <div class="plate pl-persika"><div class="plate-in">
+      <div class="hero h-a flip"><div class="hero-in">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-text">
           <p class="lvl2">Motiverande ledarskap</p>
           <p class="lvl3">Del 3 av 4</p>
           <h1>Feedback i dialog</h1>
           <p class="ingress">Feedback tas emot bättre när medarbetaren får komma till tals först. Här förbereder du en situation att öva på dag 2.</p>
-        </div></div>
-        <div class="pattern p-vetgron" aria-hidden="true"><svg><use href="#pat"/></svg></div>
-      </div>
+        </div>
+      </div></div>
       <div class="col">
-        <div class="meta"><div class="drop"><span>20<small>min</small></span></div>
+        <div class="meta"><div class="drop"><svg viewBox="0 0 80 96" aria-hidden="true"><path d="M40 95 C33 82 8 68 2.5 47 A38.5 38.5 0 1 1 77.5 47 C72 68 47 82 40 95 Z"/></svg><span>20<small>min</small></span></div>
           <p>En film på 3 minuter, fyra sidor i kursboken och två korta skrivuppgifter.</p></div>
 
         <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
@@ -607,17 +598,17 @@
 
     <!-- ================= DEL 4 ================= -->
     <section class="view" id="v4">
-      <div class="cover">
-        <div class="plate pl-turkos"><div class="plate-in">
+      <div class="hero h-b flip"><div class="hero-in">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-text">
           <p class="lvl2">Motiverande ledarskap</p>
           <p class="lvl3">Del 4 av 4</p>
           <h1>Bemöta samtalsutmaningar</h1>
           <p class="ingress">När det finns tveksamhet, motstånd eller oenighet. Vad gjorde du senast det gick bra, och vilka fällor undvek du?</p>
-        </div></div>
-        <div class="pattern p-persrod" aria-hidden="true"><svg><use href="#pat"/></svg></div>
-      </div>
+        </div>
+      </div></div>
       <div class="col">
-        <div class="meta"><div class="drop"><span>20<small>min</small></span></div>
+        <div class="meta"><div class="drop"><svg viewBox="0 0 80 96" aria-hidden="true"><path d="M40 95 C33 82 8 68 2.5 47 A38.5 38.5 0 1 1 77.5 47 C72 68 47 82 40 95 Z"/></svg><span>20<small>min</small></span></div>
           <p>Två sidor i kursboken, en kort övning och tre reflektionsfrågor om en egen erfarenhet.</p></div>
 
         <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
@@ -691,17 +682,17 @@
 
     <!-- ================= AVSLUT ================= -->
     <section class="view" id="v5">
-      <div class="cover">
-        <div class="plate pl-rosa"><div class="plate-in">
+      <div class="hero h-c flip"><div class="hero-in">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-text">
           <p class="lvl2">Motiverande ledarskap</p>
           <p class="lvl3">Inför dag 2</p>
           <h1>Kunskapskoll och dina svar</h1>
           <p class="ingress">Sex korta frågor, och sedan en sammanställning av allt du skrivit som du tar med till dag 2.</p>
-        </div></div>
-        <div class="pattern p-gulgron" aria-hidden="true"><svg><use href="#pat"/></svg></div>
-      </div>
+        </div>
+      </div></div>
       <div class="col">
-        <div class="meta"><div class="drop"><span>5<small>min</small></span></div>
+        <div class="meta"><div class="drop"><svg viewBox="0 0 80 96" aria-hidden="true"><path d="M40 95 C33 82 8 68 2.5 47 A38.5 38.5 0 1 1 77.5 47 C72 68 47 82 40 95 Z"/></svg><span>5<small>min</small></span></div>
           <p>Du kan rätta så många gånger du vill. Svarsalternativen hamnar i ny ordning varje gång sidan laddas.</p></div>
 
         <div id="examHost"></div>
@@ -969,15 +960,14 @@
   })();
 
   /* ---------- Filmer ---------- */
-  var PAT_SVG='<svg class="pat" aria-hidden="true"><use href="#pat"/></svg>';
+  var PAT_SVG='<span class="pbg" aria-hidden="true"></span>';
   function setupFrame(frame){
     var src=frame.getAttribute("data-embed"), link=frame.getAttribute("data-link"), label=frame.getAttribute("data-label")||"Spela filmen";
-    frame.style.setProperty("--pb","var(--gr-gron)"); frame.style.setProperty("--pf","var(--gr-turkos)");
-    if(IN_ARTIFACT){
-      frame.innerHTML='<a class="poster" href="'+link+'" target="_blank" rel="noopener" style="--pb:var(--gr-gron);--pf:var(--gr-turkos)">'+PAT_SVG+'<span class="play"><i></i>'+label+' på Vimeo</span></a>';
+    if(IN_ARTIFACT || frame.getAttribute("data-mode")==="link"){
+      frame.innerHTML='<a class="poster" href="'+link+'" target="_blank" rel="noopener">'+PAT_SVG+'<span class="play"><i></i>'+(frame.getAttribute("data-link-label")||label+" på Vimeo")+'</span></a>';
       return;
     }
-    frame.innerHTML='<button type="button" class="poster" style="--pb:var(--gr-gron);--pf:var(--gr-turkos)" aria-label="'+label+'">'+PAT_SVG+'<span class="play"><i></i>'+label+'</span></button>';
+    frame.innerHTML='<button type="button" class="poster" aria-label="'+label+'">'+PAT_SVG+'<span class="play"><i></i>'+label+'</span></button>';
     frame.querySelector(".poster").addEventListener("click",function(){
       var f=document.createElement("iframe"); f.src=src; f.title=label;
       f.setAttribute("allow","autoplay; fullscreen; picture-in-picture"); f.setAttribute("allowfullscreen","");
@@ -994,7 +984,7 @@
     var embed="https://player.vimeo.com/video/"+m[1]+"?"+(m[2]?"h="+m[2]+"&":"")+"autoplay=1";
     host.innerHTML='<div class="frame" data-embed="'+embed+'" data-link="'+url+'" data-label="Spela filmen"></div><div class="mcap"><b>Feedback i dialog</b><span>Film, ca 3 min. </span><a href="'+url+'" target="_blank" rel="noopener">Öppna på Vimeo</a></div>';
   })();
-  document.querySelectorAll(".frame[data-embed]").forEach(setupFrame);
+  document.querySelectorAll(".frame[data-embed], .frame[data-mode=\"link\"]").forEach(setupFrame);
 
   /* ---------- Kunskapskoll ---------- */
   var EXAM=[

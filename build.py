@@ -2,6 +2,8 @@ import base64, pathlib
 root = pathlib.Path('/home/claude/mi-kurs')
 src = (root/'src/kurs.html').read_text(encoding='utf-8')
 def uri(p): return 'data:image/png;base64,' + base64.b64encode((root/'logo'/p).read_bytes()).decode()
+def webp(k): return 'data:image/webp;base64,' + base64.b64encode((root/'patterns'/f'monster-{k}.webp').read_bytes()).decode()
+for k in 'abc': src = src.replace('{{PAT_'+k.upper()+'}}', webp(k))
 src = src.replace('{{LOGO_POS}}', uri('gr-liggande-positiv.png')).replace('{{LOGO_NEG}}', uri('gr-liggande-negativ.png'))
 head, body = src.split('<!--BODY-->')
 (root/'artifact.html').write_text(head + body, encoding='utf-8')
