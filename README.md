@@ -1,6 +1,6 @@
 # Motiverande ledarskap: förberedelse inför dag 2
 
-Självstudiekurs som deltagarna gör mellan kurstillfälle 1 och 2. En enda fristående HTML-fil (`index.html`) som bygger på samma upplägg som förberedelsen inför dag 1, men nu i GR:s grafiska profil.
+Självstudiekurs som deltagarna gör mellan kurstillfälle 1 och 2. En enda fristående HTML-fil (`index.html`) som bygger på samma upplägg som förberedelsen inför dag 1 men med en ny, neutral formgivning.
 
 ## Innehåll
 
@@ -25,16 +25,15 @@ var FEEDBACK_FILM_URL = "https://vimeo.com/1234567890/abcdef1234";
 
 Fungerar både med och utan privacy-hash. Filmen är inlagd (vimeo.com/1239539193). Om fältet töms visar kursen texten "Filmen kommer snart".
 
-## Grafisk profil
+## Formgivning
 
-Bygger på GR:s grafiska manual (2018):
-
-* Profilfärgerna används som plattor och mönster, aldrig som textfärg. Texten är svart eller vit beroende på platta.
-* Varje avsnitt börjar med ett omslag där GR:s mönster går ut i kanten (manualens omslag 6). Texten ligger på mönstrets enfärgade yta, i manualens hierarki (nivå 2, nivå 3, rubrik, ingress). På smala skärmar visas mönstret som ett band överst och texten på samma färg under.
-* Tre mönster från GR (`patterns/monster-a/b/c`: blå/grön, turkos/blå, röd/persika) används två gånger var, andra gången spegelvänt. Logotypen i bildfilerna är borttagen eftersom kursen har logotypen i sidhuvudet.
-* Typsnitt: Franklin Gothic (Libre Franklin på webben) som manualens reserv för ITC Conduit, och Georgia för brödtext.
-* Inga versaler. Listor med siffror eller fyllda punkter. Ikoner med en färg och en ihålig cirkel. Droppsymbolen används för tidsangivelser.
-* Logotypen (liggande) sitter uppe till höger, i positiv version i ljust läge och negativ version i mörkt läge.
+* Neutral formgivning utan koppling till någon organisations grafiska profil (ingen logotyp, inga profilfärger).
+* Varje avsnitt har ett enfärgat omslag i en jordnära, djup färg: skog (inledning), terrakotta (del 1), plommon (del 2), ockra (del 3), bläck (del 4) och oliv (avslutning). Vit text på de mörka färgerna, mörk text på ockra.
+* Typsnitt: Arial överallt.
+* Klickbart och inte klickbart skiljs åt:
+  * Klickbart: knappar (fyllda eller med kantlinje i knappfärgen) och valrutor med kantlinje som markeras vid hovring.
+  * Inte klickbart: textrutor utan kantlinje och fyllda markörer (a, b, c).
+* Droppsymbolen visar tidsåtgången för varje del.
 
 ## Begreppsregler (samma som dag 1)
 
@@ -45,9 +44,9 @@ Bygger på GR:s grafiska manual (2018):
 
 ## Teknik
 
-* Fristående HTML utan byggsteg. Typsnittet hämtas från Google Fonts. Logotyper och mönster ligger inbäddade i filen.
+* Fristående HTML utan byggsteg. Inga externa typsnitt eller bilder.
 * Svar och progress sparas i webbläsaren (localStorage).
 * Röstinmatning på svenska (sv-SE) i alla tio fritextrutor.
 * Filmer startar först vid klick (Vimeo). Film och mikrofon kräver https.
 * Publicering: lägg filen i ett nytt GitHub-repo kopplat till Netlify, på samma sätt som för dag 1.
-* Källfilerna ligger i `src/` (sidan), `logo/` (logotyperna), `patterns/` (mönstren) och `tools/build.py` (bygger `index.html`).
+* Källfilerna ligger i `src/` (sidan) och `tools/build.py` (bygger `index.html`).

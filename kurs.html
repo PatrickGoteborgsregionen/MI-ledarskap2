@@ -1,276 +1,273 @@
 <title>Motiverande ledarskap, dag 2</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600&display=swap">
 <style>
-  /* Layout: GR-omslag per avsnitt (enfärgad platta med rubrik + mönsterhalva), lugn läsyta under, navigering i sidofält. */
+  /* Layout: enfärgat omslag per avsnitt (jordnära, djupa färger), lugn läsyta under, navigering i sidofält.
+     Klickbart = knappar (fyllda eller med kantlinje) och valrutor med kantlinje som reagerar vid hovring.
+     Inte klickbart = text, rutor utan kantlinje och fyllda markörer. */
   :root{
-    /* GR:s profilfärger (grafisk manual 2018). Används som plattor och mönster, aldrig som textfärg. */
-    --gr-rod:#8e0826; --gr-turkos:#00a29a; --gr-gron:#1a7167; --gr-persika:#f5ac90;
-    --gr-vetegul:#ecd896; --gr-gul:#ffed00; --gr-rosa:#ebd1d0; --gr-bla:#a9cee0;
-    /* GR:s mönster (bildfiler från GR) */
-    --img-a:url("{{PAT_A}}"); --img-b:url("{{PAT_B}}"); --img-c:url("{{PAT_C}}");
+    /* Avsnittsfärger */
+    --c-skog:#2f4b3c; --c-terrakotta:#9a4529; --c-plommon:#5a2e4c; --c-ockra:#b8862e; --c-black:#22405a; --c-oliv:#6b5a2a;
+    --c-sand:#e7c27d;
 
     /* Tema (ljust) */
-    --bg:#faf8f6; --surface:#ffffff; --surface-2:#f6eee8; --ink:#1d1d1b; --muted:#56524e;
-    --line:#e3dcd5; --line-soft:#efe9e3;
-    --action:#1a7167; --action-ink:#ffffff; --action-hover:#145a52;
-    --focus:#8e0826;
-    --good:#1a7167; --good-soft:#e2efec; --bad:#8e0826; --bad-soft:#f6e3e5;
-    --logo-pos:block; --logo-neg:none;
+    --bg:#f7f4ef; --surface:#ffffff; --surface-2:#f2ece4; --ink:#1f1a14; --muted:#5b544b;
+    --line:#e2dbd1; --line-strong:#b9afa2;
+    --action:#2f4b3c; --action-ink:#ffffff; --action-hover:#233a2e; --action-soft:#e5ece6;
+    --focus:#9a4529;
+    --good:#2f6b45; --good-soft:#e3efe6; --bad:#9a2f29; --bad-soft:#f6e3e0;
 
-    /* Typografi: Franklin Gothic som manualens reserv för ITC Conduit, Georgia för brödtext */
-    --font-head:"Libre Franklin","Franklin Gothic Medium","Franklin Gothic",Arial,sans-serif;
-    --font-body:Georgia,"Times New Roman",serif;
-    --maxw:44rem; --radius:14px;
+    --font:Arial,"Helvetica Neue",Helvetica,sans-serif;
+    --maxw:46rem; --radius:14px;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --bg:#151817; --surface:#1d2120; --surface-2:#252a28; --ink:#f1ede8; --muted:#b9b2ab;
-      --line:#343a38; --line-soft:#2a2f2d;
-      --action:#00a29a; --action-ink:#111111; --action-hover:#14b5ad;
-      --focus:#f5ac90;
-      --good:#5cc2b5; --good-soft:#1d3532; --bad:#f08a9b; --bad-soft:#3d2228;
-      --logo-pos:none; --logo-neg:block;
+      --bg:#171513; --surface:#211e1b; --surface-2:#2a2622; --ink:#f3eee7; --muted:#bbb2a6;
+      --line:#38322c; --line-strong:#6a6157;
+      --action:#a9c9b1; --action-ink:#13201a; --action-hover:#bfdcc6; --action-soft:#26332b;
+      --focus:#e7c27d;
+      --good:#8fd0a3; --good-soft:#1f3326; --bad:#f19a8e; --bad-soft:#3d2421;
       color-scheme:dark;
     }
   }
   :root[data-theme="dark"]{
-    --bg:#151817; --surface:#1d2120; --surface-2:#252a28; --ink:#f1ede8; --muted:#b9b2ab;
-    --line:#343a38; --line-soft:#2a2f2d;
-    --action:#00a29a; --action-ink:#111111; --action-hover:#14b5ad;
-    --focus:#f5ac90;
-    --good:#5cc2b5; --good-soft:#1d3532; --bad:#f08a9b; --bad-soft:#3d2228;
-    --logo-pos:none; --logo-neg:block;
+    --bg:#171513; --surface:#211e1b; --surface-2:#2a2622; --ink:#f3eee7; --muted:#bbb2a6;
+    --line:#38322c; --line-strong:#6a6157;
+    --action:#a9c9b1; --action-ink:#13201a; --action-hover:#bfdcc6; --action-soft:#26332b;
+    --focus:#e7c27d;
+    --good:#8fd0a3; --good-soft:#1f3326; --bad:#f19a8e; --bad-soft:#3d2421;
     color-scheme:dark;
   }
 
   *{box-sizing:border-box;}
   [hidden]{display:none!important;}
   html{scroll-behavior:smooth;}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17.5px;line-height:1.62;-webkit-font-smoothing:antialiased;}
   body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface);}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;} *{animation:none!important;transition:none!important;}}
-  h1,h2,h3,h4,.head{font-family:var(--font-head);font-weight:500;text-wrap:balance;}
+  h1,h2,h3,h4{font-weight:700;text-wrap:balance;}
+  button,input,textarea{font-family:var(--font);}
   a{color:inherit;}
   :focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px;}
-  .skip{position:absolute;left:-999px;top:0;background:var(--surface);color:var(--ink);padding:.6rem 1rem;z-index:200;font-family:var(--font-head);}
+  .skip{position:absolute;left:-999px;top:0;background:var(--surface);color:var(--ink);padding:.6rem 1rem;z-index:200;}
   .skip:focus{left:0;}
 
-  /* ---------- Sidhuvud med logotyp uppe till höger ---------- */
-  .topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--surface);border-bottom:1px solid var(--line);}
-  .topbar-in{display:flex;align-items:center;gap:1rem;justify-content:space-between;padding-block:.7rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
-  .crumb{font-family:var(--font-head);font-size:.92rem;line-height:1.3;min-width:0;}
-  .crumb b{font-weight:500;display:block;}
-  .crumb span{font-weight:300;color:var(--muted);}
-  .logo{width:150px;flex:0 0 auto;padding:.35rem 0;}
-  .logo img{width:100%;height:auto;}
-  .logo .pos{display:var(--logo-pos);} .logo .neg{display:var(--logo-neg);}
-  .menubtn{display:none;font-family:var(--font-head);font-size:.95rem;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:99px;padding:.4rem .95rem;cursor:pointer;}
-  .mprog{display:none;height:4px;background:var(--line-soft);} .mprog i{display:block;height:100%;width:0;background:var(--action);transition:width .4s;}
+  /* Avsnittsfärg per vy */
+  .s0{--sec:var(--c-skog);--sec-ink:#ffffff;}
+  .s1{--sec:var(--c-terrakotta);--sec-ink:#ffffff;}
+  .s2{--sec:var(--c-plommon);--sec-ink:#ffffff;}
+  .s3{--sec:var(--c-ockra);--sec-ink:#1f1a14;}
+  .s4{--sec:var(--c-black);--sec-ink:#ffffff;}
+  .s5{--sec:var(--c-oliv);--sec-ink:#ffffff;}
+
+  /* ---------- Toppfält (bara mobil) ---------- */
+  .topbar{display:none;position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--surface);border-bottom:1px solid var(--line);}
+  .topbar-in{display:flex;align-items:center;gap:.9rem;padding-block:.6rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
+  .crumb{font-size:.95rem;font-weight:700;line-height:1.3;min-width:0;}
+  .menubtn{font-size:.95rem;font-weight:700;background:var(--surface);color:var(--action);border:1.5px solid var(--action);border-radius:99px;padding:.4rem 1rem;cursor:pointer;}
+  .menubtn:hover{background:var(--action-soft);}
+  .mprog{height:4px;background:var(--line);} .mprog i{display:block;height:100%;width:0;background:var(--action);transition:width .4s;}
+  .drawer{display:none;}
 
   /* ---------- Sidofält ---------- */
   .wrap{display:flex;align-items:flex-start;}
-  .sidebar{width:290px;flex:0 0 290px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 66px);height:calc(100vh - 66px);overflow-y:auto;padding:1.6rem 1.1rem 2rem max(16px,env(safe-area-inset-left,0px));border-right:1px solid var(--line);background:var(--surface);}
-  .sb-title{font-family:var(--font-head);font-size:1.15rem;line-height:1.25;margin:0 0 .3rem;font-weight:500;}
-  .sb-sub{font-family:var(--font-head);font-weight:300;font-size:.9rem;color:var(--muted);margin:0 0 1.3rem;line-height:1.4;}
-  nav.toc{display:flex;flex-direction:column;gap:.2rem;}
-  .toc button{display:grid;grid-template-columns:2rem 1fr auto;align-items:center;gap:.55rem;width:100%;text-align:left;background:none;border:0;border-radius:10px;padding:.5rem .55rem;cursor:pointer;color:var(--ink);font-family:var(--font-head);font-size:.95rem;line-height:1.3;}
-  .toc button:hover{background:var(--line-soft);}
-  .toc button[aria-current="true"]{background:var(--surface-2);font-weight:500;}
-  .toc .dot{width:1.65rem;height:1.65rem;border-radius:50%;background:var(--sw);display:grid;place-items:center;font-size:.8rem;font-weight:500;color:var(--swi);}
-  .toc .tmin{font-weight:300;font-size:.8rem;color:var(--muted);}
-  .toc .ok{font-size:.8rem;color:var(--good);font-weight:600;}
-  .prog{margin:1.5rem 0 0;}
-  .prog-l{font-family:var(--font-head);font-weight:300;font-size:.85rem;color:var(--muted);margin-bottom:.35rem;display:flex;justify-content:space-between;}
-  .prog-t{height:6px;border-radius:99px;background:var(--line-soft);overflow:hidden;} .prog-t i{display:block;height:100%;width:0;background:var(--action);transition:width .4s;}
-  .saveinfo{margin-top:1.2rem;font-family:var(--font-head);font-weight:300;font-size:.82rem;color:var(--muted);line-height:1.5;}
-  .linkbtn{background:none;border:0;padding:0;margin-top:.35rem;font:inherit;font-weight:400;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
+  .sidebar{width:290px;flex:0 0 290px;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow-y:auto;padding:1.8rem 1.1rem 2rem max(16px,env(safe-area-inset-left,0px));border-right:1px solid var(--line);background:var(--surface);}
+  .sb-title{font-size:1.2rem;font-weight:700;line-height:1.25;margin:0 0 .25rem;}
+  .sb-sub{font-size:.9rem;color:var(--muted);margin:0 0 1.4rem;line-height:1.4;}
+  nav.toc{display:flex;flex-direction:column;gap:.15rem;}
+  .toc button{display:grid;grid-template-columns:1.4rem 1fr auto;align-items:center;gap:.7rem;width:100%;text-align:left;background:none;border:0;border-radius:10px;padding:.55rem .6rem;cursor:pointer;color:var(--ink);font-size:.95rem;line-height:1.3;}
+  .toc button:hover{background:var(--surface-2);}
+  .toc button[aria-current="true"]{background:var(--surface-2);font-weight:700;}
+  .toc .dot{width:.85rem;height:.85rem;border-radius:3px;background:var(--sw);justify-self:center;}
+  .toc .tmin{font-weight:400;font-size:.8rem;color:var(--muted);}
+  .toc .ok{font-size:.8rem;color:var(--good);font-weight:700;}
+  .prog{margin:1.6rem 0 0;}
+  .prog-l{font-size:.85rem;color:var(--muted);margin-bottom:.35rem;display:flex;justify-content:space-between;}
+  .prog-t{height:6px;border-radius:99px;background:var(--line);overflow:hidden;} .prog-t i{display:block;height:100%;width:0;background:var(--action);transition:width .4s;}
+  .saveinfo{margin-top:1.2rem;font-size:.82rem;color:var(--muted);line-height:1.5;}
+  .linkbtn{background:none;border:0;padding:0;margin-top:.35rem;font:inherit;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
+  .linkbtn:hover{color:var(--action);}
   .confirm{margin-top:.6rem;background:var(--surface-2);border-radius:10px;padding:.7rem .8rem;font-size:.85rem;}
   .confirm .row{display:flex;gap:.5rem;margin-top:.5rem;flex-wrap:wrap;}
-  .drawer{display:none;}
 
   .main{flex:1 1 auto;min-width:0;}
-
-  /* ---------- Avsnittets omslag ---------- */
   section.view{display:none;}
   section.view.active{display:block;animation:in .35s ease;}
   @keyframes in{from{opacity:.4;transform:translateY(4px);}to{opacity:1;transform:none;}}
-  /* Omslag: GR:s mönster utfallande, texten ligger på mönstrets enfärgade yta (manualens omslag 6) */
-  .hero{position:relative;container-type:inline-size;background:var(--hb);color:var(--hi);overflow:hidden;}
-  .hero-bg{background:var(--img) center top/cover no-repeat;}
-  .flip .hero-bg{transform:scaleX(-1);}
-  .h-a{--img:var(--img-a);--hb:var(--gr-bla);--hi:#1d1d1b;--tx:30;--tw:41.5;--ty:3.8;--th:37.5;}
-  .h-b{--img:var(--img-b);--hb:var(--gr-turkos);--hi:#111111;--tx:17.5;--tw:52.5;--ty:15.2;--th:24.5;}
-  .h-c{--img:var(--img-c);--hb:var(--gr-rod);--hi:#ffffff;--tx:40;--tw:44.4;--ty:3.8;--th:31.5;}
-  .lvl2{font-family:var(--font-head);font-weight:600;font-size:.95rem;margin:0;letter-spacing:.005em;}
-  .lvl3{font-family:var(--font-head);font-weight:300;font-size:.95rem;margin:.1rem 0 1rem;}
-  .hero h1{font-weight:500;font-size:clamp(2rem,3.4cqw,3rem);line-height:1.06;letter-spacing:-.02em;margin:0 0 .65rem;}
-  .hero .ingress{font-family:var(--font-head);font-weight:400;font-size:clamp(1.02rem,1.45cqw,1.2rem);line-height:1.45;margin:0;max-width:34em;}
-  /* Bred yta: text ovanpå mönstret */
-  @container (min-width:900px){
-    .hero-in{position:relative;height:min(50cqw,560px);}
-    .hero-bg{position:absolute;inset:0;}
-    .hero-text{position:absolute;left:calc(var(--tx) * 1cqw);width:calc(var(--tw) * 1cqw);top:calc(var(--ty) * 1cqw);height:calc(var(--th) * 1cqw);display:flex;flex-direction:column;justify-content:center;}
-    .flip .hero-text{left:calc((100 - var(--tx) - var(--tw)) * 1cqw);}
-  }
-  /* Smal yta: mönsterband överst, texten på samma färg under */
-  @container (max-width:899.98px){
-    .hero-bg{height:clamp(110px,30cqw,220px);background-position:center 30%;}
-    .hero-text{padding-block:1.4rem 2rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:44rem;}
-    .hero-text{margin-inline:auto;}
-  }
+
+  /* ---------- Omslag ---------- */
+  .hero{background:var(--sec);color:var(--sec-ink);}
+  .hero-text{max-width:var(--maxw);margin:0 auto;padding-block:clamp(2.6rem,7vw,5rem) clamp(2.2rem,5vw,3.6rem);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));box-sizing:content-box;}
+  .eyebrow{font-size:1rem;font-weight:700;margin:0 0 .9rem;opacity:.85;}
+  .hero h1{font-size:clamp(2.4rem,5.2vw,3.8rem);line-height:1.04;letter-spacing:-.025em;margin:0 0 1rem;}
+  .hero .ingress{font-size:clamp(1.1rem,1.6vw,1.3rem);line-height:1.5;margin:0;max-width:36em;}
 
   /* ---------- Läsyta ---------- */
-  .col{max-width:var(--maxw);margin:0 auto;padding-block:2.2rem 5rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
-  .col > * + *{margin-top:1rem;}
-  h2{font-size:1.5rem;line-height:1.25;margin:2.6rem 0 .3rem;}
-  h3{font-size:1.15rem;line-height:1.3;margin:1.8rem 0 .2rem;}
+  .col{max-width:var(--maxw);margin:0 auto;padding-block:2.4rem 5rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));box-sizing:content-box;}
+  h2{font-size:1.5rem;line-height:1.25;margin:2.6rem 0 .4rem;}
+  h3{font-size:1.25rem;line-height:1.3;margin:.1rem 0 .3rem;}
   p{margin:.8rem 0;}
-  ul,ol{padding-left:1.3rem;margin:.6rem 0;} li{margin:.35rem 0;} li::marker{color:var(--muted);}
-  strong{font-weight:700;}
-  .src{font-family:var(--font-head);font-weight:300;font-size:.85rem;color:var(--muted);margin-top:.4rem;}
-  .light{font-family:var(--font-head);font-weight:300;}
+  ul,ol{padding-left:1.3rem;margin:.6rem 0;} li{margin:.35rem 0;}
+  .src{font-size:.85rem;color:var(--muted);margin-top:.5rem;}
+  .light{color:var(--muted);}
+  .lead{font-size:1.15rem;line-height:1.6;}
 
-  /* Symbol: droppe för kort information (tid) */
-  .meta{display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;margin:0 0 1.2rem;}
-  .drop{position:relative;width:80px;height:96px;flex:0 0 auto;color:#1d1d1b;}
+  /* Symbol: droppe för tidsangivelse (inte klickbar) */
+  .meta{display:flex;align-items:center;gap:1.2rem;margin:0 0 1rem;}
+  .drop{position:relative;width:72px;height:86px;flex:0 0 auto;color:#1f1a14;}
   .drop svg{position:absolute;inset:0;width:100%;height:100%;}
-  .drop svg path{fill:var(--gr-gul);}
-  .drop span{position:absolute;left:0;right:0;top:0;height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:600;font-size:1.15rem;line-height:1;text-align:center;letter-spacing:-.01em;}
-  .drop small{display:block;font-weight:400;font-size:.78rem;margin-top:.2rem;letter-spacing:0;}
-  .meta p{margin:0;font-family:var(--font-head);font-weight:300;font-size:1rem;line-height:1.5;flex:1 1 16rem;min-width:0;}
+  .drop svg path{fill:var(--c-sand);}
+  .drop span{position:absolute;left:0;right:0;top:0;height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;line-height:1;text-align:center;}
+  .drop small{display:block;font-weight:400;font-size:.75rem;margin-top:.2rem;}
+  .meta p{margin:0;font-size:1rem;line-height:1.5;color:var(--muted);flex:1 1 16rem;min-width:0;}
 
-  /* Steg (a, b, c …) */
-  .step{display:grid;grid-template-columns:2.6rem 1fr;gap:0 1rem;margin:2.2rem 0 0;}
-  .step > .letter{width:2.6rem;height:2.6rem;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center;font-family:var(--font-head);font-weight:500;font-size:1.05rem;}
+  /* Steg a, b, c: fylld markör, inte klickbar */
+  .step{display:grid;grid-template-columns:2.4rem 1fr;gap:0 1rem;margin:2.6rem 0 0;}
+  .step > .letter{width:2.4rem;height:2.4rem;border-radius:8px;background:var(--sec);color:var(--sec-ink);display:grid;place-items:center;font-weight:700;font-size:1.1rem;}
   .step > .body{min-width:0;}
-  .step h3{margin:.35rem 0 .3rem;}
-  .kind{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--font-head);font-weight:300;font-size:.88rem;color:var(--muted);margin:0 0 .2rem;}
-  .ic{width:28px;height:28px;flex:0 0 auto;}
-  .later{display:inline-block;font-family:var(--font-head);font-weight:500;font-size:.85rem;background:var(--gr-blaa,var(--gr-bla));color:#1d1d1b;border-radius:99px;padding:.15rem .7rem;margin-left:.2rem;}
+  .kind{font-size:.9rem;font-weight:700;color:var(--muted);margin:0 0 .15rem;line-height:1.3;}
+  .when{font-weight:400;}
 
-  /* Teoriruta och citat */
-  .box{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.2rem 1.3rem;margin:1.2rem 0;}
+  /* Läsrutor (inte klickbara) */
+  .box{background:var(--surface-2);border-radius:var(--radius);padding:1.3rem 1.4rem;margin:1.2rem 0;}
   .box > :first-child{margin-top:0;} .box > :last-child{margin-bottom:0;}
   .box h4{font-size:1.05rem;margin:0 0 .4rem;}
   .say{font-style:italic;color:var(--muted);}
   .twocol{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
   .twocol > div{min-width:0;}
-  .chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:.6rem 0 0;padding:0;list-style:none;}
-  .chips li{margin:0;font-family:var(--font-head);font-size:.9rem;line-height:1.3;background:var(--surface-2);border-radius:99px;padding:.35rem .8rem;}
-  ol.steps{counter-reset:s;list-style:none;padding:0;margin:.8rem 0 0;display:grid;gap:.7rem;}
-  ol.steps > li{counter-increment:s;display:grid;grid-template-columns:2rem 1fr;gap:.8rem;margin:0;}
-  ol.steps > li::before{content:counter(s);width:2rem;height:2rem;border-radius:50%;background:var(--gr-persika);color:#1d1d1b;display:grid;place-items:center;font-family:var(--font-head);font-weight:500;font-size:.9rem;}
+  .twocol .box{margin:0;}
+  ul.cols{columns:2;column-gap:2rem;margin-top:.6rem;}
+  ul.cols li{break-inside:avoid;margin:0 0 .35rem;}
+  ol.steps{list-style:none;counter-reset:s;padding:0;margin:.8rem 0 0;display:grid;gap:.6rem;}
+  ol.steps > li{counter-increment:s;display:grid;grid-template-columns:1.6rem 1fr;gap:.6rem;margin:0;}
+  ol.steps > li::before{content:counter(s) ".";font-weight:700;}
   ol.steps > li > div{min-width:0;}
 
-  /* Media (podd/film) */
+  /* Media */
   .media{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:1.2rem 0;}
-  .frame{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;background:var(--gr-gron);}
-  .frame[data-mode="link"]{aspect-ratio:16/7;}
+  .frame{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;background:var(--sec);}
+  .frame[data-mode="link"]{aspect-ratio:16/6;}
   .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
-  .poster{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;cursor:pointer;background:var(--pb);display:block;text-decoration:none;color:#1d1d1b;}
-  .poster .pbg{position:absolute;inset:0;background:var(--img-a) center 35%/cover no-repeat;}
-  .poster .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:.7rem;background:#ffffff;color:#1d1d1b;border-radius:99px;padding:.7rem 1.3rem .7rem .8rem;font-family:var(--font-head);font-weight:500;font-size:1rem;white-space:nowrap;transition:transform .15s;}
-  .poster:hover .play{transform:translate(-50%,-50%) scale(1.04);}
-  .poster .play i{width:2.2rem;height:2.2rem;border-radius:50%;background:var(--gr-gron);display:grid;place-items:center;}
-  .poster .play i::before{content:"";border-style:solid;border-width:.45rem 0 .45rem .75rem;border-color:transparent transparent transparent #fff;margin-left:.15rem;}
-  .mcap{padding:.9rem 1.2rem;font-family:var(--font-head);font-size:.95rem;line-height:1.45;}
-  .mcap b{font-weight:500;display:block;}
-  .mcap span{font-weight:300;color:var(--muted);}
-  .mcap a{font-weight:400;}
-  .pending{aspect-ratio:16/9;max-width:100%;display:grid;place-items:center;text-align:center;padding:1.5rem;background:var(--surface-2);font-family:var(--font-head);}
-  .pending b{display:block;font-weight:500;font-size:1.1rem;}
-  .pending span{font-weight:300;color:var(--muted);font-size:.95rem;}
+  .poster{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;cursor:pointer;background:var(--sec);display:grid;place-items:center;text-decoration:none;}
+  .poster .play{display:flex;align-items:center;gap:.7rem;background:#ffffff;color:#1f1a14;border-radius:99px;padding:.65rem 1.3rem .65rem .7rem;font-weight:700;font-size:1rem;white-space:nowrap;transition:transform .15s,box-shadow .15s;box-shadow:0 2px 10px rgba(0,0,0,.18);}
+  .poster:hover .play{transform:scale(1.04);box-shadow:0 4px 16px rgba(0,0,0,.25);}
+  .poster .play i{width:2.2rem;height:2.2rem;border-radius:50%;background:var(--sec);display:grid;place-items:center;}
+  .poster .play i::before{content:"";border-style:solid;border-width:.45rem 0 .45rem .75rem;border-color:transparent transparent transparent var(--sec-ink);margin-left:.15rem;}
+  .poster .pbg{display:none;}
+  .mcap{padding:.9rem 1.2rem;font-size:.95rem;line-height:1.45;}
+  .mcap b{display:block;}
+  .mcap span{color:var(--muted);}
+  .pending{aspect-ratio:16/9;max-width:100%;display:grid;place-items:center;text-align:center;padding:1.5rem;background:var(--surface-2);}
+  .pending b{display:block;font-size:1.1rem;}
+  .pending span{color:var(--muted);font-size:.95rem;}
 
   /* Övningar */
   .ex{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.3rem;margin:1.3rem 0;}
   .ex > :first-child{margin-top:0;}
-  .ex-k{font-family:var(--font-head);font-weight:300;font-size:.88rem;color:var(--muted);margin:0 0 .3rem;}
-  .q{font-family:var(--font-head);font-weight:500;font-size:1.05rem;line-height:1.4;margin:0 0 .8rem;}
-  .hint{font-family:var(--font-head);font-weight:300;font-size:.92rem;color:var(--muted);margin:-.4rem 0 .7rem;}
-  textarea{display:block;width:100%;min-height:8rem;border:1.5px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--ink);padding:.8rem .9rem;font:inherit;font-size:1rem;line-height:1.55;resize:vertical;}
-  textarea:focus{border-color:var(--action);outline:none;box-shadow:0 0 0 3px var(--good-soft);}
-  label.tl{display:block;font-family:var(--font-head);font-weight:500;font-size:1rem;margin:1.1rem 0 .4rem;}
+  .ex-k{font-size:.88rem;font-weight:700;color:var(--muted);margin:0 0 .3rem;}
+  .q{font-weight:700;font-size:1.05rem;line-height:1.4;margin:0 0 .8rem;}
+  .hint{font-size:.93rem;color:var(--muted);margin:-.3rem 0 .7rem;}
+  textarea{display:block;width:100%;min-height:8rem;border:1.5px solid var(--line-strong);border-radius:10px;background:var(--surface);color:var(--ink);padding:.8rem .9rem;font-size:1rem;line-height:1.55;resize:vertical;}
+  textarea:focus{border-color:var(--action);outline:none;box-shadow:0 0 0 3px var(--action-soft);}
+  label.tl{display:block;font-weight:700;font-size:1rem;margin:1.2rem 0 .4rem;}
   label.tl:first-of-type{margin-top:.2rem;}
-  .btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--action);color:var(--action-ink);border:0;border-radius:99px;padding:.6rem 1.2rem;font-family:var(--font-head);font-weight:500;font-size:.98rem;cursor:pointer;}
-  .btn:hover{background:var(--action-hover);}
-  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);}
-  .btn.ghost:hover{background:var(--line-soft);}
+
+  /* Knappar: fyllda (huvudval) eller med kantlinje i knappfärg (övriga) */
+  .btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--action);color:var(--action-ink);border:1.5px solid var(--action);border-radius:99px;padding:.62rem 1.25rem;font-weight:700;font-size:.98rem;cursor:pointer;transition:background .15s,box-shadow .15s;}
+  .btn:hover{background:var(--action-hover);border-color:var(--action-hover);box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .btn.ghost{background:transparent;color:var(--action);}
+  .btn.ghost:hover{background:var(--action-soft);box-shadow:none;}
+  .btn .arr{font-size:1.05em;line-height:1;}
   .row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;align-items:center;}
   .model{margin-top:1rem;background:var(--surface-2);border-radius:10px;padding:1rem 1.1rem;font-size:.98rem;}
-  .model .mt{font-family:var(--font-head);font-weight:500;margin-bottom:.3rem;}
-  .mic{display:inline-flex;align-items:center;gap:.4rem;background:none;border:1.5px solid var(--line);border-radius:99px;color:var(--ink);font-family:var(--font-head);font-size:.88rem;padding:.35rem .85rem;cursor:pointer;margin-top:.5rem;}
+  .model .mt{font-weight:700;margin-bottom:.3rem;}
+  .mic{display:inline-flex;align-items:center;gap:.4rem;background:transparent;border:1.5px solid var(--action);border-radius:99px;color:var(--action);font-size:.88rem;font-weight:700;padding:.35rem .85rem;cursor:pointer;margin-top:.5rem;}
+  .mic:hover{background:var(--action-soft);}
   .mic.on{border-color:var(--bad);color:var(--bad);background:var(--bad-soft);}
   .mic svg{width:15px;height:15px;}
-  .micst{font-family:var(--font-head);font-weight:300;font-size:.85rem;color:var(--muted);margin-left:.5rem;}
+  .micst{font-size:.85rem;color:var(--muted);margin-left:.5rem;}
 
-  /* Flerval */
-  .opt{display:flex;gap:.7rem;align-items:flex-start;width:100%;text-align:left;background:var(--surface-2);color:var(--ink);border:1.5px solid transparent;border-radius:10px;padding:.75rem .9rem;margin:.45rem 0;cursor:pointer;font-family:var(--font-head);font-size:1rem;line-height:1.4;}
-  .opt:hover{border-color:var(--line);}
-  .opt .mk{flex:0 0 1.6rem;height:1.6rem;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-size:.8rem;font-weight:500;}
+  /* Valbara rutor: kantlinje, hovring och markering */
+  .opt,.chipbtn,.pick,.part{display:flex;gap:.7rem;align-items:flex-start;width:100%;text-align:left;background:var(--surface);color:var(--ink);border:1.5px solid var(--line-strong);border-radius:10px;padding:.75rem .9rem;cursor:pointer;font-size:1rem;line-height:1.4;transition:border-color .15s,background .15s;}
+  .opt:hover,.chipbtn:hover,.pick:hover,.part:hover{border-color:var(--action);background:var(--action-soft);}
+  .opt{margin:.45rem 0;}
+  .opt .mk{flex:0 0 1.6rem;height:1.6rem;border-radius:6px;background:var(--surface-2);display:grid;place-items:center;font-size:.85rem;font-weight:700;}
   .opt.correct{border-color:var(--good);background:var(--good-soft);}
   .opt.wrong{border-color:var(--bad);background:var(--bad-soft);}
   .opt[disabled]{cursor:default;}
-  .opt input{margin-top:.3rem;accent-color:var(--action);}
+  .opt[disabled]:not(.correct):not(.wrong){opacity:.7;}
+  .opt[disabled]:hover:not(.correct):not(.wrong){border-color:var(--line-strong);background:var(--surface);}
+  .opt input{margin-top:.25rem;accent-color:var(--action);width:1.05rem;height:1.05rem;}
   .facit{margin-top:.9rem;border-top:1px solid var(--line);padding-top:.9rem;font-size:.98rem;}
-  .facit .fh{font-family:var(--font-head);font-weight:500;margin-bottom:.3rem;}
+  .facit .fh{font-weight:700;margin-bottom:.3rem;}
   .facit ul{margin:.4rem 0 0;}
 
   /* Sortering */
   .pool{display:flex;flex-direction:column;gap:.45rem;}
-  .chipbtn{text-align:left;background:var(--surface-2);color:var(--ink);border:1.5px solid transparent;border-radius:10px;padding:.6rem .85rem;cursor:pointer;font-family:var(--font-head);font-size:.98rem;line-height:1.4;}
-  .chipbtn:hover{border-color:var(--line);}
-  .chipbtn.sel{border-color:var(--ink);background:var(--surface);}
+  .chipbtn.sel{border-color:var(--action);background:var(--action-soft);box-shadow:inset 0 0 0 1px var(--action);}
   .chipbtn.placed{display:none;}
   .buckets{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1rem;}
-  .bucket{border:1.5px dashed var(--line);border-radius:12px;padding:.8rem;min-height:6rem;cursor:pointer;background:transparent;color:var(--ink);text-align:left;font:inherit;display:flex;flex-direction:column;gap:.45rem;min-width:0;}
-  .bucket.armed{border-color:var(--ink);background:var(--surface-2);}
-  .bucket .bt{font-family:var(--font-head);font-weight:500;font-size:.98rem;}
-  .pi{display:flex;justify-content:space-between;gap:.5rem;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.45rem .6rem;font-family:var(--font-head);font-size:.9rem;line-height:1.35;}
+  .bucket{border:2px dashed var(--line-strong);border-radius:12px;padding:.8rem;min-height:6rem;cursor:pointer;background:transparent;color:var(--ink);text-align:left;font:inherit;display:flex;flex-direction:column;gap:.45rem;min-width:0;}
+  .bucket:hover,.bucket.armed{border-color:var(--action);background:var(--action-soft);}
+  .bucket .bt{font-weight:700;font-size:.98rem;}
+  .pi{display:flex;justify-content:space-between;gap:.5rem;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.45rem .6rem;font-size:.9rem;line-height:1.35;}
   .pi.ok{border-color:var(--good);background:var(--good-soft);} .pi.no{border-color:var(--bad);background:var(--bad-soft);}
-  .pi .x{background:none;border:0;color:var(--muted);cursor:pointer;font-size:1rem;line-height:1;padding:.1rem .2rem;}
-  .live{font-family:var(--font-head);font-weight:300;font-size:.92rem;color:var(--muted);min-height:1.3em;margin:.6rem 0 0;}
+  .pi .x{background:none;border:0;color:var(--muted);cursor:pointer;font-size:1.1rem;line-height:1;padding:.1rem .3rem;border-radius:4px;}
+  .pi .x:hover{color:var(--ink);background:var(--surface-2);}
+  .live{font-size:.92rem;color:var(--muted);min-height:1.3em;margin:.6rem 0 0;}
 
   /* Ordna */
   .olist{display:flex;flex-direction:column;gap:.45rem;}
-  .oi{display:flex;align-items:center;gap:.7rem;background:var(--surface-2);border:1.5px solid transparent;border-radius:10px;padding:.55rem .7rem;font-family:var(--font-head);font-size:.96rem;line-height:1.35;}
+  .oi{display:flex;align-items:center;gap:.7rem;background:var(--surface-2);border:1.5px solid transparent;border-radius:10px;padding:.55rem .7rem;font-size:.96rem;line-height:1.35;}
   .oi .ot{flex:1;min-width:0;}
   .oi.ok{border-color:var(--good);background:var(--good-soft);} .oi.no{border-color:var(--bad);background:var(--bad-soft);}
   .oc{display:flex;flex-direction:column;gap:.2rem;}
-  .oc button{width:2rem;height:1.6rem;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font-size:.7rem;}
-  .oc button:disabled{opacity:.35;cursor:default;}
+  .oc button{width:2.1rem;height:1.7rem;border-radius:6px;border:1.5px solid var(--action);background:var(--surface);color:var(--action);cursor:pointer;font-size:.7rem;}
+  .oc button:hover{background:var(--action-soft);}
+  .oc button:disabled{opacity:.3;cursor:default;border-color:var(--line-strong);color:var(--muted);background:transparent;}
 
   /* MI-påminnaren */
-  .picker{display:flex;flex-wrap:wrap;gap:.45rem;}
-  .pick{background:var(--surface-2);color:var(--ink);border:1.5px solid transparent;border-radius:99px;padding:.4rem .9rem;cursor:pointer;font-family:var(--font-head);font-size:.93rem;}
-  .pick:hover{border-color:var(--line);}
-  .pick[aria-pressed="true"]{background:var(--gr-vetegul);color:#1d1d1b;border-color:#1d1d1b;}
+  .picker{display:grid;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:.45rem;}
+  .pick{align-items:center;justify-content:space-between;padding:.6rem .8rem;font-size:.95rem;}
+  .pick::after{content:"+";font-weight:700;color:var(--action);}
+  .pick[aria-pressed="true"]{background:var(--action);border-color:var(--action);color:var(--action-ink);}
+  .pick[aria-pressed="true"]:hover{background:var(--action-hover);border-color:var(--action-hover);}
+  .pick[aria-pressed="true"]::after{content:"✓";color:var(--action-ink);}
   .reminder{margin-top:1rem;border-top:1px solid var(--line);padding-top:1rem;}
   .reminder h4{font-size:1.15rem;margin:0 0 .3rem;}
   .reminder dl{margin:.6rem 0 0;display:grid;gap:.6rem;}
-  .reminder dt{font-family:var(--font-head);font-weight:500;font-size:.92rem;}
+  .reminder dt{font-weight:700;font-size:.92rem;}
   .reminder dd{margin:0;}
+
+  /* Inledning: delarna som klickbara rader */
+  .parts{display:grid;gap:.55rem;margin:1rem 0 0;padding:0;list-style:none;}
+  .parts li{margin:0;}
+  .part{align-items:center;padding:.9rem 1rem;gap:1rem;}
+  .part .pn{flex:0 0 2.2rem;height:2.2rem;border-radius:8px;background:var(--pc);color:var(--pci);display:grid;place-items:center;font-weight:700;}
+  .part .pt{flex:1;min-width:0;}
+  .part .pt b{display:block;font-size:1.05rem;}
+  .part .pt span{color:var(--muted);font-size:.92rem;}
+  .part .go{color:var(--action);font-weight:700;font-size:1.2rem;}
 
   /* Resultat och sammanställning */
   .score{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.3rem;margin:1.2rem 0;}
-  .score .blob{width:110px;height:100px;background:var(--gr-turkos);color:#111;border-radius:58% 42% 55% 45% / 52% 48% 52% 48%;display:grid;place-items:center;font-family:var(--font-head);font-weight:500;font-size:1.8rem;font-variant-numeric:tabular-nums;flex:0 0 auto;}
-  .score .st{flex:1 1 16rem;min-width:0;font-family:var(--font-head);font-size:1rem;}
+  .score .blob{width:104px;height:104px;background:var(--sec);color:var(--sec-ink);border-radius:20px;display:grid;place-items:center;font-weight:700;font-size:1.8rem;font-variant-numeric:tabular-nums;flex:0 0 auto;}
+  .score .st{flex:1 1 16rem;min-width:0;}
   .ks{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.5rem;margin-top:1rem;}
   .ks-h{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;border-bottom:1px solid var(--line);padding-bottom:.8rem;margin-bottom:1rem;flex-wrap:wrap;}
   .ks-h h3{margin:0;font-size:1.35rem;}
-  .ks-h .light{font-size:.88rem;color:var(--muted);}
+  .ks-h .light{font-size:.88rem;}
   .ks-sec{margin:1rem 0;} .ks-sec h4{margin:0 0 .3rem;font-size:1.02rem;}
   .ks-sec ul{margin:.2rem 0;} .ks-sec li{font-size:.97rem;}
-  .ans{margin:.5rem 0 .9rem;} .ans .al{font-family:var(--font-head);font-weight:500;font-size:.92rem;}
-  .ans .at{white-space:pre-wrap;border-left:2px solid var(--line);padding-left:.8rem;margin-top:.2rem;font-size:.97rem;}
+  .ans{margin:.5rem 0 .9rem;} .ans .al{font-weight:700;font-size:.92rem;}
+  .ans .at{white-space:pre-wrap;border-left:3px solid var(--line);padding-left:.8rem;margin-top:.2rem;font-size:.97rem;}
   .ans .at.empty{color:var(--muted);font-style:italic;}
-  .note{font-family:var(--font-head);font-weight:300;font-size:.88rem;color:var(--muted);}
+  .note{font-size:.88rem;color:var(--muted);}
 
+  .pager .btn:not(.ghost)::after{content:"→";}
+  .pager .btn.ghost[data-go]:first-child::before{content:"←";}
   .pager{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);}
-  .resume{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;background:var(--surface-2);border-radius:12px;padding:.8rem 1rem;font-family:var(--font-head);font-size:.95rem;margin-bottom:1rem;}
-  .refs{font-family:var(--font-head);font-weight:300;font-size:.9rem;}
+  .resume{background:var(--surface-2);border-radius:12px;padding:.8rem 1rem;font-size:.95rem;margin-bottom:1rem;}
+  .refs{font-size:.9rem;}
 
   #printArea{display:none;}
   @media print{
@@ -280,38 +277,25 @@
 
   @media (max-width:900px){
     .sidebar{display:none;}
-    .menubtn{display:inline-block;}
-    .mprog{display:block;}
+    .topbar{display:block;}
     .drawer.open{display:block;background:var(--surface);border-bottom:1px solid var(--line);padding-block:.6rem 1rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
-    .logo{width:118px;}
   }
   @media (max-width:560px){
     body{font-size:17px;}
     .twocol,.buckets{grid-template-columns:1fr;}
-    .crumb span{display:none;}
-    .step{grid-template-columns:2.2rem 1fr;gap:0 .75rem;}
-    .step > .letter{width:2.2rem;height:2.2rem;}
+    ul.cols{columns:1;}
+    .step{grid-template-columns:2.1rem 1fr;gap:0 .75rem;}
+    .step > .letter{width:2.1rem;height:2.1rem;}
   }
 </style>
 <!--BODY-->
 <a class="skip" href="#innehall">Hoppa till innehållet</a>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <defs>
-    <symbol id="i-target" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><circle fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" cx="14" cy="14" r="6.5"/><circle fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" cx="14" cy="14" r="2"/></symbol>
-    <symbol id="i-listen" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 16v-2a6 6 0 0 1 12 0v2"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 16h2v4H8zM18 16h2v4h-2z"/></symbol>
-    <symbol id="i-play" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M11.5 9.5v9l7-4.5z"/></symbol>
-    <symbol id="i-read" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M7.5 9.5c2.5-.8 4.7-.5 6.5 1 1.8-1.5 4-1.8 6.5-1v9c-2.5-.8-4.7-.5-6.5 1-1.8-1.5-4-1.8-6.5-1zM14 10.5v9"/></symbol>
-    <symbol id="i-write" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M9 19l1-3.5 7-7 2.5 2.5-7 7zM15.5 10l2.5 2.5"/></symbol>
-    <symbol id="i-talk" viewBox="0 0 28 28"><circle fill="none" stroke="currentColor" stroke-width="1.5" cx="14" cy="14" r="13"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 10.5h12v7h-6l-3 2.5v-2.5H8z"/></symbol>
-  </defs>
-</svg>
 
 <header class="topbar">
   <div class="topbar-in">
     <button class="menubtn" id="menuBtn" aria-expanded="false" aria-controls="drawer">Meny</button>
-    <div class="crumb"><b id="crumbTitle">Inledning</b><span>Motiverande ledarskap, förberedelse inför dag 2</span></div>
-    <div class="logo"><img class="pos" src="{{LOGO_POS}}" alt="Göteborgsregionen"><img class="neg" src="{{LOGO_NEG}}" alt="Göteborgsregionen"></div>
+    <div class="crumb" id="crumbTitle">Inledning</div>
   </div>
   <div class="mprog"><i id="mFill"></i></div>
   <div class="drawer" id="drawer"><nav class="toc" id="tocMobile" aria-label="Avsnitt"></nav></div>
@@ -336,62 +320,44 @@
   <main class="main" id="innehall" tabindex="-1">
 
     <!-- ================= INLEDNING ================= -->
-    <section class="view" id="v0">
-      <div class="hero h-a"><div class="hero-in">
-        <div class="hero-bg" aria-hidden="true"></div>
-        <div class="hero-text">
-          <p class="lvl2">Motiverande ledarskap</p>
-          <p class="lvl3">Förberedelse inför dag 2</p>
+    <section class="view s0" id="v0">
+      <div class="hero"><div class="hero-text">
+          <p class="eyebrow">Förberedelse inför dag 2</p>
           <h1>Från dag 1 till dag 2</h1>
           <p class="ingress">Pröva det du tränade på dag 1 i ett riktigt möte, och förbered dig på feedback i dialog och samtalsutmaningar.</p>
-        </div>
       </div></div>
       <div class="col">
         <div class="resume" id="resumeBanner" hidden role="status"><span id="resumeText">Välkommen tillbaka.</span></div>
 
-        <div class="meta"><div class="drop"><svg viewBox="0 0 80 96" aria-hidden="true"><path d="M40 95 C33 82 8 68 2.5 47 A38.5 38.5 0 1 1 77.5 47 C72 68 47 82 40 95 Z"/></svg><span>ca 2<small>timmar</small></span></div>
-          <p>Förberedelsen består av fyra delar. Gör dem i den ordning som passar dig, men börja gärna med del 1 eftersom den kräver ett möte.</p></div>
-
-        <p>Den här förberedelsen bygger vidare på dag 1. Du prövar en MI-detalj i praktiken, lyssnar på ett webbinarium om psykologisk trygghet och läser några korta avsnitt i kursboken <em>Handbok för ledarhjältar</em>. Det du skriver ner tar du med till dag 2, där vi tränar vidare tillsammans.</p>
+        <p class="lead">Välkommen tillbaka! Nu är det dags att använda det du tränade på dag 1 i din vardag. Förberedelsen tar ungefär två timmar och du kan dela upp den på flera tillfällen.</p>
+        <p>Det du skriver sparas automatiskt och samlas i slutet av kursen, så att du har det med dig till dag 2. Du kan skriva eller tala in dina svar.</p>
 
         <h2>Fyra delar</h2>
-        <ol class="steps">
-          <li><div><strong>Pröva MI i ett möte</strong> <span class="light">(ca 15 min)</span><br>Förbered dig på att testa en MI-detalj från dag 1. Reflektera efter mötet.</div></li>
-          <li><div><strong>Psykologisk trygghet</strong> <span class="light">(ca 1 timme)</span><br>Lyssna på ett webbinarium, läs s. 84–86 och skriv ner vad du konkret kan göra för din arbetsgrupp.</div></li>
-          <li><div><strong>Feedback i dialog</strong> <span class="light">(ca 20 min)</span><br>Titta på en kort film, läs s. 91–94 och välj en situation att öva på dag 2.</div></li>
-          <li><div><strong>Bemöta samtalsutmaningar</strong> <span class="light">(ca 20 min)</span><br>Läs s. 114–115 och dra lärdomar av en samtalsutmaning som du har hanterat.</div></li>
-        </ol>
-
-        <div class="box">
-          <h4>Så fungerar kursen</h4>
-          <ul>
-            <li>Det du skriver sparas automatiskt i den här webbläsaren, så du kan pausa och fortsätta senare på samma dator eller mobil.</li>
-            <li>Vill du hellre prata än skriva kan du tala in dina svar, om din webbläsare stödjer det.</li>
-            <li>Sist i kursen finns en kort kunskapskoll och en sammanställning med alla dina svar som du kan spara och ta med till dag 2.</li>
-          </ul>
-        </div>
+        <p class="light" style="margin-top:0">Börja gärna med del 1, eftersom den bygger på ett möte du har framför dig.</p>
+        <ul class="parts">
+          <li><button type="button" class="part" data-go="1" style="--pc:var(--c-terrakotta);--pci:#fff"><span class="pn">1</span><span class="pt"><b>Pröva MI i ett möte</b><span>ca 15 min</span></span><span class="go" aria-hidden="true">→</span></button></li>
+          <li><button type="button" class="part" data-go="2" style="--pc:var(--c-plommon);--pci:#fff"><span class="pn">2</span><span class="pt"><b>Psykologisk trygghet</b><span>ca 1 timme</span></span><span class="go" aria-hidden="true">→</span></button></li>
+          <li><button type="button" class="part" data-go="3" style="--pc:var(--c-ockra);--pci:#1f1a14"><span class="pn">3</span><span class="pt"><b>Feedback i dialog</b><span>ca 20 min</span></span><span class="go" aria-hidden="true">→</span></button></li>
+          <li><button type="button" class="part" data-go="4" style="--pc:var(--c-black);--pci:#fff"><span class="pn">4</span><span class="pt"><b>Bemöta samtalsutmaningar</b><span>ca 20 min</span></span><span class="go" aria-hidden="true">→</span></button></li>
+        </ul>
 
         <div class="pager"><span></span><button class="btn" data-go="1">Börja med del 1</button></div>
       </div>
     </section>
 
     <!-- ================= DEL 1 ================= -->
-    <section class="view" id="v1">
-      <div class="hero h-b"><div class="hero-in">
-        <div class="hero-bg" aria-hidden="true"></div>
-        <div class="hero-text">
-          <p class="lvl2">Motiverande ledarskap</p>
-          <p class="lvl3">Del 1 av 4</p>
+    <section class="view s1" id="v1">
+      <div class="hero"><div class="hero-text">
+          <p class="eyebrow">Del 1 av 4</p>
           <h1>Pröva MI i ett möte</h1>
           <p class="ingress">Välj en MI-detalj från dag 1, testa den i ett kommande möte och reflektera så snart som möjligt efteråt.</p>
-        </div>
       </div></div>
       <div class="col">
         <div class="meta"><div class="drop"><svg viewBox="0 0 80 96" aria-hidden="true"><path d="M40 95 C33 82 8 68 2.5 47 A38.5 38.5 0 1 1 77.5 47 C72 68 47 82 40 95 Z"/></svg><span>15<small>min</small></span></div>
           <p>Ungefär 5 minuter före mötet och 10 minuter efter. Mötet i sig ingår inte i tiden.</p></div>
 
         <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
-          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-target"/></svg>Förbered</p>
+          <p class="kind">Förbered</p>
           <h3>Välj vad du vill testa</h3>
           <p>Tänk på ett möte du har framför dig, ett individuellt samtal eller ett gruppmöte. Vilken av MI-detaljerna från dag 1 blev du påmind om? Välj en här nedanför för att få en kort påminnelse.</p>
 
@@ -409,7 +375,7 @@
         </div></div>
 
         <div class="step"><div class="letter" aria-hidden="true">b</div><div class="body">
-          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-write"/></svg>Efter mötet <span class="later">gör så snart som möjligt</span></p>
+          <p class="kind">Efter mötet <span class="when">(gör så snart som möjligt)</span></p>
           <h3>Reflektera efter mötet</h3>
           <p>När du har testat, svara på frågorna medan mötet är färskt i minnet. Det räcker med några rader per fråga.</p>
           <div class="ex">
@@ -433,22 +399,18 @@
     </section>
 
     <!-- ================= DEL 2 ================= -->
-    <section class="view" id="v2">
-      <div class="hero h-c"><div class="hero-in">
-        <div class="hero-bg" aria-hidden="true"></div>
-        <div class="hero-text">
-          <p class="lvl2">Motiverande ledarskap</p>
-          <p class="lvl3">Del 2 av 4</p>
+    <section class="view s2" id="v2">
+      <div class="hero"><div class="hero-text">
+          <p class="eyebrow">Del 2 av 4</p>
           <h1>Psykologisk trygghet</h1>
           <p class="ingress">Vad gör att människor i en grupp vågar säga vad de tänker, fråga och dela sina misstag? Och vad kan du som ledare göra för att bidra till det?</p>
-        </div>
       </div></div>
       <div class="col">
         <div class="meta"><div class="drop"><svg viewBox="0 0 80 96" aria-hidden="true"><path d="M40 95 C33 82 8 68 2.5 47 A38.5 38.5 0 1 1 77.5 47 C72 68 47 82 40 95 Z"/></svg><span>1<small>timme</small></span></div>
           <p>Webbinariet tar ca 55 minuter. Lyssna gärna när du kan vara ostörd, till exempel på en promenad. Därefter tre sidor i kursboken och en kort skrivuppgift.</p></div>
 
         <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
-          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-listen"/></svg>Lyssna</p>
+          <p class="kind">Lyssna</p>
           <h3>Webbinarium om psykologisk trygghet</h3>
           <div class="media">
             <div class="frame" data-mode="link" data-link="https://vimeo.com/1020956186" data-label="Spela webbinariet" data-link-label="Öppna webbinariet på Vimeo"></div>
@@ -458,7 +420,7 @@
         </div></div>
 
         <div class="step"><div class="letter" aria-hidden="true">b</div><div class="body">
-          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-read"/></svg>Läs</p>
+          <p class="kind">Läs</p>
           <h3>Kursboken s. 84–86</h3>
           <p>Läs sidorna om psykologisk trygghet i arbetsgruppen. Här är en sammanfattning att ha bredvid.</p>
 
@@ -466,7 +428,7 @@
             <h4>Psykologisk trygghet i arbetsgruppen</h4>
             <p>Psykologisk trygghet beskrivs som att deltagarna i gruppen har en gemensam upplevelse av att det är okej att ta mellanmänskliga risker: att vara uppriktig med sitt perspektiv och öppet kunna prata om olika förslag, det som känns svårt i arbetet och snedsteg (Edmondson, 2019). I grupper där det råder psykologisk trygghet kommer medarbetarna självmant till tals och delar sina förslag och åsikter på ett sätt som gynnar samarbetet.</p>
             <p>Ledaren är en förebild. När du kommunicerar med aktivt lyssnande och MI-anda visar du det som också är önskvärt att medarbetarna förmedlar till varandra. Boken sammanfattar kommunikation som främjar psykologisk trygghet så här:</p>
-            <ul class="chips">
+            <ul class="cols">
               <li>Icke-dömande</li><li>Förmedla empati</li><li>Fördela ordet och utforska olika perspektiv</li><li>Uppmärksamma resurser</li><li>Förmedla respekt inför olika intressen och behov</li><li>Normalisera snedsteg</li><li>Förmedla och uppmuntra till hjälpsamhet</li><li>Utforska lärdomar från snedsteg</li><li>Visa uppskattning när medarbetarna är ärliga med det som känns svårt</li>
             </ul>
             <p class="src">Källa: kap 4, s. 84–86. En princip att ta med sig: låt andra komma till tals först.</p>
@@ -480,7 +442,7 @@
         </div></div>
 
         <div class="step"><div class="letter" aria-hidden="true">c</div><div class="body">
-          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-write"/></svg>Skriv</p>
+          <p class="kind">Skriv</p>
           <h3>Vad kan du göra konkret?</h3>
           <div class="ex">
             <label class="tl" for="ta_pt">Vad påminns du om som du konkret kan göra för att bidra till ökad psykologisk trygghet i din arbetsgrupp?</label>
@@ -498,28 +460,24 @@
     </section>
 
     <!-- ================= DEL 3 ================= -->
-    <section class="view" id="v3">
-      <div class="hero h-a flip"><div class="hero-in">
-        <div class="hero-bg" aria-hidden="true"></div>
-        <div class="hero-text">
-          <p class="lvl2">Motiverande ledarskap</p>
-          <p class="lvl3">Del 3 av 4</p>
+    <section class="view s3" id="v3">
+      <div class="hero"><div class="hero-text">
+          <p class="eyebrow">Del 3 av 4</p>
           <h1>Feedback i dialog</h1>
           <p class="ingress">Feedback tas emot bättre när medarbetaren får komma till tals först. Här förbereder du en situation att öva på dag 2.</p>
-        </div>
       </div></div>
       <div class="col">
         <div class="meta"><div class="drop"><svg viewBox="0 0 80 96" aria-hidden="true"><path d="M40 95 C33 82 8 68 2.5 47 A38.5 38.5 0 1 1 77.5 47 C72 68 47 82 40 95 Z"/></svg><span>20<small>min</small></span></div>
           <p>En film på 3 minuter, fyra sidor i kursboken och två korta skrivuppgifter.</p></div>
 
         <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
-          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>Titta</p>
+          <p class="kind">Titta</p>
           <h3>Film: feedback i dialog</h3>
           <div class="media" id="feedbackFilm"></div>
         </div></div>
 
         <div class="step"><div class="letter" aria-hidden="true">b</div><div class="body">
-          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-read"/></svg>Läs</p>
+          <p class="kind">Läs</p>
           <h3>Kursboken s. 91–94</h3>
           <p>Läs sidorna om feedback i dialog och en boostande feedbackkultur. Här är en sammanfattning att ha bredvid.</p>
 
@@ -576,7 +534,7 @@
         </div></div>
 
         <div class="step"><div class="letter" aria-hidden="true">c</div><div class="body">
-          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-write"/></svg>Skriv</p>
+          <p class="kind">Skriv</p>
           <h3>Det här tar du med dig</h3>
           <div class="ex">
             <label class="tl" for="ta_fb1">Vad påminns du om från filmen och texten som kan vara värdefullt att göra i dina feedbacksamtal framöver?</label>
@@ -585,7 +543,7 @@
         </div></div>
 
         <div class="step"><div class="letter" aria-hidden="true">d</div><div class="body">
-          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-talk"/></svg>Inför övningen dag 2</p>
+          <p class="kind">Inför övningen dag 2</p>
           <h3>Välj en situation att öva på</h3>
           <div class="ex">
             <label class="tl" for="ta_fb2">I vilken situation upplever du att det kan vara värdefullt att ge feedback i dialog?</label>
@@ -603,22 +561,18 @@
     </section>
 
     <!-- ================= DEL 4 ================= -->
-    <section class="view" id="v4">
-      <div class="hero h-b flip"><div class="hero-in">
-        <div class="hero-bg" aria-hidden="true"></div>
-        <div class="hero-text">
-          <p class="lvl2">Motiverande ledarskap</p>
-          <p class="lvl3">Del 4 av 4</p>
+    <section class="view s4" id="v4">
+      <div class="hero"><div class="hero-text">
+          <p class="eyebrow">Del 4 av 4</p>
           <h1>Bemöta samtalsutmaningar</h1>
           <p class="ingress">När det finns tveksamhet, motstånd eller oenighet. Vad gjorde du senast det gick bra, och vilka fällor undvek du?</p>
-        </div>
       </div></div>
       <div class="col">
         <div class="meta"><div class="drop"><svg viewBox="0 0 80 96" aria-hidden="true"><path d="M40 95 C33 82 8 68 2.5 47 A38.5 38.5 0 1 1 77.5 47 C72 68 47 82 40 95 Z"/></svg><span>20<small>min</small></span></div>
           <p>Två sidor i kursboken, en kort övning och tre reflektionsfrågor om en egen erfarenhet.</p></div>
 
         <div class="step"><div class="letter" aria-hidden="true">a</div><div class="body">
-          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-read"/></svg>Läs</p>
+          <p class="kind">Läs</p>
           <h3>Kursboken s. 114–115</h3>
           <p>Signaler om tveksamhet och lägre engagemang kan ha många orsaker: lägre angelägenhet eller självtillit, annat som pågår parallellt, eller relationer och kommunikation i gruppen. Hur du som ledare kommunicerar påverkar hur dialogen fortsätter. Genom MI-anda och aktivt lyssnande kan spänningar dämpas.</p>
 
@@ -663,7 +617,7 @@
         </div></div>
 
         <div class="step"><div class="letter" aria-hidden="true">b</div><div class="body">
-          <p class="kind"><svg class="ic" aria-hidden="true"><use href="#i-write"/></svg>Reflektera och skriv</p>
+          <p class="kind">Reflektera och skriv</p>
           <h3>En samtalsutmaning som gick bra</h3>
           <p>Tänk på en samtalsutmaning som du nyligen hanterat, där utfallet blev till det bättre. Skriv ner dina lärdomar utifrån frågorna.</p>
           <div class="ex">
@@ -687,15 +641,11 @@
     </section>
 
     <!-- ================= AVSLUT ================= -->
-    <section class="view" id="v5">
-      <div class="hero h-c flip"><div class="hero-in">
-        <div class="hero-bg" aria-hidden="true"></div>
-        <div class="hero-text">
-          <p class="lvl2">Motiverande ledarskap</p>
-          <p class="lvl3">Inför dag 2</p>
+    <section class="view s5" id="v5">
+      <div class="hero"><div class="hero-text">
+          <p class="eyebrow">Inför dag 2</p>
           <h1>Kunskapskoll och dina svar</h1>
           <p class="ingress">Sex korta frågor, och sedan en sammanställning av allt du skrivit som du tar med till dag 2.</p>
-        </div>
       </div></div>
       <div class="col">
         <div class="meta"><div class="drop"><svg viewBox="0 0 80 96" aria-hidden="true"><path d="M40 95 C33 82 8 68 2.5 47 A38.5 38.5 0 1 1 77.5 47 C72 68 47 82 40 95 Z"/></svg><span>5<small>min</small></span></div>
@@ -744,12 +694,12 @@
   var IN_ARTIFACT = /claude/i.test(location.hostname);
 
   var SECTIONS=[
-    {id:"v0",label:"Inledning",n:"",sw:"var(--gr-gron)",swi:"#fff",t:""},
-    {id:"v1",label:"Pröva MI i ett möte",n:"1",sw:"var(--gr-vetegul)",swi:"#1d1d1b",t:"15 min"},
-    {id:"v2",label:"Psykologisk trygghet",n:"2",sw:"var(--gr-rod)",swi:"#fff",t:"1 tim"},
-    {id:"v3",label:"Feedback i dialog",n:"3",sw:"var(--gr-persika)",swi:"#1d1d1b",t:"20 min"},
-    {id:"v4",label:"Bemöta samtalsutmaningar",n:"4",sw:"var(--gr-turkos)",swi:"#111",t:"20 min"},
-    {id:"v5",label:"Kunskapskoll och svar",n:"",sw:"var(--gr-rosa)",swi:"#1d1d1b",t:"5 min"}
+    {id:"v0",label:"Inledning",sw:"var(--c-skog)",t:""},
+    {id:"v1",label:"1. Pröva MI i ett möte",sw:"var(--c-terrakotta)",t:"15 min"},
+    {id:"v2",label:"2. Psykologisk trygghet",sw:"var(--c-plommon)",t:"1 tim"},
+    {id:"v3",label:"3. Feedback i dialog",sw:"var(--c-ockra)",t:"20 min"},
+    {id:"v4",label:"4. Bemöta samtalsutmaningar",sw:"var(--c-black)",t:"20 min"},
+    {id:"v5",label:"Kunskapskoll och svar",sw:"var(--c-oliv)",t:"5 min"}
   ];
   var ANSWER_FIELDS=[
     {id:"ta_plan",part:"Del 1. Pröva MI i ett möte",label:"a) Det här vill jag testa, och i det här mötet"},
@@ -783,7 +733,7 @@
     host.innerHTML="";
     SECTIONS.forEach(function(s,i){
       var b=document.createElement("button"); b.type="button";
-      b.innerHTML='<span class="dot" style="--sw:'+s.sw+';--swi:'+s.swi+'">'+s.n+'</span><span>'+s.label+(s.t?'<br><span class="tmin">'+s.t+'</span>':'')+'</span><span class="ok" data-done="'+s.id+'"></span>';
+      b.innerHTML='<span class="dot" style="--sw:'+s.sw+'"></span><span>'+s.label+(s.t?'<br><span class="tmin">'+s.t+'</span>':'')+'</span><span class="ok" data-done="'+s.id+'"></span>';
       b.addEventListener("click",function(){ go(i); });
       host.appendChild(b);
     });
@@ -1054,16 +1004,15 @@
     return out;
   }
   function renderSummary(){ document.getElementById("ksHost").innerHTML=ksHtml(); }
-  var PRINT_CSS='body{font-family:Georgia,serif;color:#1d1d1b;line-height:1.55;max-width:720px;margin:24px auto;padding:0 18px;font-size:15px}'
-    +'h3,h4,.al,.light{font-family:"Libre Franklin","Franklin Gothic Medium",Arial,sans-serif;font-weight:500}.light{font-weight:300;color:#56524e;font-size:.85rem}'
-    +'.ks-h{display:flex;justify-content:space-between;border-bottom:2px solid #1d1d1b;padding-bottom:.6rem;margin-bottom:1rem}.ks-h h3{margin:0;font-size:1.4rem}'
+  var PRINT_CSS='body{font-family:Arial,Helvetica,sans-serif;color:#1f1a14;line-height:1.55;max-width:720px;margin:24px auto;padding:0 18px;font-size:15px}'
+    +'h3,h4,.al{font-weight:700}.light{color:#5b544b;font-size:.85rem}'
+    +'.ks-h{display:flex;justify-content:space-between;border-bottom:2px solid #1f1a14;padding-bottom:.6rem;margin-bottom:1rem}.ks-h h3{margin:0;font-size:1.4rem}'
     +'.ks-sec{margin:1rem 0;page-break-inside:avoid}.ks-sec h4{margin:0 0 .3rem;font-size:1.05rem}.ans{margin:.4rem 0 .8rem}.al{font-size:.9rem}'
-    +'.at{white-space:pre-wrap;border-left:2px solid #ccc;padding-left:.7rem;margin-top:.2rem}.at.empty{color:#777;font-style:italic}.note{font-size:.8rem;color:#56524e}'
-    +'.logo{width:150px;margin-bottom:1rem}.noprint{text-align:center;margin:1.4rem 0}.noprint button{background:#1a7167;color:#fff;border:0;border-radius:99px;padding:.6rem 1.3rem;font-size:1rem;cursor:pointer}'
+    +'.at{white-space:pre-wrap;border-left:2px solid #ccc;padding-left:.7rem;margin-top:.2rem}.at.empty{color:#777;font-style:italic}.note{font-size:.8rem;color:#5b544b}'
+    +'.noprint{text-align:center;margin:1.4rem 0}.noprint button{background:#2f4b3c;color:#fff;border:0;border-radius:99px;padding:.6rem 1.3rem;font-size:1rem;cursor:pointer}'
     +'@media print{.noprint{display:none}body{margin:0;max-width:none}@page{margin:16mm 15mm}}';
   document.getElementById("ksPdf").addEventListener("click",function(){
-    var logo=document.querySelector(".logo .pos").getAttribute("src");
-    var doc='<!DOCTYPE html><html lang="sv"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ta med till dag 2</title><style>'+PRINT_CSS+'</style></head><body><img class="logo" src="'+logo+'" alt="Göteborgsregionen">'+ksHtml()+'<div class="noprint"><button type="button" onclick="window.print()">Skriv ut eller spara som PDF</button></div><scr'+'ipt>window.addEventListener("load",function(){setTimeout(function(){try{window.print();}catch(e){}},400);});<\/scr'+'ipt></body></html>';
+    var doc='<!DOCTYPE html><html lang="sv"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ta med till dag 2</title><style>'+PRINT_CSS+'</style></head><body>'+ksHtml()+'<div class="noprint"><button type="button" onclick="window.print()">Skriv ut eller spara som PDF</button></div><scr'+'ipt>window.addEventListener("load",function(){setTimeout(function(){try{window.print();}catch(e){}},400);});<\/scr'+'ipt></body></html>';
     var w=null; try{ w=window.open("","_blank"); }catch(e){}
     if(w){ w.document.open(); w.document.write(doc); w.document.close(); w.focus(); return; }
     var pa=document.getElementById("printArea"); pa.innerHTML=ksHtml(); document.body.classList.add("printing");
